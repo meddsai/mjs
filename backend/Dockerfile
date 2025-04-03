@@ -18,7 +18,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy only necessary files for dependency caching
-COPY Cargo.toml Cargo.lock ./
+COPY Cargo.toml ./
+RUN touch Cargo.lock
 
 # Create a dummy main.rs to build dependencies
 RUN mkdir src && \
