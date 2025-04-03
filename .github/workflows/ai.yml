@@ -5,12 +5,12 @@ on:
   push:
     branches: [ main, develop ]
     paths:
-      - 'ai/**'
+      - 'ai-service/**'
       - '.github/workflows/ai.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
-      - 'ai/**'
+      - 'ai-service/**'
       - '.github/workflows/ai.yml'
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./ai
+        working-directory: ./ai-service
 
     steps:
     - uses: actions/checkout@v4
