@@ -230,4 +230,4 @@ jmeter -n -t test-plan.jmx
 - Logical grouping
 - Clear structure
 - Easy navigation
-- Proper documentation 
+- Proper documentation

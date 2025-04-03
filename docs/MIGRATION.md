@@ -217,4 +217,4 @@ rsync -avz /mojs/files_backup/ /ojs/files/
 ### 3. Operational
 - Monitoring in place
 - Documentation complete
-- Team trained 
+- Team trained

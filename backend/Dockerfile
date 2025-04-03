@@ -16,4 +16,4 @@ RUN apt-get update && \
     cargo build --release && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-CMD ["./target/release/mjs-backend"] 
+CMD ["./target/release/mjs-backend"]

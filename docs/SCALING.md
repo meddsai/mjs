@@ -182,7 +182,7 @@ spec:
 ```sql
 -- Example read replica setup
 CREATE PUBLICATION mojs_publication FOR TABLE articles, authors;
-CREATE SUBSCRIPTION mojs_subscription 
+CREATE SUBSCRIPTION mojs_subscription
 CONNECTION 'host=primary dbname=mojs user=replicator'
 PUBLICATION mojs_publication;
 ```
@@ -279,4 +279,4 @@ psql -U postgres -d mojs < backup.sql
 - Scaling operations
 - Recovery procedures
 - Maintenance tasks
-- Monitoring setup 
+- Monitoring setup

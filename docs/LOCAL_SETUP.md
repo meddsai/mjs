@@ -122,4 +122,4 @@ docs/
 If you encounter any issues not covered in this guide:
 1. Check the project's GitHub issues
 2. Create a new issue with detailed information about your problem
-3. Contact the development team through the project's communication channels 
+3. Contact the development team through the project's communication channels

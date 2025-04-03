@@ -1,6 +1,6 @@
 # Modern Open Journal Systems (MOJS) Documentation
 
-Welcome to the MOJS Documentation Hub!  
+Welcome to the MOJS Documentation Hub!
 
 ## About MOJS
 
@@ -48,6 +48,6 @@ Our documentation is organized into several sections:
 - [Documentation](https://balinesthesia.github.io/modern-ojs/docs/)
 - [GitHub Repository](https://github.com/balinesthesia/modern-ojs)
 
-MOJS is under active development as of April 2025 and not yet ready for use. Our full documentation—including the [Admin Guide](https://balinesthesia.github.io/modern-ojs/docs/admin-guide/), [Getting Started](https://balinesthesia.github.io/modern-ojs/docs/getting-started/) guide, and more—will be available here upon our first release.  
+MOJS is under active development as of April 2025 and not yet ready for use. Our full documentation—including the [Admin Guide](https://balinesthesia.github.io/modern-ojs/docs/admin-guide/), [Getting Started](https://balinesthesia.github.io/modern-ojs/docs/getting-started/) guide, and more—will be available here upon our first release.
 
-For now, follow our progress and contribute at [github.com/balinesthesia/modern-ojs](https://github.com/balinesthesia/modern-ojs).  
+For now, follow our progress and contribute at [github.com/balinesthesia/modern-ojs](https://github.com/balinesthesia/modern-ojs).

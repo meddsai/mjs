@@ -15,4 +15,4 @@ pre-commit install
 echo "Running pre-commit on all files..."
 pre-commit run --all-files
 
-echo "Pre-commit hooks setup complete!" 
+echo "Pre-commit hooks setup complete!"

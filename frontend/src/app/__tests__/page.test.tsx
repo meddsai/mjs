@@ -14,4 +14,4 @@ describe('Home', () => {
         const description = screen.getByText('Next-generation scholarly publishing platform');
         expect(description).toBeInTheDocument();
     });
-}); 
+});

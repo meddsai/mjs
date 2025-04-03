@@ -201,9 +201,9 @@ SwaggerModule.setup('api', app, document);
 ### 2. Code Documentation
 ```rust
 /// Example Rust documentation
-/// 
+///
 /// # Examples
-/// 
+///
 /// ```
 /// let result = add(2, 2);
 /// assert_eq!(result, 4);
@@ -289,4 +289,4 @@ jobs:
 - Log analysis
 - Debugging
 - Tool configuration
-- Environment setup 
+- Environment setup

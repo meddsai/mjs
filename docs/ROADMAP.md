@@ -437,4 +437,4 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
 
 ---
 
-**Note**: This roadmap is subject to adjustment based on project progress, user feedback, and changing requirements. Regular reviews and updates will be conducted to ensure alignment with project goals. The extended timeline accounts for limited resources and complex technical requirements. 
+**Note**: This roadmap is subject to adjustment based on project progress, user feedback, and changing requirements. Regular reviews and updates will be conducted to ensure alignment with project goals. The extended timeline accounts for limited resources and complex technical requirements.

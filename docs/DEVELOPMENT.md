@@ -256,4 +256,4 @@ For development support:
 - Create an issue
 - Join our Discord
 - Check documentation
-- Contact maintainers 
+- Contact maintainers

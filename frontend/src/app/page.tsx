@@ -5,4 +5,4 @@ export default function Home() {
             <p className="mt-4">Next-generation scholarly publishing platform</p>
         </main>
     );
-} 
+}

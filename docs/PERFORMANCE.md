@@ -152,7 +152,7 @@ class Cache {
 ```sql
 -- Example materialized view
 CREATE MATERIALIZED VIEW article_stats AS
-SELECT 
+SELECT
     author_id,
     COUNT(*) as article_count,
     AVG(rating) as avg_rating
@@ -186,11 +186,11 @@ server {
     location / {
         root /var/www/html;
         try_files $uri $uri/ /index.html;
-        
+
         # Enable gzip compression
         gzip on;
         gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
-        
+
         # Enable caching
         location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
             expires 30d;
@@ -222,7 +222,7 @@ use sysinfo::{System, SystemExt};
 fn monitor_resources() {
     let mut sys = System::new_all();
     sys.refresh_all();
-    
+
     println!("CPU usage: {}%", sys.get_global_processor_info().get_cpu_usage());
     println!("Memory usage: {} bytes", sys.get_used_memory());
 }
@@ -282,4 +282,4 @@ k6 run --vus 100 --duration 5m stress-test.js
 - Regular performance reviews
 - Continuous optimization
 - Monitoring and alerting
-- Documentation updates 
+- Documentation updates

@@ -57,4 +57,4 @@ pre-commit run --all-files
 
 ## License
 
-See the main project LICENSE file. 
+See the main project LICENSE file.

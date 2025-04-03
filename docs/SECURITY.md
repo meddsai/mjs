@@ -16,7 +16,7 @@ export const authenticate = (
   next: NextFunction
 ) => {
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({ error: 'Authentication required' });
   }
@@ -41,7 +41,7 @@ pub fn verify_token(token: &str) -> Result<Claims, Error> {
         algorithms: vec![Algorithm::HS256],
         ..Validation::default()
     };
-    
+
     decode::<Claims>(token, &DecodingKey::from_secret(secret), &validation)
         .map(|data| data.claims)
 }
@@ -257,10 +257,10 @@ export const detectIncident = (event: SecurityEvent) => {
 export const handleIncident = async (incident: SecurityIncident) => {
   // Log incident
   logSecurityEvent(incident);
-  
+
   // Notify team
   await sendSecurityAlert(incident);
-  
+
   // Take action
   await takeRemedialAction(incident);
 };
@@ -278,4 +278,4 @@ export const handleIncident = async (incident: SecurityIncident) => {
 - Access control
 - Monitoring
 - Incident response
-- Regular audits 
+- Regular audits

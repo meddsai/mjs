@@ -236,4 +236,4 @@ systemctl start mojs
 - Regular reports
 - Incident summaries
 - Performance trends
-- Resource usage 
+- Resource usage

@@ -115,10 +115,10 @@ pub fn process_data(data: &[u8]) -> Result<Vec<u8>, Error> {
 # Example function
 def process_data(data: np.ndarray) -> np.ndarray:
     """Process input data.
-    
+
     Args:
         data: Input array
-        
+
     Returns:
         Processed array
     """
@@ -277,4 +277,4 @@ poetry version      # AI/ML
 - Community support
 - Maintainer support
 - Professional support
-- Emergency support 
+- Emergency support

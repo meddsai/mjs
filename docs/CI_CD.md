@@ -40,21 +40,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Run tests
         run: npm test
-        
+
       - name: Build
         run: npm run build
-        
+
       - name: Deploy
         if: github.ref == 'refs/heads/main'
         run: npm run deploy
@@ -249,4 +249,4 @@ secrets:
 - Deployment procedures
 - Rollback procedures
 - Emergency procedures
-- Maintenance tasks 
+- Maintenance tasks

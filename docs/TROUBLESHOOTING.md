@@ -244,4 +244,4 @@ COMMIT;
 - Community forums
 - Documentation
 - Support channels
-- Professional services 
+- Professional services
