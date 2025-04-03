@@ -9,7 +9,8 @@ CMD ["npm", "run", "dev"]
 
 FROM base AS production
 COPY package*.json ./
-RUN npm ci
+# First try npm ci, if it fails fall back to npm install
+RUN npm ci || npm install
 COPY . .
 RUN npm run build
 CMD ["npm", "start"]
