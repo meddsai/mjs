@@ -1,32 +1,48 @@
 repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: trailing-whitespace
+        files: ^.*$
+    -   id: end-of-file-fixer
+        files: ^.*$
+    -   id: check-yaml
+        files: ^.*\.ya?ml$
+    -   id: check-added-large-files
+    -   id: mixed-line-ending
+        files: ^.*$
+    -   id: fix-byte-order-marker
+        files: ^.*$
+    -   id: check-merge-conflict
+        files: ^.*$
+    -   id: detect-private-key
+        files: ^.*$
+
 -   repo: https://github.com/psf/black
     rev: 24.2.0
     hooks:
     -   id: black
         language_version: python3.12
-        files: ^ai-service/.*\.py$
+        files: ^(ai-service/.*\.py|scripts/.*\.py)$
+        args: [--line-length=88]
 
 -   repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
     -   id: isort
         language_version: python3.12
-        args: ["--profile", "black"]
-        files: ^ai-service/.*\.py$
-
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
-    hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: check-added-large-files
-    -   id: double-quote-string-fixer
-    -   id: mixed-line-ending
-    -   id: fix-byte-order-marker
+        args: ["--profile", "black", "--line-length=88"]
+        files: ^(ai-service/.*\.py|scripts/.*\.py)$
 
 -   repo: local
     hooks:
+    -   id: rustfmt
+        name: Rust Format
+        entry: bash -c 'cd backend && rustfmt --edition=2021 --check $(git diff --cached --name-only --diff-filter=ACMR | grep "\.rs$" | tr "\n" " ")'
+        language: system
+        types: [rust]
+        pass_filenames: false
+
     -   id: python-tests
         name: Python Tests
         entry: bash -c 'cd ai-service && poetry install && poetry run pytest --cov'
