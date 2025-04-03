@@ -113,6 +113,43 @@ poetry add --group dev package-name
 poetry export -f requirements.txt --output requirements.txt --without-hashes
 ```
 
+### 7. Pre-commit Hooks Setup
+```bash
+# Install pre-commit hooks
+./scripts/setup-hooks.sh
+
+# The script will:
+# 1. Install pre-commit if not present
+# 2. Install Rust toolchain and rustfmt if needed
+# 3. Update Poetry lock file
+# 4. Install Python dependencies
+# 5. Set up pre-commit hooks
+# 6. Run hooks on all files
+
+# Manually run hooks
+pre-commit run --all-files
+```
+
+The pre-commit hooks configuration includes:
+- **Python Formatting**:
+  - Black (code formatting)
+  - isort (import sorting)
+- **Rust Formatting**:
+  - rustfmt (code formatting)
+- **File Checks**:
+  - Trailing whitespace
+  - End of file fixer
+  - YAML validation
+  - Large file detection
+  - Line ending consistency
+  - Byte order marker
+  - Merge conflict detection
+  - Private key detection
+- **Pre-push Checks**:
+  - Python tests
+  - Rust build
+  - Docker builds
+
 ## Development Workflow
 
 ### 1. Branch Strategy

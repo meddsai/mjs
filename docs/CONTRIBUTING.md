@@ -36,19 +36,40 @@ poetry run dev      # AI/ML
 
 MJS uses pre-commit hooks to ensure code quality across all services. The hooks are automatically installed when you run `./scripts/setup-hooks.sh`. They will:
 
-- Format Python code using Black
-- Sort Python imports using isort
-- Check Python types using mypy
-- Format TypeScript/JavaScript code using Prettier
-- Format Rust code using rustfmt
+### Python Code Quality
+- Format code using Black (line length: 88)
+- Sort imports using isort (Black profile)
 - Remove trailing whitespace
-- Ensure files end with a newline
+- Fix end of files
+- Check YAML files
+- Detect large files
+- Fix line endings
+- Fix byte order markers
+- Check for merge conflicts
+- Detect private keys
+
+### Rust Code Quality
+- Format code using rustfmt (edition: 2021)
+- Check for merge conflicts
+- Detect private keys
+
+### Pre-push Checks
+- Run Python tests with coverage
+- Build Rust code
+- Build Docker images
 
 The pre-commit hooks will run automatically before each commit. If any checks fail, the commit will be blocked until you fix the issues.
 
 You can also manually run the checks at any time:
 ```bash
+# Run all hooks
 pre-commit run --all-files
+
+# Run specific hook
+pre-commit run <hook-id>
+
+# Run on specific files
+pre-commit run --files <file1> <file2>
 ```
 
 ## Contribution Workflow
