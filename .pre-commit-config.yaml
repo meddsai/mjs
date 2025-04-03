@@ -3,7 +3,7 @@ repos:
     rev: 24.2.0
     hooks:
     -   id: black
-        language_version: python3.11
+        language_version: python3.12
         args: [--check]
         files: ^ai-service/.*\.py$
 
@@ -11,6 +11,7 @@ repos:
     rev: 5.13.2
     hooks:
     -   id: isort
+        language_version: python3.12
         args: ["--check", "--profile", "black"]
         files: ^ai-service/.*\.py$
 

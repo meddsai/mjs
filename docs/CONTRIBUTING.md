@@ -7,7 +7,7 @@ This document outlines the contribution guidelines for MJS.
 ### 1. Prerequisites
 - Node.js 18+
 - Rust 1.70+
-- Python 3.11+
+- Python 3.12+
 - Docker
 - Git
 - Pre-commit hooks

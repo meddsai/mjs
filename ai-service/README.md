@@ -14,7 +14,7 @@ The AI service component of Modern Journal Systems (MJS), providing intelligent 
 
 ### Prerequisites
 
-- Python 3.11+
+- Python 3.12+
 - Poetry for dependency management
 - PostgreSQL 15+
 - Pre-commit hooks (installed via `./scripts/setup-hooks.sh`)
