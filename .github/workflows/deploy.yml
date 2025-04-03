@@ -26,14 +26,11 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata
-      id: meta
+    - name: Extract metadata for Frontend
+      id: frontend-meta
       uses: docker/metadata-action@v5
       with:
-        images: |
-          ghcr.io/${{ github.repository }}/frontend
-          ghcr.io/${{ github.repository }}/backend
-          ghcr.io/${{ github.repository }}/ai
+        images: ghcr.io/${{ github.repository }}/frontend
         tags: |
           type=ref,event=branch
           type=ref,event=tag
@@ -44,28 +41,48 @@ jobs:
       with:
         context: ./frontend
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.frontend-meta.outputs.tags }}
+        labels: ${{ steps.frontend-meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+
+    - name: Extract metadata for Backend
+      id: backend-meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/${{ github.repository }}/backend
+        tags: |
+          type=ref,event=branch
+          type=ref,event=tag
+          type=sha,format=long
 
     - name: Build and push Backend
       uses: docker/build-push-action@v5
       with:
         context: ./backend
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.backend-meta.outputs.tags }}
+        labels: ${{ steps.backend-meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
+
+    - name: Extract metadata for AI Service
+      id: ai-meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ghcr.io/${{ github.repository }}/ai-service
+        tags: |
+          type=ref,event=branch
+          type=ref,event=tag
+          type=sha,format=long
 
     - name: Build and push AI Service
       uses: docker/build-push-action@v5
       with:
-        context: ./ai
+        context: ./ai-service
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.ai-meta.outputs.tags }}
+        labels: ${{ steps.ai-meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
