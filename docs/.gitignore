@@ -1,0 +1,20 @@
+# Docs .gitignore
+
+# MkDocs
+site/
+
+# Node modules (if using VuePress or similar)
+node_modules/
+
+# Build directory
+_build/
+build/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment
+.env
+.env.*
+!.env.example

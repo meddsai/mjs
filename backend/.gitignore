@@ -1,0 +1,29 @@
+# Backend .gitignore
+
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Debug
+*.pdb
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE Rust specific
+*.rs.fmt
+
+# Generated files
+src/schema.rs
+
+# Database
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log

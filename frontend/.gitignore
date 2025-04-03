@@ -1,0 +1,42 @@
+# Frontend .gitignore
+
+# Next.js
+.next/
+out/
+
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# PWA
+public/sw.js
+public/workbox-*.js
+public/worker-*.js
+public/sw.js.map
+public/workbox-*.js.map
+public/worker-*.js.map
+
+# Vercel
+.vercel/
+
+# Build
+.turbo
