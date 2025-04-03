@@ -1,3 +1,4 @@
+# This is a test comment with    extra spaces    and wrong formatting
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -18,4 +19,4 @@ app.add_middleware(
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy"}
+    return {"status": "ok"}
