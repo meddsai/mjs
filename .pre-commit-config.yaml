@@ -4,7 +4,6 @@ repos:
     hooks:
     -   id: black
         language_version: python3.12
-        args: [--check]
         files: ^ai-service/.*\.py$
 
 -   repo: https://github.com/pycqa/isort
@@ -12,7 +11,7 @@ repos:
     hooks:
     -   id: isort
         language_version: python3.12
-        args: ["--check", "--profile", "black"]
+        args: ["--profile", "black"]
         files: ^ai-service/.*\.py$
 
 -   repo: https://github.com/pre-commit/pre-commit-hooks
@@ -22,3 +21,6 @@ repos:
     -   id: end-of-file-fixer
     -   id: check-yaml
     -   id: check-added-large-files
+    -   id: double-quote-string-fixer
+    -   id: mixed-line-ending
+    -   id: fix-byte-order-marker
