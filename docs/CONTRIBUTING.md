@@ -1,31 +1,54 @@
 # Contributing Guide
 
-This document outlines the contribution guidelines for MOJS.
+This document outlines the contribution guidelines for MJS.
 
 ## Getting Started
 
 ### 1. Prerequisites
 - Node.js 18+
 - Rust 1.70+
-- Python 3.9+
+- Python 3.11+
 - Docker
 - Git
+- Pre-commit hooks
 
 ### 2. Development Setup
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/mojs.git
-cd mojs
+git clone https://github.com/your-org/mjs.git
+cd mjs
+
+# Install pre-commit hooks
+./scripts/setup-hooks.sh
 
 # Install dependencies
-npm install          # Frontend
-cargo build         # Backend
-poetry install      # AI/ML
+cd frontend && npm install
+cd ../backend && cargo build
+cd ../ai-service && poetry install
 
 # Start development servers
 npm run dev         # Frontend
 cargo run           # Backend
 poetry run dev      # AI/ML
+```
+
+## Code Quality
+
+MJS uses pre-commit hooks to ensure code quality across all services. The hooks are automatically installed when you run `./scripts/setup-hooks.sh`. They will:
+
+- Format Python code using Black
+- Sort Python imports using isort
+- Check Python types using mypy
+- Format TypeScript/JavaScript code using Prettier
+- Format Rust code using rustfmt
+- Remove trailing whitespace
+- Ensure files end with a newline
+
+The pre-commit hooks will run automatically before each commit. If any checks fail, the commit will be blocked until you fix the issues.
+
+You can also manually run the checks at any time:
+```bash
+pre-commit run --all-files
 ```
 
 ## Contribution Workflow
@@ -122,6 +145,7 @@ poetry run coverage # AI/ML
 - No linting errors
 - All tests passing
 - Documentation updated
+- All pre-commit checks passing
 
 ## Documentation
 
@@ -156,7 +180,8 @@ function example(param1: string, param2: number): boolean {
 - [ ] Tests added/updated
 - [ ] Documentation updated
 - [ ] Code follows standards
-- [ ] All checks passing
+- [ ] All pre-commit checks passing
+- [ ] All tests passing
 
 ### 2. Review Process
 - Code review by maintainers
@@ -232,6 +257,7 @@ poetry version      # AI/ML
 - Follow standards
 - Document changes
 - Test thoroughly
+- Run pre-commit checks
 
 ### 2. Collaboration
 - Communicate clearly
@@ -251,70 +277,4 @@ poetry version      # AI/ML
 - Community support
 - Maintainer support
 - Professional support
-- Emergency support
-
-## Development Setup
-
-1. Fork and clone the repository
-2. Set up the development environment:
-   ```bash
-   # Install pre-commit hooks
-   ./scripts/setup-hooks.sh
-
-   # Install dependencies for each service
-   cd frontend && npm install
-   cd ../backend && cargo build
-   cd ../ai-service && poetry install
-   ```
-
-## Code Quality
-
-MJS uses pre-commit hooks to ensure code quality across all services. The hooks are automatically installed when you run `./scripts/setup-hooks.sh`. They will:
-
-- Format Python code using Black
-- Sort Python imports using isort
-- Check Python types using mypy
-- Format TypeScript/JavaScript code using Prettier
-- Format Rust code using rustfmt
-- Remove trailing whitespace
-- Ensure files end with a newline
-
-The pre-commit hooks will run automatically before each commit. If any checks fail, the commit will be blocked until you fix the issues.
-
-You can also manually run the checks at any time:
-```bash
-pre-commit run --all-files
-```
-
-## Pull Request Process
-
-1. Create a new branch for your feature/fix
-2. Make your changes
-3. Ensure all pre-commit checks pass
-4. Write/update tests as needed
-5. Update documentation
-6. Submit a pull request
-
-## Code Style Guidelines
-
-- Python: Follow PEP 8, use Black for formatting
-- TypeScript/JavaScript: Use Prettier for formatting
-- Rust: Use rustfmt for formatting
-- All code must pass the pre-commit checks
-
-## Testing
-
-- Frontend: `npm test`
-- Backend: `cargo test`
-- AI Service: `poetry run pytest`
-
-## Documentation
-
-- Update README.md if needed
-- Add/update API documentation
-- Include comments for complex logic
-- Update CHANGELOG.md for significant changes
-
-## Questions?
-
-Feel free to open an issue or join our community discussions! 
+- Emergency support 
