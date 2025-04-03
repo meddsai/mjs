@@ -9,7 +9,10 @@ CMD ["cargo", "watch", "-x", "run"]
 FROM base AS production
 COPY . .
 RUN apt-get update && \
-    apt-get install -y pkg-config libssl-dev && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    pkg-config \
+    libssl-dev \
+    ca-certificates && \
     cargo build --release && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
