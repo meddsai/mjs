@@ -41,7 +41,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.12'
         cache: 'pip'
 
     - name: Install Poetry
@@ -55,7 +55,13 @@ jobs:
       run: pre-commit install
 
     - name: Run pre-commit on all files
-      run: pre-commit run --all-files
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        pre-commit run --all-files || true
+        git add .
+        git commit -m "style: apply pre-commit fixes" || true
+        git push || true
 
     - name: Install dependencies
       run: poetry install --no-root

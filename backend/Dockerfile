@@ -7,13 +7,46 @@ COPY . .
 CMD ["cargo", "watch", "-x", "run"]
 
 FROM base AS production
-COPY . .
+# Install build dependencies first
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     pkg-config \
     libssl-dev \
-    ca-certificates && \
-    cargo build --release && \
+    ca-certificates \
+    build-essential && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-CMD ["./target/release/mjs-backend"]
+
+# Copy only necessary files for dependency caching
+COPY Cargo.toml Cargo.lock ./
+
+# Create a dummy main.rs to build dependencies
+RUN mkdir src && \
+    echo "fn main() {}" > src/main.rs && \
+    cargo build --release && \
+    rm -rf src
+
+# Copy actual source code
+COPY . .
+
+# Build the actual application
+RUN cargo build --release
+
+# Use a smaller runtime image
+FROM debian:bullseye-slim
+
+WORKDIR /app
+
+# Install runtime dependencies
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    ca-certificates \
+    libssl1.1 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy the binary from builder
+COPY --from=production /app/target/release/mjs-backend /app/
+
+# Run the binary
+CMD ["./mjs-backend"]
