@@ -17,13 +17,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy only necessary files for dependency caching
-COPY Cargo.toml ./
-RUN touch Cargo.lock
+# Create a minimal Cargo.toml if it doesn't exist
+RUN echo '[package]\nname = "mjs-backend"\nversion = "0.1.0"\n\n[dependencies]\nactix-web = "4.4"\n' > Cargo.toml
 
 # Create a dummy main.rs to build dependencies
-RUN mkdir src && \
-    echo "fn main() {}" > src/main.rs && \
+RUN mkdir -p src && \
+    echo 'fn main() { println!("Hello, world!"); }' > src/main.rs && \
     cargo build --release && \
     rm -rf src
 

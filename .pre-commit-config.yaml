@@ -24,3 +24,29 @@ repos:
     -   id: double-quote-string-fixer
     -   id: mixed-line-ending
     -   id: fix-byte-order-marker
+
+-   repo: local
+    hooks:
+    -   id: python-tests
+        name: Python Tests
+        entry: bash -c 'cd ai-service && poetry install && poetry run pytest --cov'
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [push]
+
+    -   id: rust-build
+        name: Rust Build
+        entry: bash -c 'cd backend && cargo build'
+        language: system
+        types: [rust]
+        pass_filenames: false
+        stages: [push]
+
+    -   id: docker-build
+        name: Docker Build
+        entry: bash -c 'docker build -t mjs-backend ./backend && docker build -t mjs-ai ./ai-service'
+        language: system
+        types: [dockerfile]
+        pass_filenames: false
+        stages: [push]
