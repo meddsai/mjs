@@ -5,7 +5,7 @@
 
 Welcome to Modern Journal Systems (MJS), an open-source platform for next-generation scholarly publishing!
 
-MJS is a fresh take on academic journal management, inspired by [Open Journal Systems (OJS)](https://pkp.sfu.ca/software/ojs/) from the [Public Knowledge Project (PKP)](https://pkp.sfu.ca/). Built from scratch by [Balinesthesia](https://website.anestesiudayana.com/), MJS leverages React with TypeScript and Next.js for the frontend, Rust for the backend, and Python for AI-driven features like peer review matchmaking. Unlike OJS’s PHP-based system, MJS shares its mission but not its codebase, offering a modern, scalable alternative.
+MJS is a fresh take on academic journal management, inspired by [Open Journal Systems (OJS)](https://pkp.sfu.ca/software/ojs/) from the [Public Knowledge Project (PKP)](https://pkp.sfu.ca/). Built from scratch by [Balinesthesia](https://website.anestesiudayana.com/), MJS uses React with TypeScript and Next.js for the frontend, Rust for the backend, and Python for AI-driven features like text analysis, content recommendations, automated metadata extraction, peer review matchmaking, plagiarism detection, and more. Built anew, distinct from OJS’s PHP roots, MJS shares its mission but not its codebase, delivering a modern, scalable alternative for 2025 and future publishing needs.
 
 As of April 2025, MJS is in early development. Join us to shape the future of publishing!
 
@@ -19,7 +19,7 @@ MJS is built with a full-stack architecture optimized for performance, scalabili
 
 - **Frontend**: React with TypeScript and Next.js for a responsive, SEO-friendly interface.
 - **Backend**: Rust with Actix Web for secure, high-performance APIs.
-- **AI/ML**: Python with FastAPI for features like peer review matchmaking, citation analysis, and beyond.
+- **AI/ML**: Python with FastAPI for features like peer review matchmaking, citation analysis, plagiarism detection, and beyond.
 - **Database**: PostgreSQL for robust, structured data storage.
 - **File Storage**: MinIO for scalable hosting of PDFs and supplementary files.
 - **Caching**: Redis for optimized performance on frequent queries.
