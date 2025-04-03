@@ -60,11 +60,8 @@ jobs:
     - name: Install dependencies
       run: poetry install --no-root
 
-    - name: Code Quality
-      run: |
-        poetry run black . --check
-        poetry run isort . --check
-        poetry run mypy .
+    - name: Run type checking
+      run: poetry run mypy .
 
     - name: Test
       run: poetry run pytest --cov

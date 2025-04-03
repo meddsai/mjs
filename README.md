@@ -5,7 +5,7 @@
 
 Welcome to Modern Journal Systems (MJS), an open-source platform for next-generation scholarly publishing!
 
-MJS is a fresh take on academic journal management, inspired by [Open Journal Systems (OJS)](https://pkp.sfu.ca/software/ojs/) from the [Public Knowledge Project (PKP)](https://pkp.sfu.ca/). Built from scratch by [Balinesthesia](https://website.anestesiudayana.com/), MJS uses React with TypeScript and Next.js for the frontend, Rust for the backend, and Python for AI-driven features like text analysis, content recommendations, automated metadata extraction, peer review matchmaking, plagiarism detection, and more. Built anew, distinct from OJS’s PHP roots, MJS shares its mission but not its codebase, delivering a modern, scalable alternative for 2025 and future publishing needs.
+MJS is a fresh take on academic journal management, inspired by [Open Journal Systems (OJS)](https://pkp.sfu.ca/software/ojs/) from the [Public Knowledge Project (PKP)](https://pkp.sfu.ca/). Built from scratch by [Balinesthesia](https://website.anestesiudayana.com/), MJS uses React with TypeScript and Next.js for the frontend, Rust for the backend, and Python for AI-driven features like text analysis, content recommendations, automated metadata extraction, peer review matchmaking, plagiarism detection, and more. Built anew, distinct from OJS's PHP roots, MJS shares its mission but not its codebase, delivering a modern, scalable alternative for 2025 and future publishing needs.
 
 As of April 2025, MJS is in early development. Join us to shape the future of publishing!
 
@@ -27,6 +27,7 @@ MJS is built with a full-stack architecture optimized for performance, scalabili
 - **Authentication**: Keycloak with OAuth 2.0 and OpenID Connect for secure user access.
 - **Deployment**: Docker and Kubernetes for scalable, portable infrastructure.
 - **Monitoring**: Prometheus and Grafana for system health and performance tracking.
+- **Code Quality**: Pre-commit hooks for automated code formatting and linting across all services.
 
 For a detailed migration plan and timeline, see our [ROADMAP.md](./ROADMAP.md).
 

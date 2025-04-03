@@ -1,14 +1,13 @@
 # MJS AI Service
 
-AI services for Modern Journal Systems.
+The AI service component of Modern Journal Systems (MJS), providing intelligent features for scholarly publishing.
 
-## Description
+## Features
 
-This service provides AI capabilities for the Modern Journal Systems platform, including:
-
-- Text analysis
-- Content recommendations
+- Text analysis and content recommendations
 - Automated metadata extraction
+- Peer review matchmaking
+- Citation analysis
 - Plagiarism detection
 
 ## Development
@@ -17,6 +16,8 @@ This service provides AI capabilities for the Modern Journal Systems platform, i
 
 - Python 3.11+
 - Poetry for dependency management
+- PostgreSQL 15+
+- Pre-commit hooks (installed via `./scripts/setup-hooks.sh`)
 
 ### Setup
 
@@ -25,9 +26,14 @@ This service provides AI capabilities for the Modern Journal Systems platform, i
    poetry install
    ```
 
-2. Run the service:
+2. Set up pre-commit hooks:
    ```bash
-   poetry run uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+   ./scripts/setup-hooks.sh
+   ```
+
+3. Run the service:
+   ```bash
+   poetry run uvicorn src.main:app --reload
    ```
 
 ### Testing
@@ -35,6 +41,18 @@ This service provides AI capabilities for the Modern Journal Systems platform, i
 Run tests with:
 ```bash
 poetry run pytest
+```
+
+### Code Quality
+
+The service uses pre-commit hooks for code quality checks:
+- Black for code formatting
+- isort for import sorting
+- mypy for type checking
+
+These checks run automatically before each commit. You can also run them manually:
+```bash
+pre-commit run --all-files
 ```
 
 ## License

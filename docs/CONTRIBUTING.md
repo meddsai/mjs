@@ -251,4 +251,70 @@ poetry version      # AI/ML
 - Community support
 - Maintainer support
 - Professional support
-- Emergency support 
+- Emergency support
+
+## Development Setup
+
+1. Fork and clone the repository
+2. Set up the development environment:
+   ```bash
+   # Install pre-commit hooks
+   ./scripts/setup-hooks.sh
+
+   # Install dependencies for each service
+   cd frontend && npm install
+   cd ../backend && cargo build
+   cd ../ai-service && poetry install
+   ```
+
+## Code Quality
+
+MJS uses pre-commit hooks to ensure code quality across all services. The hooks are automatically installed when you run `./scripts/setup-hooks.sh`. They will:
+
+- Format Python code using Black
+- Sort Python imports using isort
+- Check Python types using mypy
+- Format TypeScript/JavaScript code using Prettier
+- Format Rust code using rustfmt
+- Remove trailing whitespace
+- Ensure files end with a newline
+
+The pre-commit hooks will run automatically before each commit. If any checks fail, the commit will be blocked until you fix the issues.
+
+You can also manually run the checks at any time:
+```bash
+pre-commit run --all-files
+```
+
+## Pull Request Process
+
+1. Create a new branch for your feature/fix
+2. Make your changes
+3. Ensure all pre-commit checks pass
+4. Write/update tests as needed
+5. Update documentation
+6. Submit a pull request
+
+## Code Style Guidelines
+
+- Python: Follow PEP 8, use Black for formatting
+- TypeScript/JavaScript: Use Prettier for formatting
+- Rust: Use rustfmt for formatting
+- All code must pass the pre-commit checks
+
+## Testing
+
+- Frontend: `npm test`
+- Backend: `cargo test`
+- AI Service: `poetry run pytest`
+
+## Documentation
+
+- Update README.md if needed
+- Add/update API documentation
+- Include comments for complex logic
+- Update CHANGELOG.md for significant changes
+
+## Questions?
+
+Feel free to open an issue or join our community discussions! 
