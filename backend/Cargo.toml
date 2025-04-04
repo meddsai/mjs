@@ -11,13 +11,14 @@ actix-cors = "0.6"
 actix-rt = "2.9"
 
 # Database
-sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "chrono", "uuid"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "chrono", "uuid", "json"] }
 tokio = { version = "1.32", features = ["full"] }
 
 # Authentication
 jsonwebtoken = "9.1"
 bcrypt = "0.15"
-argon2 = "0.5"
+argon2 = { version = "0.5", features = ["password-hash"] }
+rand = "0.8"
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
@@ -29,6 +30,9 @@ dotenv = "0.15"
 # Logging
 env_logger = "0.10"
 log = "0.4"
+
+# Error handling
+thiserror = "1.0"
 
 # Utilities
 chrono = { version = "0.4", features = ["serde"] }

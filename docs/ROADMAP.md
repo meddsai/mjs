@@ -40,8 +40,8 @@ This roadmap outlines the development strategy for the Modern Journal Systems (M
   - [x] Define module structure
 - [🔄] Database Setup
   - [x] Design schema (based on Supabase reference model)
-  - [ ] Configure PostgreSQL
-  - [ ] Set up migrations
+  - [x] Configure PostgreSQL
+  - [x] Set up migrations
 - [ ] API Implementation
   - [ ] Core endpoints
   - [🔄] Authentication (Rust-based implementation)
@@ -75,6 +75,11 @@ This roadmap outlines the development strategy for the Modern Journal Systems (M
 - 🔄 User management system in planning
 - 🔄 Rust backend authentication in development
 - 🔄 API endpoints in development
+- ✅ Backend services implementation
+  - ✅ Article service with CRUD operations
+  - ✅ Review service with CRUD operations
+  - ✅ User service with role management
+  - 🔄 Authentication service (JWT implementation in progress)
 
 ### Next Steps
 1. Complete Rust backend authentication implementation

@@ -1,31 +1,52 @@
-use crate::database::DbPool;
-use crate::models::{CreateUser, LoginUser};
-use crate::services::auth;
 use actix_web::{web, HttpResponse, Responder};
+use serde::{Deserialize, Serialize};
+use sqlx::PgPool;
 
-pub fn configure(cfg: &mut web::ServiceConfig) {
+use crate::{
+    models::user::{CreateUserInput, UserResponse},
+    services::{auth::AuthService, jwt::JwtService},
+};
+
+#[derive(Debug, Deserialize)]
+pub struct LoginRequest {
+    email: String,
+    password: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RegisterRequest {
+    email: String,
+    password: String,
+    name: String,
+    role: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct AuthResponse {
+    token: String,
+}
+
+async fn login(pool: web::Data<PgPool>, credentials: web::Json<LoginRequest>) -> impl Responder {
+    // TODO: Implement login logic
+    HttpResponse::Ok().json(AuthResponse {
+        token: "dummy_token".to_string(),
+    })
+}
+
+async fn register(
+    pool: web::Data<PgPool>,
+    user_data: web::Json<RegisterRequest>,
+) -> impl Responder {
+    // TODO: Implement registration logic
+    HttpResponse::Created().json(AuthResponse {
+        token: "dummy_token".to_string(),
+    })
+}
+
+pub fn configure_routes(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/auth")
-            .route("/register", web::post().to(register))
             .route("/login", web::post().to(login))
-            .route("/logout", web::post().to(logout)),
+            .route("/register", web::post().to(register)),
     );
-}
-
-async fn register(pool: web::Data<DbPool>, user: web::Json<CreateUser>) -> impl Responder {
-    match auth::register(pool.get_ref(), user.into_inner()).await {
-        Ok(user) => HttpResponse::Created().json(user),
-        Err(e) => HttpResponse::BadRequest().json(e.to_string()),
-    }
-}
-
-async fn login(pool: web::Data<DbPool>, credentials: web::Json<LoginUser>) -> impl Responder {
-    match auth::login(pool.get_ref(), credentials.into_inner()).await {
-        Ok(token) => HttpResponse::Ok().json(token),
-        Err(e) => HttpResponse::Unauthorized().json(e.to_string()),
-    }
-}
-
-async fn logout() -> impl Responder {
-    HttpResponse::Ok().json("Logged out successfully")
 }

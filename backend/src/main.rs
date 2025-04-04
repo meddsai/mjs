@@ -1,6 +1,8 @@
 // backend/src/main.rs
-use actix_web::{web, App, HttpServer};
+use actix_cors::Cors;
+use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenv::dotenv;
+use sqlx::postgres::PgPoolOptions;
 use std::env;
 
 mod config;
@@ -21,25 +23,51 @@ pub async fn health_check() -> impl actix_web::Responder {
 async fn main() -> std::io::Result<()> {
     // Load environment variables
     dotenv().ok();
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
-    // Get configuration
-    let config = config::Config::from_env().expect("Failed to load configuration");
+    // Initialize logger
+    env_logger::init();
 
-    // Initialize database connection pool
-    let pool = database::init_pool(&config.database_url)
+    // Get configuration from environment
+    let host = env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+    let port = env::var("PORT")
+        .unwrap_or_else(|_| "8080".to_string())
+        .parse::<u16>()
+        .expect("PORT must be a number");
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let cors_origins = env::var("CORS_ORIGINS").expect("CORS_ORIGINS must be set");
+
+    // Test database connection
+    println!("Testing database connection...");
+    let pool = PgPoolOptions::new()
+        .max_connections(5)
+        .connect(&database_url)
         .await
-        .expect("Failed to create database pool");
+        .expect("Failed to create pool");
 
-    let host = config.host.clone();
-    let port = config.port;
+    // Test the connection
+    sqlx::query!("SELECT 1 as one")
+        .fetch_one(&pool)
+        .await
+        .expect("Failed to connect to database");
+    println!("Database connection successful!");
+
+    // Create shared application state
+    let app_state = web::Data::new(pool);
 
     // Start HTTP server
     HttpServer::new(move || {
+        // Configure CORS
+        let cors = Cors::default()
+            .allowed_origin(&cors_origins)
+            .allow_any_method()
+            .allow_any_header()
+            .max_age(3600);
+
         App::new()
-            .app_data(web::Data::new(pool.clone()))
-            .app_data(web::Data::new(config.clone()))
-            .configure(routes::configure)
+            .wrap(Logger::default())
+            .wrap(cors)
+            .app_data(app_state.clone())
+            .configure(routes::configure_routes)
     })
     .bind((host, port))?
     .run()

@@ -1,75 +1,68 @@
 # MJS Backend
 
-The backend service for Modern Journal Systems, built with Rust and PostgreSQL.
+This is the backend service for the Modern Journal System (MJS), a double-blind journal workflow application.
 
 ## Prerequisites
 
 - Rust (latest stable version)
-- PostgreSQL
-- sqlx-cli (for database migrations)
+- PostgreSQL (version 12 or higher)
+- SQLx CLI (for database migrations)
 
 ## Setup
 
-1. Install dependencies:
-```bash
-cargo install sqlx-cli
-```
+1. Clone the repository
+2. Copy `.env.example` to `.env` and update the values as needed
+3. Create the database:
+   ```bash
+   createdb mjs_db
+   ```
+4. Install SQLx CLI:
+   ```bash
+   cargo install sqlx-cli
+   ```
+5. Run database migrations:
+   ```bash
+   sqlx migrate run
+   ```
+6. Build and run the application:
+   ```bash
+   cargo run
+   ```
 
-2. Create a PostgreSQL database:
-```bash
-createdb mjs
-```
+## API Endpoints
 
-3. Copy the environment file and update the values:
-```bash
-cp .env.example .env
-```
+### Authentication
+- POST `/api/auth/register` - Register a new user
+- POST `/api/auth/login` - Login user
 
-4. Run database migrations:
-```bash
-sqlx migrate run
-```
-
-5. Start the development server:
-```bash
-cargo run
-```
+### Users
+- GET `/api/users` - Get all users
+- GET `/api/users/{id}` - Get user by ID
+- PUT `/api/users/{id}` - Update user
+- DELETE `/api/users/{id}` - Delete user
 
 ## Development
 
-### Database Migrations
+To run the application in development mode:
 
-Create a new migration:
 ```bash
-sqlx migrate add <migration_name>
+cargo watch -x run
 ```
 
-Run migrations:
-```bash
-sqlx migrate run
-```
+## Testing
 
-### Testing
+To run tests:
 
-Run tests:
 ```bash
 cargo test
 ```
 
-### API Documentation
-
-The API documentation will be available at `/api/v1/docs` when the server is running.
-
 ## Project Structure
 
 - `src/` - Source code
-  - `config.rs` - Configuration management
-  - `database.rs` - Database connection and pool
-  - `models/` - Database models
-  - `routes/` - API routes
+  - `models/` - Database models and types
+  - `routes/` - API route handlers
   - `services/` - Business logic
-  - `utils/` - Utility functions
-
-## License
-
-MIT
+  - `main.rs` - Application entry point
+- `migrations/` - Database migrations
+- `tests/` - Integration and unit tests
