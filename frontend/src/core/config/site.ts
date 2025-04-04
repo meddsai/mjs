@@ -1,7 +1,7 @@
 export const siteConfig = {
     // Basic site information
     name: "MJS Platform",
-    description: "Modern Journal Systems - A customizable academic publishing platform",
+    description: "Modern Journal Systems - Create and manage academic journals",
     url: "https://your-journal-domain.com",
 
     // Branding
@@ -14,16 +14,15 @@ export const siteConfig = {
 
     // Features configuration
     features: {
-        openAccess: true,
-        peerReview: true,
-        manuscriptSubmission: true,
-        authorDashboard: true,
-        reviewerDashboard: true,
-        editorDashboard: true,
+        templates: true,
+        journalCreation: true,
+        customDomain: true,
+        analytics: true,
+        apiAccess: true,
     },
 
-    // Journal settings
-    journal: {
+    // Platform settings
+    platform: {
         defaultLayout: "modern",
         availableLayouts: ["modern", "classic", "minimal"],
         defaultTheme: "light",
@@ -34,21 +33,23 @@ export const siteConfig = {
     navigation: {
         main: [
             { label: "Home", href: "/" },
-            { label: "About", href: "/about" },
-            { label: "Journals", href: "/journals" },
-            { label: "Submit", href: "/submit" },
-            { label: "Contact", href: "/contact" },
+            { label: "Templates", href: "/templates" },
+            { label: "Create Journal", href: "/create-journal" },
+            { label: "Features", href: "/features" },
+            { label: "Pricing", href: "/pricing" },
         ],
         footer: {
-            about: [
-                { label: "About Us", href: "/about" },
-                { label: "Team", href: "/about#team" },
-                { label: "History", href: "/about#history" },
+            platform: [
+                { label: "Templates", href: "/templates" },
+                { label: "Features", href: "/features" },
+                { label: "Pricing", href: "/pricing" },
+                { label: "Create Journal", href: "/create-journal" },
             ],
             resources: [
                 { label: "Documentation", href: "/docs" },
                 { label: "API", href: "/api" },
                 { label: "Support", href: "/support" },
+                { label: "Blog", href: "/blog" },
             ],
             legal: [
                 { label: "Privacy Policy", href: "/privacy" },
