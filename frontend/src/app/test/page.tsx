@@ -118,19 +118,19 @@ const TemplateDemoPage = () => {
 
     return (
         <MainLayout>
-            <div className="container mx-auto p-8 space-y-8">
+        <div className="container mx-auto p-8 space-y-8">
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="text-4xl font-bold">MJS Template Demo</h1>
                         <p className="text-xl text-muted-foreground">
                             Customize your journal platform using the options below
                         </p>
-                    </div>
+                </div>
                     <div className="space-x-4">
                         <Button variant="outline" onClick={handleReset}>Reset</Button>
                         <Button onClick={handleSaveConfig}>Save Configuration</Button>
-                    </div>
                 </div>
+            </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Configuration Panel */}
@@ -391,7 +391,7 @@ const TemplateDemoPage = () => {
                             </div>
                         </CardContent>
                     </Card>
-                </div>
+            </div>
 
                 {/* Action Buttons */}
                 <div className="flex justify-end space-x-4 mt-8">
