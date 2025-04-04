@@ -40,3 +40,6 @@ public/worker-*.js.map
 
 # Build
 .turbo
+
+# Compiler cache
+.swc/
