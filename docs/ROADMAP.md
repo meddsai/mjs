@@ -1,228 +1,91 @@
-# Modern Open Journal Systems (MOJS) Migration Roadmap
+# Modern Journal Systems (MJS) Migration Roadmap
 
 ## Overview
-This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) to the modern MOJS architecture (React/Rust/Python). The migration is planned to take approximately 36 months (3 years), with phases overlapping to maximize efficiency while considering limited resources.
+This roadmap outlines the development strategy for the Modern Journal Systems (MJS), a template-based academic journal publishing platform. The development is planned in phases, with each phase focusing on specific aspects of the system.
 
 ## Timeline Overview
-- **Phase 1 (Months 1-6)**: Infrastructure and Foundation
-- **Phase 2 (Months 6-15)**: Backend Services
-- **Phase 3 (Months 12-24)**: Frontend Migration
+- **Phase 1 (Months 1-6)**: Infrastructure and Foundation ✅
+- **Phase 2 (Months 6-15)**: Backend Services 🔄
+- **Phase 3 (Months 12-24)**: Frontend Migration 🔄
 - **Phase 4 (Months 18-30)**: AI/ML Integration
 - **Phase 5 (Months 27-33)**: Testing and Validation
 - **Phase 6 (Months 30-36)**: Deployment and Rollout
 
-## Phase 1: Infrastructure and Foundation (Months 1-6)
+## Phase 1: Infrastructure and Foundation ✅
 
-### Months 1-2: Development Environment
-- [x] Set up Docker development environment
-  - [x] Configure Docker Compose for local development
-    - [x] Define service dependencies (PostgreSQL, Redis, MinIO)
-    - [x] Set up development, staging, and production configurations
-    - [x] Implement hot-reload for development
-  - [x] Create development environment documentation
-    - [x] Document setup procedures
-    - [x] Create troubleshooting guides
-    - [x] Define development standards
-  - [x] Set up development workflow guidelines
-    - [x] Git workflow (feature branches, PR templates)
-    - [x] Code review process
-    - [x] Documentation requirements
-- [ ] Initialize Kubernetes clusters
-  - [ ] Set up development cluster
-    - [ ] Configure resource limits
-    - [ ] Set up namespaces
-    - [ ] Implement network policies
-  - [ ] Configure staging cluster
-    - [ ] Set up CI/CD pipelines
-    - [ ] Configure monitoring
-    - [ ] Implement backup strategies
-  - [ ] Prepare production cluster templates
-    - [ ] Define scaling policies
-    - [ ] Set up high availability
-    - [ ] Configure disaster recovery
+### Development Environment
+- [x] Set up Next.js development environment
+  - [x] Configure TypeScript
+  - [x] Set up ESLint/Prettier
+  - [x] Implement hot-reload
+- [x] Create development environment documentation
+  - [x] Document setup procedures
+  - [x] Create troubleshooting guides
+  - [x] Define development standards
+- [x] Set up development workflow guidelines
+  - [x] Git workflow (feature branches, PR templates)
+  - [x] Code review process
+  - [x] Documentation requirements
 - [x] Configure CI/CD pipelines
   - [x] Set up GitHub Actions workflows
-    - [x] Define build matrices
-    - [x] Configure caching
-    - [x] Set up artifact storage
   - [x] Configure automated testing
-    - [x] Unit test automation
-    - [x] Integration test automation
-    - [x] Performance test automation
   - [x] Implement deployment pipelines
-    - [x] Blue-green deployment
-    - [x] Canary releases
-    - [x] Rollback procedures
 
-### Progress Notes:
-- ✅ Completed Docker setup with comprehensive documentation
-- ✅ Implemented security scanning workflow
-- ✅ Established development standards and guidelines
-- ✅ Set up automated testing and CI/CD pipelines
-- 🔄 Ongoing improvements to modular architecture
-- 🔄 Documentation improvements in progress
+## Phase 2: Backend Services 🔄
 
-### Months 3-4: Database and Storage
-- [ ] PostgreSQL Setup
-  - [ ] Design database schema
-    - [ ] Define entity relationships
-    - [ ] Plan indexing strategy
-    - [ ] Design partitioning scheme
-  - [ ] Set up development database
-    - [ ] Configure replication
-    - [ ] Set up monitoring
-    - [ ] Implement backup strategy
-  - [ ] Create migration scripts
-    - [ ] Data type mappings
-    - [ ] Schema conversion
-    - [ ] Data validation
-  - [ ] Implement data validation tools
-    - [ ] Data integrity checks
-    - [ ] Consistency validation
-    - [ ] Performance benchmarking
-- [ ] Redis Implementation
-  - [ ] Configure Redis clusters
-    - [ ] Set up replication
-    - [ ] Configure persistence
-    - [ ] Implement failover
-  - [ ] Set up caching strategies
-    - [ ] Define cache invalidation
-    - [ ] Implement cache warming
-    - [ ] Configure TTL policies
-  - [ ] Implement cache invalidation
-    - [ ] Event-based invalidation
-    - [ ] Time-based invalidation
-    - [ ] Manual invalidation
+### Core API Development
+- [x] Rust Backend Setup
+  - [x] Initialize project structure
+  - [x] Configure dependencies
+  - [x] Define module structure
+- [🔄] Database Setup
+  - [x] Design schema (based on Supabase reference model)
+  - [ ] Configure PostgreSQL
+  - [ ] Set up migrations
+- [ ] API Implementation
+  - [ ] Core endpoints
+  - [🔄] Authentication (Rust-based implementation)
+  - [ ] Template management
 
-### Months 5-6: Authentication System
-- [ ] Keycloak Deployment
-  - [ ] Set up Keycloak server
-    - [ ] Configure high availability
-    - [ ] Set up database backend
-    - [ ] Implement monitoring
-  - [ ] Configure OAuth 2.0
-    - [ ] Define scopes
-    - [ ] Set up token management
-    - [ ] Configure refresh tokens
-  - [ ] Implement OpenID Connect
-    - [ ] User info endpoint
-    - [ ] Token validation
-    - [ ] Session management
+## Phase 3: Frontend Migration 🔄
 
-## Phase 2: Backend Services (Months 6-15)
+### Next.js/React Setup
+- [x] Project Initialization
+  - [x] Next.js configuration
+  - [x] TypeScript setup
+  - [x] Build optimization
+- [🔄] Component Library
+  - [x] Base components
+    - [x] Header component
+    - [x] Navigation component
+    - [x] Footer component
+    - [x] MainLayout component
+  - [🔄] Template system architecture
+  - [🔄] Morton-style layout implementation
+- [🔄] Core Features
+  - [x] Layout components
+  - [🔄] Template system
+  - [🔄] Authentication (Rust backend integration)
+  - [ ] User management
 
-### Months 6-8: Core API Development
-- [ ] Rust Backend Setup
-  - [ ] Initialize Rust project structure
-    - [ ] Set up workspace
-    - [ ] Configure dependencies
-    - [ ] Define module structure
-  - [ ] Set up Actix Web framework
-    - [ ] Configure middleware
-    - [ ] Set up error handling
-    - [ ] Implement logging
-  - [ ] Implement basic API endpoints
-    - [ ] Health checks
-    - [ ] Metrics endpoints
-    - [ ] Basic CRUD operations
-- [ ] API Documentation
-  - [ ] Set up OpenAPI/Swagger
-    - [ ] Define API schemas
-    - [ ] Document endpoints
-    - [ ] Add examples
-  - [ ] Create API testing suite
-    - [ ] Unit tests
-    - [ ] Integration tests
-    - [ ] Performance tests
+### Current Progress
+- ✅ Basic layout components implemented
+- ✅ Database schema designed (based on Supabase model)
+- 🔄 Template system in development
+- 🔄 User management system in planning
+- 🔄 Rust backend authentication in development
+- 🔄 API endpoints in development
 
-### Months 9-11: File Storage Migration
-- [ ] MinIO Integration
-  - [ ] Implement file upload/download APIs
-    - [ ] Chunked uploads
-    - [ ] Resume capability
-    - [ ] Progress tracking
-  - [ ] Set up file versioning
-    - [ ] Version control
-    - [ ] Change tracking
-    - [ ] Rollback capability
-  - [ ] Configure backup strategies
-    - [ ] Automated backups
-    - [ ] Disaster recovery
-    - [ ] Data retention
-
-### Months 12-15: Search Implementation
-- [ ] Meilisearch Setup
-  - [ ] Deploy Meilisearch clusters
-    - [ ] Configure replication
-    - [ ] Set up monitoring
-    - [ ] Implement backup
-  - [ ] Configure indexing pipeline
-    - [ ] Define index schemas
-    - [ ] Set up sync jobs
-    - [ ] Configure ranking rules
-  - [ ] Implement search APIs
-    - [ ] Full-text search
-    - [ ] Faceted search
-    - [ ] Geo-search
-
-## Phase 3: Frontend Migration (Months 12-24)
-
-### Months 12-14: React/Next.js Setup
-- [ ] Project Initialization
-  - [ ] Set up Next.js project
-    - [ ] Configure TypeScript
-    - [ ] Set up ESLint/Prettier
-    - [ ] Configure build optimization
-  - [ ] Set up testing framework
-    - [ ] Jest configuration
-    - [ ] React Testing Library
-    - [ ] Cypress for E2E
-- [ ] Component Library
-  - [ ] Create base components
-    - [ ] Design system implementation
-    - [ ] Accessibility compliance
-    - [ ] Responsive design
-  - [ ] Set up storybook
-    - [ ] Component documentation
-    - [ ] Visual testing
-    - [ ] Interaction testing
-
-### Months 15-18: Core Features
-- [ ] Authentication
-  - [ ] Implement login/signup
-    - [ ] OAuth integration
-    - [ ] 2FA support
-    - [ ] Password policies
-  - [ ] Add role-based access
-    - [ ] Permission system
-    - [ ] Role management
-    - [ ] Access control
-
-### Months 19-21: Submission System
-- [ ] Submission Workflow
-  - [ ] Create submission form
-    - [ ] Dynamic form generation
-    - [ ] Validation rules
-    - [ ] File upload integration
-  - [ ] Add metadata management
-    - [ ] Schema validation
-    - [ ] Version control
-    - [ ] Export capabilities
-
-### Months 22-24: Advanced Features
-- [ ] Statistics and Reports
-  - [ ] Create analytics dashboard
-    - [ ] Real-time updates
-    - [ ] Custom reports
-    - [ ] Export functionality
-  - [ ] Search Interface
-    - [ ] Advanced filters
-    - [ ] Saved searches
-    - [ ] Search analytics
+### Next Steps
+1. Complete Rust backend authentication implementation
+2. Implement user management system
+3. Finish template system development
+4. Set up remaining backend services
+5. Continue improving documentation
 
 ## Phase 4: AI/ML Integration (Months 18-30)
 
-### Months 18-21: Python Services
+### Python Services
 - [ ] FastAPI Setup
   - [ ] Initialize FastAPI project
     - [ ] API structure
@@ -233,7 +96,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
     - [ ] Model serving
     - [ ] Monitoring system
 
-### Months 22-25: Peer Review Features
+### Peer Review Features
 - [ ] Matchmaking System
   - [ ] Implement reviewer matching
     - [ ] Algorithm development
@@ -244,7 +107,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
     - [ ] Quality metrics
     - [ ] Feedback analysis
 
-### Months 26-30: Citation System
+### Citation System
 - [ ] Citation Analysis
   - [ ] Implement citation extraction
     - [ ] PDF parsing
@@ -257,7 +120,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
 
 ## Phase 5: Testing and Validation (Months 27-33)
 
-### Months 27-29: Testing Infrastructure
+### Testing Infrastructure
 - [ ] Unit Testing
   - [ ] Set up test suites
     - [ ] Frontend tests
@@ -268,7 +131,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
     - [ ] Performance benchmarks
     - [ ] Security scanning
 
-### Months 30-31: Performance Testing
+### Performance Testing
 - [ ] Load Testing
   - [ ] Create load test scenarios
     - [ ] User simulation
@@ -279,7 +142,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
     - [ ] Vulnerability scanning
     - [ ] Compliance checking
 
-### Months 32-33: Validation
+### Validation
 - [ ] Data Validation
   - [ ] Verify data integrity
     - [ ] Data consistency
@@ -292,7 +155,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
 
 ## Phase 6: Deployment and Rollout (Months 30-36)
 
-### Months 30-32: Staging Deployment
+### Staging Deployment
 - [ ] Environment Setup
   - [ ] Configure staging environment
     - [ ] Infrastructure setup
@@ -303,7 +166,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
     - [ ] Integration testing
     - [ ] Performance monitoring
 
-### Months 33-34: Production Preparation
+### Production Preparation
 - [ ] Production Setup
   - [ ] Configure production environment
     - [ ] High availability
@@ -314,7 +177,7 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
     - [ ] User communication
     - [ ] Support system
 
-### Months 35-36: Production Rollout
+### Production Rollout
 - [ ] Deployment
   - [ ] Execute production deployment
     - [ ] Phased rollout
@@ -443,6 +306,4 @@ This roadmap outlines the migration strategy from the current OJS (PHP/Vue.js) t
   - [ ] Diagnostics
   - [ ] Maintenance
 
----
-
-**Note**: This roadmap is subject to adjustment based on project progress, user feedback, and changing requirements. Regular reviews and updates will be conducted to ensure alignment with project goals. The extended timeline accounts for limited resources and complex technical requirements.
+Note: This roadmap is subject to adjustment based on project progress, user feedback, and changing requirements. Regular reviews and updates will be conducted to ensure alignment with project goals.
