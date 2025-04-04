@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
 
 describe('Tabs', () => {
     it('renders tabs with correct content', () => {

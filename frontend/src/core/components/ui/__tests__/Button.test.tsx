@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Button } from '../Button';
+import { Button } from '../button';
+import Link from 'next/link';
 
 describe('Button', () => {
     it('renders with default variant and size', () => {
@@ -49,8 +50,12 @@ describe('Button', () => {
         expect(screen.getByRole('button')).toHaveClass('custom-class');
     });
 
-    it('renders as a link when href is provided', () => {
-        render(<Button href="/test">Link</Button>);
+    it('renders as a link when using asChild with Link', () => {
+        render(
+            <Button asChild>
+                <Link href="/test">Link</Link>
+            </Button>
+        );
         const link = screen.getByRole('link');
         expect(link).toHaveAttribute('href', '/test');
         expect(link).toHaveClass('bg-primary');
