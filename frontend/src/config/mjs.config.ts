@@ -1,20 +1,20 @@
 import { type JournalConfig } from "./journal.config"
 
-export const mortonConfig: JournalConfig = {
-    name: "Morton Journal",
-    shortName: "MJ",
-    description: "Next-generation scholarly publishing platform",
+export const mjsConfig: JournalConfig = {
+    name: "MJS Journal",
+    shortName: "MJS",
+    description: "Modern academic publishing platform",
     logo: {
-        light: "/images/morton-logo-light.svg",
-        dark: "/images/morton-logo-dark.svg"
+        light: "/images/mjs-logo-light.svg",
+        dark: "/images/mjs-logo-dark.svg"
     },
 
     organization: {
-        name: "Morton Publishing",
-        website: "https://morton-publishing.org"
+        name: "MJS Publishing",
+        website: "https://mjs-publishing.org"
     },
     contact: {
-        email: "contact@morton-publishing.org",
+        email: "contact@mjs-publishing.org",
         address: "123 Publishing Street, Academic City, 12345",
         phone: "+1 234 567 8900"
     },
@@ -200,39 +200,48 @@ export const mortonConfig: JournalConfig = {
         }
     },
 
-    customFields: {
-        submission: [
-            {
-                name: "funding",
-                type: "text",
-                required: false,
-                label: "Funding Information",
-                description: "List any funding sources for this research"
+    template: {
+        workflow: {
+            editorial: {
+                initialScreening: true,
+                editorAssignment: true,
+                copyEditing: true,
+                productionEditing: true
             },
-            {
-                name: "conflict_of_interest",
-                type: "text",
-                required: true,
-                label: "Conflict of Interest",
-                description: "Declare any potential conflicts of interest"
+            automation: {
+                authorReminders: true,
+                reviewerReminders: true,
+                editorReminders: true,
+                plagiarismCheck: true,
+                referenceCheck: true
             }
-        ],
-        review: [
-            {
-                name: "methodology_rating",
-                type: "rating",
-                required: true,
-                label: "Methodology Assessment",
-                description: "Rate the research methodology"
+        },
+        roles: {
+            admin: {
+                name: "Administrator",
+                permissions: ["*"],
+                description: "Full system access"
             },
-            {
-                name: "recommendation",
-                type: "select",
-                required: true,
-                options: ["Accept", "Minor Revision", "Major Revision", "Reject"],
-                label: "Recommendation",
-                description: "Your overall recommendation"
+            editor: {
+                name: "Editor",
+                permissions: [
+                    "manage_submissions",
+                    "assign_reviewers",
+                    "make_decisions",
+                    "manage_issues"
+                ],
+                description: "Manages editorial process"
+            },
+            reviewer: {
+                name: "Reviewer",
+                permissions: ["view_assigned_submissions", "submit_reviews"],
+                description: "Reviews assigned manuscripts"
+            },
+            author: {
+                name: "Author",
+                permissions: ["submit_manuscript", "view_own_submissions"],
+                description: "Can submit and track own manuscripts"
             }
-        ]
+        }
     }
 }
