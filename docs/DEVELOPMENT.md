@@ -1,296 +1,160 @@
 # Development Guide
 
-This guide provides detailed instructions for setting up and contributing to the Modern Open Journal Systems (MOJS) project.
+Welcome to the MJS development guide! This document is designed to help developers of all experience levels get started with the project. Whether you're a frontend specialist, backend developer, or AI enthusiast, we'll guide you through the setup process.
+
+## Time Expectations ⏱️
+
+Before you begin, here's what to expect for the initial setup:
+
+- **First-time setup**: 30-45 minutes
+  - Docker installation: ~10 minutes
+  - Dependencies installation: ~15-20 minutes
+  - Initial build time: ~10-15 minutes
+- **Subsequent builds**: 2-5 minutes
+- **Development hot-reload**: Almost instant
+
+Note: Build times may vary based on your internet connection and machine specifications.
 
 ## Prerequisites
 
-### System Requirements
-- **Operating System**: Linux (Ubuntu 22.04+ recommended), macOS, or Windows with WSL2
-- **CPU**: 4+ cores
-- **RAM**: 16GB+ recommended
-- **Storage**: 50GB+ free space
-- **Network**: Stable internet connection
+Don't worry if you're not familiar with all technologies - each component can be worked on independently!
 
-### Required Software
-- **Docker**: 24.0+ and Docker Compose
-- **Node.js**: 18.0+ (LTS recommended)
-- **Rust**: 1.75+ (stable channel)
-- **Python**: 3.11+
-- **Git**: 2.30+
-- **Make**: 4.0+
-- **PostgreSQL**: 15+
-- **Redis**: 7.0+
-- **MinIO**: Latest stable
-- **Keycloak**: 22.0+
+### Essential Tools (Required for all developers)
+- Git
+- Docker Desktop
+- VS Code (recommended) or any IDE of your choice
 
-## Development Environment Setup
+### Stack-Specific Requirements
+
+#### Frontend Development
+- Node.js 18+ (LTS version recommended)
+- Basic understanding of:
+  - React
+  - TypeScript (but JavaScript knowledge is fine to start)
+  - Tailwind CSS (easy to learn as you go)
+
+#### Backend Development
+- Rust (don't worry if you're new to it!)
+  - We provide step-by-step guidance
+  - Most endpoints are well-documented
+- Basic understanding of:
+  - RESTful APIs
+  - SQL (basic queries)
+
+#### AI Service Development
+- Python 3.12+
+- Basic understanding of:
+  - FastAPI
+  - Machine Learning concepts (but not required for API work)
+
+## Getting Started 🚀
 
 ### 1. Clone the Repository
+
 ```bash
-git clone https://github.com/balinesthesia/modern-ojs.git
-cd modern-ojs
+git clone https://github.com/balinesthesia/mjs.git
+cd mjs
 ```
 
-### 2. Environment Configuration
-```bash
-# Copy environment templates
-cp .env.example .env
-cp .env.example.frontend .env.frontend
-cp .env.example.backend .env.backend
-cp .env.example.ai .env.ai
+### 2. Choose Your Development Path
 
-# Edit environment files with your configuration
-nano .env
-nano .env.frontend
-nano .env.backend
-nano .env.ai
+#### Path A: Full Stack Development
+Run the complete setup:
+```bash
+make setup-all
 ```
 
-### 3. Docker Setup
+#### Path B: Frontend Only
 ```bash
-# Build and start all services
-make docker-build
-make docker-up
-
-# View logs
-make docker-logs
-```
-
-### 4. Frontend Development
-```bash
-# Install dependencies
 cd frontend
 npm install
-
-# Start development server
 npm run dev
-
-# Run tests
-npm test
 ```
 
-### 5. Backend Development
+#### Path C: Backend Only
 ```bash
-# Install dependencies
 cd backend
 cargo build
-
-# Start development server
 cargo run
-
-# Run tests
-cargo test
 ```
 
-### 6. AI/ML Development
+#### Path D: AI Service Only
 ```bash
-# Install Poetry (if not already installed)
-curl -sSL https://install.python-poetry.org | python3 -
-
-# Initialize Poetry project (if not already initialized)
-cd ai
-poetry init
-
-# Install dependencies
+cd ai-service
 poetry install
-
-# Activate virtual environment
-poetry shell
-
-# Start development server
-poetry run uvicorn main:app --reload
-
-# Run tests
-poetry run pytest
-
-# Add new dependencies
-poetry add package-name
-
-# Add development dependencies
-poetry add --group dev package-name
-
-# Export requirements (if needed)
-poetry export -f requirements.txt --output requirements.txt --without-hashes
+poetry run uvicorn src.main:app --reload
 ```
 
-### 7. Pre-commit Hooks Setup
+### 3. Verify Your Setup
+
+Each component has its own verification steps:
+
+- Frontend: Visit http://localhost:5173
+- Backend: Visit http://localhost:8000/health
+- AI Service: Visit http://localhost:8001/docs
+
+## Development Workflow 🔄
+
+### 1. Make Changes
+- Work on your assigned component
+- Use hot-reload for immediate feedback
+- Follow the style guides (automatically enforced)
+
+### 2. Test Your Changes
 ```bash
-# Install pre-commit hooks
-./scripts/setup-hooks.sh
+# Frontend
+npm test
 
-# The script will:
-# 1. Install pre-commit if not present
-# 2. Install Rust toolchain and rustfmt if needed
-# 3. Update Poetry lock file
-# 4. Install Python dependencies
-# 5. Set up pre-commit hooks
-# 6. Run hooks on all files
+# Backend
+cargo test
 
-# Manually run hooks
-pre-commit run --all-files
+# AI Service
+poetry run pytest
 ```
 
-The pre-commit hooks configuration includes:
-- **Python Formatting**:
-  - Black (code formatting)
-  - isort (import sorting)
-- **Rust Formatting**:
-  - rustfmt (code formatting)
-- **File Checks**:
-  - Trailing whitespace
-  - End of file fixer
-  - YAML validation
-  - Large file detection
-  - Line ending consistency
-  - Byte order marker
-  - Merge conflict detection
-  - Private key detection
-- **Pre-push Checks**:
-  - Python tests
-  - Rust build
-  - Docker builds
+### 3. Submit Changes
+```bash
+git add .
+git commit -m "Your descriptive message"
+git push
+```
 
-## Development Workflow
+## Common Tasks
 
-### 1. Branch Strategy
-- `main`: Production-ready code
-- `develop`: Integration branch
-- `feature/*`: New features
-- `bugfix/*`: Bug fixes
-- `release/*`: Release preparation
+### Frontend Development
+- Component development: `frontend/src/components/`
+- Styling: Use Tailwind classes (autocomplete available)
+- State management: React hooks and context
 
-### 2. Code Style
-- **Frontend**: ESLint + Prettier
-  ```bash
-  npm run lint
-  npm run format
-  ```
-- **Backend**: rustfmt
-  ```bash
-  cargo fmt
-  ```
-- **AI/ML**: Black + isort
-  ```bash
-  black .
-  isort .
-  ```
+### Backend Development
+- API endpoints: `backend/src/routes/`
+- Database changes: `backend/src/models/`
+- Configuration: `backend/config/`
 
-### 3. Testing
-- **Frontend**: Jest + React Testing Library
-  ```bash
-  npm test
-  npm run test:coverage
-  ```
-- **Backend**: Rust test framework
-  ```bash
-  cargo test
-  cargo test -- --nocapture
-  ```
-- **AI/ML**: pytest
-  ```bash
-  pytest
-  pytest --cov
-  ```
+### AI Service Development
+- API endpoints: `ai-service/src/routes/`
+- Model integration: `ai-service/src/models/`
+- Training scripts: `ai-service/scripts/`
 
-### 4. Documentation
-- Update relevant documentation
-- Follow JSDoc/rustdoc/Python docstring standards
-- Keep README and API docs current
+## Getting Help 🆘
 
-## Common Development Tasks
+1. Check `docs/TROUBLESHOOTING.md` for common issues
+2. Search existing GitHub issues
+3. Ask in our Discord community
+4. Create a new issue if needed
 
-### Adding a New Feature
-1. Create feature branch
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-2. Implement changes
-3. Write tests
-4. Update documentation
-5. Create pull request
+## Best Practices 🌟
 
-### Fixing a Bug
-1. Create bugfix branch
-   ```bash
-   git checkout -b bugfix/your-bug-fix
-   ```
-2. Fix the issue
-3. Add regression tests
-4. Update documentation
-5. Create pull request
+1. **Start Small**: Begin with small changes to understand the workflow
+2. **Use Feature Branches**: Create a branch for each feature/fix
+3. **Ask Questions**: No question is too basic - we're here to help!
+4. **Read Error Messages**: They often contain helpful information
+5. **Use the Debugger**: Each component has debugging support in VS Code
 
-### Code Review Process
-1. Create pull request
-2. Request reviews from team members
-3. Address feedback
-4. Get approvals
-5. Merge to develop
+## Next Steps 📚
 
-## Troubleshooting
+- Read `CONTRIBUTING.md` for contribution guidelines
+- Check `ROADMAP.md` for future plans
+- Join our Discord community for real-time help
 
-### Common Issues
-1. **Docker Issues**
-   - Clear Docker cache: `docker system prune`
-   - Rebuild containers: `make docker-rebuild`
-
-2. **Database Issues**
-   - Reset database: `make db-reset`
-   - Run migrations: `make db-migrate`
-
-3. **Frontend Issues**
-   - Clear node_modules: `rm -rf node_modules`
-   - Reinstall dependencies: `npm install`
-
-4. **Backend Issues**
-   - Clear target directory: `cargo clean`
-   - Update dependencies: `cargo update`
-
-5. **AI/ML Issues**
-   - Recreate virtual environment
-   - Update dependencies: `pip install -r requirements.txt`
-
-## Performance Optimization
-
-### Frontend
-- Use React.memo for expensive components
-- Implement code splitting
-- Optimize bundle size
-- Use proper caching strategies
-
-### Backend
-- Implement connection pooling
-- Use proper indexing
-- Optimize database queries
-- Implement caching
-
-### AI/ML
-- Optimize model inference
-- Implement batch processing
-- Use proper hardware acceleration
-- Cache model results
-
-## Security Considerations
-
-### Development
-- Never commit secrets
-- Use environment variables
-- Follow security best practices
-- Regular security audits
-
-### Testing
-- Run security scans
-- Test for vulnerabilities
-- Check dependencies
-- Validate inputs
-
-## Contributing
-
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for detailed contribution guidelines.
-
-## Support
-
-For development support:
-- Create an issue
-- Join our Discord
-- Check documentation
-- Contact maintainers
+Remember: Everyone was a beginner once. Take your time to understand the parts you're working with, and don't hesitate to ask for help!

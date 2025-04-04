@@ -1,13 +1,101 @@
-# Modern Journal Systems (MJS)
+# Modern Journal System (MJS) 📚
 
 <!-- Build Status badge to be added once CI is set up -->
 <!-- [![Build Status](https://github.com/balinesthesia/mjs/actions/workflows/main.yml/badge.svg)](https://github.com/balinesthesia/mjs/actions/workflows/main.yml) -->
 
-Welcome to Modern Journal Systems (MJS), an open-source platform for next-generation scholarly publishing!
+Welcome to MJS! We're building a modern, open-source journal system that's both powerful and easy to use. Whether you're a developer, researcher, or journal editor, we've got you covered.
 
-MJS is a fresh take on academic journal management, inspired by [Open Journal Systems (OJS)](https://pkp.sfu.ca/software/ojs/) from the [Public Knowledge Project (PKP)](https://pkp.sfu.ca/). Built from scratch by [Balinesthesia](https://website.anestesiudayana.com/), MJS uses React with TypeScript and Next.js for the frontend, Rust for the backend, and Python for AI-driven features like text analysis, content recommendations, automated metadata extraction, peer review matchmaking, plagiarism detection, and more. Built anew, distinct from OJS's PHP roots, MJS shares its mission but not its codebase, delivering a modern, scalable alternative for 2025 and future publishing needs.
+## 🌟 Key Features
 
-As of April 2025, MJS is in early development. Join us to shape the future of publishing!
+- **Modern UI**: Beautiful, responsive interface built with React and Tailwind
+- **Smart Search**: AI-powered search and recommendations
+- **Fast Backend**: High-performance Rust backend
+- **Easy Setup**: Docker-based deployment for quick starts
+
+## 🚀 Quick Start
+
+Choose your path based on your interests and expertise:
+
+### For Users
+```bash
+# One-command setup with Docker
+docker compose up
+```
+Visit http://localhost:5173 to start using MJS!
+
+### For Developers
+
+Pick the area you want to work on:
+
+#### Frontend Development (React + TypeScript)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+#### Backend Development (Rust)
+```bash
+cd backend
+cargo build
+cargo run
+```
+
+#### AI Service Development (Python + FastAPI)
+```bash
+cd ai-service
+poetry install
+poetry run uvicorn src.main:app --reload
+```
+
+## ⏱️ Time Expectations
+
+- **Quick Start**: 5-10 minutes
+- **First Build**: 30-45 minutes
+- **Development Setup**: 15-20 minutes
+- **Hot Reload**: Almost instant
+
+## 🤝 Contributing
+
+We welcome contributors of all experience levels! Here's how you can help:
+
+1. **Frontend**: React components, UI/UX improvements
+2. **Backend**: API endpoints, database optimizations
+3. **AI**: Search improvements, recommendation system
+4. **Documentation**: Help us make MJS more accessible
+5. **Testing**: Help catch bugs before they reach production
+
+See our [Contributing Guide](docs/CONTRIBUTING.md) for details.
+
+## 📚 Documentation
+
+- [Development Guide](docs/DEVELOPMENT.md): Start here for development setup
+- [User Guide](docs/USER_GUIDE.md): Learn how to use MJS
+- [API Documentation](docs/API.md): REST API reference
+- [Troubleshooting](docs/TROUBLESHOOTING.md): Common issues and solutions
+
+## 🆘 Need Help?
+
+1. Check our [Troubleshooting Guide](docs/TROUBLESHOOTING.md)
+2. Search [existing issues](https://github.com/balinesthesia/mjs/issues)
+3. Join our [Discord community](https://discord.gg/mjs)
+4. Create a new issue
+
+## 🛣️ Roadmap
+
+See our [Roadmap](docs/ROADMAP.md) for planned features and improvements.
+
+## 📜 License
+
+MJS is open source under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+
+Thanks to all our contributors and the open source community!
+
+---
+
+Remember: Every expert was once a beginner. Don't hesitate to ask questions and contribute!
 
 ## Usage
 
