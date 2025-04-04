@@ -10,39 +10,41 @@ export default function Header() {
             <div className="bg-background py-2 border-b">
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center gap-4 text-sm">
+                        <Link href="/browse-templates" className="hover:text-primary">Browse Templates</Link>
+                        <span className="text-muted-foreground">|</span>
+                        <Link href="/documentation" className="hover:text-primary">Documentation</Link>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm">
                         <Link href="/login" className="hover:text-primary">Log in</Link>
                         <span className="text-muted-foreground">|</span>
                         <Link href="/register" className="hover:text-primary">Register</Link>
                     </div>
-                    <Link href="/alerts" className="text-sm hover:text-primary">
-                        Get Issue Alerts
-                    </Link>
                 </div>
             </div>
 
             {/* Main Header */}
-            <header className="bg-[#0A1A2F] py-6">
+            <header className="bg-primary py-4 border-b">
                 <div className="container mx-auto px-4">
-                    <div className="flex justify-between items-center">
+                    <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="flex items-center">
                             <Link href="/" className="flex items-start">
-                                <h1 className="text-3xl font-bold text-white">MJS</h1>
-                                <div className="ml-4 pl-4 border-l border-white/20">
-                                    <p className="text-sm text-white/90">
+                                <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground">MJS</h1>
+                                <div className="ml-4 border-l border-primary-foreground/30 pl-4">
+                                    <p className="text-sm md:text-base text-primary-foreground">
                                         Modern Journal Systems<br />
-                                        Template-Based Academic Publishing
+                                        Create your academic journal
                                     </p>
                                 </div>
                             </Link>
                         </div>
-                        <div className="w-72">
-                            <div className="relative">
+                        <div className="mt-3 md:mt-0">
+                            <div className="relative w-full max-w-xs">
                                 <input
                                     type="text"
-                                    placeholder="Search articles..."
-                                    className="w-full py-1.5 px-4 pr-10 rounded bg-white/10 border border-white/20 text-white placeholder:text-white/50 text-sm focus:outline-none focus:ring-2 focus:ring-white/30"
+                                    placeholder="Search templates..."
+                                    className="w-full py-1.5 px-3 pr-8 rounded text-sm border border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary-foreground/30"
                                 />
-                                <SearchIcon className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/50" />
+                                <SearchIcon className="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-primary-foreground/60" />
                             </div>
                         </div>
                     </div>
