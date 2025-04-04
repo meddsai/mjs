@@ -4,6 +4,7 @@ use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenv::dotenv;
 use sqlx::postgres::PgPoolOptions;
 use std::env;
+use std::time::Duration;
 
 mod config;
 mod database;
@@ -25,7 +26,7 @@ async fn main() -> std::io::Result<()> {
     dotenv().ok();
 
     // Initialize logger
-    env_logger::init();
+    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
 
     // Get configuration from environment
     let host = env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
@@ -40,6 +41,7 @@ async fn main() -> std::io::Result<()> {
     println!("Testing database connection...");
     let pool = PgPoolOptions::new()
         .max_connections(5)
+        .acquire_timeout(Duration::from_secs(3))
         .connect(&database_url)
         .await
         .expect("Failed to create pool");
@@ -67,6 +69,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .wrap(cors)
             .app_data(app_state.clone())
+            .service(routes::health::health_check)
             .configure(routes::configure_routes)
     })
     .bind((host, port))?

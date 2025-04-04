@@ -1,43 +1,50 @@
 use actix_web::{web, HttpResponse, Responder};
-use serde::{Deserialize, Serialize};
-use sqlx::PgPool;
+use uuid::Uuid;
 
-#[derive(Debug, Serialize)]
-pub struct UserResponse {
-    id: i32,
-    email: String,
-    name: String,
-    role: String,
+use crate::{
+    models::user::{UpdateUserRequest, UserRole},
+    services::user::UserService,
+};
+
+pub async fn get_users(user_service: web::Data<UserService>) -> impl Responder {
+    match user_service.get_users().await {
+        Ok(users) => HttpResponse::Ok().json(users),
+        Err(_) => HttpResponse::InternalServerError().finish(),
+    }
 }
 
-#[derive(Debug, Deserialize)]
-pub struct UpdateUserRequest {
-    name: Option<String>,
-    email: Option<String>,
+pub async fn get_user(
+    user_service: web::Data<UserService>,
+    user_id: web::Path<Uuid>,
+) -> impl Responder {
+    match user_service.get_user(user_id.into_inner()).await {
+        Ok(user) => HttpResponse::Ok().json(user),
+        Err(_) => HttpResponse::NotFound().finish(),
+    }
 }
 
-async fn get_users(pool: web::Data<PgPool>) -> impl Responder {
-    // TODO: Implement get users logic
-    HttpResponse::Ok().json(Vec::<UserResponse>::new())
-}
-
-async fn get_user(pool: web::Data<PgPool>, user_id: web::Path<i32>) -> impl Responder {
-    // TODO: Implement get user logic
-    HttpResponse::NotFound().finish()
-}
-
-async fn update_user(
-    pool: web::Data<PgPool>,
-    user_id: web::Path<i32>,
+pub async fn update_user(
+    user_service: web::Data<UserService>,
+    user_id: web::Path<Uuid>,
     user_data: web::Json<UpdateUserRequest>,
 ) -> impl Responder {
-    // TODO: Implement update user logic
-    HttpResponse::NotFound().finish()
+    match user_service
+        .update_user(user_id.into_inner(), user_data.into_inner())
+        .await
+    {
+        Ok(user) => HttpResponse::Ok().json(user),
+        Err(_) => HttpResponse::InternalServerError().finish(),
+    }
 }
 
-async fn delete_user(pool: web::Data<PgPool>, user_id: web::Path<i32>) -> impl Responder {
-    // TODO: Implement delete user logic
-    HttpResponse::NotFound().finish()
+pub async fn delete_user(
+    user_service: web::Data<UserService>,
+    user_id: web::Path<Uuid>,
+) -> impl Responder {
+    match user_service.delete_user(user_id.into_inner()).await {
+        Ok(_) => HttpResponse::NoContent().finish(),
+        Err(_) => HttpResponse::InternalServerError().finish(),
+    }
 }
 
 pub fn configure_routes(cfg: &mut web::ServiceConfig) {

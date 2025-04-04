@@ -1,6 +1,8 @@
 use sqlx::PgPool;
+use uuid::Uuid;
 
-use crate::models::User;
+use crate::models::user::{UpdateUserRequest, User, UserRole};
+use crate::utils::error::Error;
 
 pub struct UserService {
     pool: PgPool,
@@ -11,64 +13,81 @@ impl UserService {
         Self { pool }
     }
 
-    pub async fn get_users(&self) -> Result<Vec<User>, sqlx::Error> {
-        sqlx::query_as!(
+    pub async fn get_users(&self) -> Result<Vec<User>, Error> {
+        let users = sqlx::query_as!(
             User,
             r#"
-            SELECT * FROM users
+            SELECT id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
+            FROM users
             ORDER BY created_at DESC
             "#
         )
         .fetch_all(&self.pool)
-        .await
+        .await?;
+
+        Ok(users)
     }
 
-    pub async fn get_user(&self, id: i32) -> Result<User, sqlx::Error> {
-        sqlx::query_as!(
+    pub async fn get_user(&self, id: Uuid) -> Result<User, Error> {
+        let user = sqlx::query_as!(
             User,
             r#"
-            SELECT * FROM users WHERE id = $1
+            SELECT id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
+            FROM users WHERE id = $1
             "#,
             id
         )
-        .fetch_one(&self.pool)
-        .await
+        .fetch_optional(&self.pool)
+        .await?
+        .ok_or(Error::NotFound("User not found".to_string()))?;
+
+        Ok(user)
     }
 
     pub async fn update_user(
         &self,
-        id: i32,
-        name: Option<String>,
-        email: Option<String>,
-    ) -> Result<User, sqlx::Error> {
-        sqlx::query_as!(
+        id: Uuid,
+        user_data: UpdateUserRequest,
+    ) -> Result<User, Error> {
+        let current_user = self.get_user(id).await?;
+        
+        let user = sqlx::query_as!(
             User,
             r#"
             UPDATE users
             SET
-                name = COALESCE($1, name),
-                email = COALESCE($2, email),
-                updated_at = NOW()
-            WHERE id = $3
-            RETURNING *
+                email = $1,
+                name = $2,
+                role = $3,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = $4
+            RETURNING id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
             "#,
-            name,
-            email,
+            user_data.email.unwrap_or(current_user.email),
+            user_data.name.unwrap_or(current_user.name),
+            user_data.role.unwrap_or(current_user.role) as UserRole,
             id
         )
         .fetch_one(&self.pool)
-        .await
+        .await?;
+
+        Ok(user)
     }
 
-    pub async fn delete_user(&self, id: i32) -> Result<(), sqlx::Error> {
-        sqlx::query!(
+    pub async fn delete_user(&self, id: Uuid) -> Result<(), Error> {
+        let result = sqlx::query!(
             r#"
-            DELETE FROM users WHERE id = $1
+            DELETE FROM users
+            WHERE id = $1
             "#,
             id
         )
         .execute(&self.pool)
         .await?;
+
+        if result.rows_affected() == 0 {
+            return Err(Error::NotFound("User not found".to_string()));
+        }
 
         Ok(())
     }

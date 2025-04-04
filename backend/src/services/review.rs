@@ -1,6 +1,8 @@
 use sqlx::PgPool;
+use uuid::Uuid;
 
-use crate::models::{CreateReviewRequest, Review, ReviewStatus, UpdateReviewRequest};
+use crate::models::review::{Review, ReviewStatus, CreateReviewRequest, UpdateReviewRequest};
+use crate::utils::error::Error;
 
 pub struct ReviewService {
     pool: PgPool,
@@ -13,115 +15,133 @@ impl ReviewService {
 
     pub async fn create_review(
         &self,
-        article_id: i32,
-        reviewer_id: i32,
         review_data: CreateReviewRequest,
-    ) -> Result<Review, sqlx::Error> {
-        sqlx::query_as!(
+    ) -> Result<Review, Error> {
+        let review = sqlx::query_as!(
             Review,
             r#"
-            INSERT INTO reviews (article_id, reviewer_id, content, rating, status)
+            INSERT INTO reviews (article_id, reviewer_id, status, comments, rating)
             VALUES ($1, $2, $3, $4, $5)
-            RETURNING *
+            RETURNING id, article_id, reviewer_id, status as "status: ReviewStatus", comments, rating, created_at as "created_at!", updated_at as "updated_at!"
             "#,
-            article_id,
-            reviewer_id,
-            review_data.content,
+            review_data.article_id,
+            review_data.reviewer_id,
+            ReviewStatus::PENDING as ReviewStatus,
+            review_data.comments,
             review_data.rating,
-            ReviewStatus::Completed as ReviewStatus,
         )
         .fetch_one(&self.pool)
-        .await
+        .await?;
+
+        Ok(review)
     }
 
-    pub async fn get_reviews(&self) -> Result<Vec<Review>, sqlx::Error> {
-        sqlx::query_as!(
+    pub async fn get_all_reviews(&self) -> Result<Vec<Review>, Error> {
+        let reviews = sqlx::query_as!(
             Review,
             r#"
-            SELECT * FROM reviews
-            ORDER BY created_at DESC
+            SELECT id, article_id, reviewer_id, status as "status: ReviewStatus", comments, rating, created_at as "created_at!", updated_at as "updated_at!"
+            FROM reviews
             "#
         )
         .fetch_all(&self.pool)
-        .await
+        .await?;
+
+        Ok(reviews)
     }
 
-    pub async fn get_review(&self, id: i32) -> Result<Review, sqlx::Error> {
-        sqlx::query_as!(
+    pub async fn get_review_by_id(&self, id: Uuid) -> Result<Review, Error> {
+        let review = sqlx::query_as!(
             Review,
             r#"
-            SELECT * FROM reviews WHERE id = $1
+            SELECT id, article_id, reviewer_id, status as "status: ReviewStatus", comments, rating, created_at as "created_at!", updated_at as "updated_at!"
+            FROM reviews
+            WHERE id = $1
             "#,
             id
         )
-        .fetch_one(&self.pool)
-        .await
+        .fetch_optional(&self.pool)
+        .await?
+        .ok_or(Error::NotFound("Review not found".to_string()))?;
+
+        Ok(review)
     }
 
-    pub async fn get_article_reviews(&self, article_id: i32) -> Result<Vec<Review>, sqlx::Error> {
-        sqlx::query_as!(
+    pub async fn get_reviews_by_article(&self, article_id: Uuid) -> Result<Vec<Review>, Error> {
+        let reviews = sqlx::query_as!(
             Review,
             r#"
-            SELECT * FROM reviews WHERE article_id = $1
-            ORDER BY created_at DESC
+            SELECT id, article_id, reviewer_id, status as "status: ReviewStatus", comments, rating, created_at as "created_at!", updated_at as "updated_at!"
+            FROM reviews
+            WHERE article_id = $1
             "#,
             article_id
         )
         .fetch_all(&self.pool)
-        .await
+        .await?;
+
+        Ok(reviews)
     }
 
-    pub async fn get_reviewer_reviews(&self, reviewer_id: i32) -> Result<Vec<Review>, sqlx::Error> {
-        sqlx::query_as!(
+    pub async fn get_reviews_by_reviewer(&self, reviewer_id: Uuid) -> Result<Vec<Review>, Error> {
+        let reviews = sqlx::query_as!(
             Review,
             r#"
-            SELECT * FROM reviews WHERE reviewer_id = $1
-            ORDER BY created_at DESC
+            SELECT id, article_id, reviewer_id, status as "status: ReviewStatus", comments, rating, created_at as "created_at!", updated_at as "updated_at!"
+            FROM reviews
+            WHERE reviewer_id = $1
             "#,
             reviewer_id
         )
         .fetch_all(&self.pool)
-        .await
+        .await?;
+
+        Ok(reviews)
     }
 
     pub async fn update_review(
         &self,
-        id: i32,
-        reviewer_id: i32,
+        id: Uuid,
         review_data: UpdateReviewRequest,
-    ) -> Result<Review, sqlx::Error> {
-        sqlx::query_as!(
+    ) -> Result<Review, Error> {
+        let current_review = self.get_review_by_id(id).await?;
+
+        let review = sqlx::query_as!(
             Review,
             r#"
             UPDATE reviews
-            SET
-                content = COALESCE($1, content),
-                rating = COALESCE($2, rating),
-                status = COALESCE($3, status),
-                updated_at = NOW()
-            WHERE id = $4 AND reviewer_id = $5
-            RETURNING *
+            SET status = $1,
+                comments = $2,
+                rating = $3,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = $4
+            RETURNING id, article_id, reviewer_id, status as "status: ReviewStatus", comments, rating, created_at as "created_at!", updated_at as "updated_at!"
             "#,
-            review_data.content,
-            review_data.rating,
-            review_data.status.map(|s| s as ReviewStatus),
-            id,
-            reviewer_id
+            review_data.status.unwrap_or(current_review.status) as ReviewStatus,
+            review_data.comments.unwrap_or(current_review.comments.unwrap_or_default()),
+            review_data.rating.unwrap_or(current_review.rating.unwrap_or_default()),
+            id
         )
         .fetch_one(&self.pool)
-        .await
+        .await?;
+
+        Ok(review)
     }
 
-    pub async fn delete_review(&self, id: i32, reviewer_id: i32) -> Result<(), sqlx::Error> {
-        sqlx::query!(
+    pub async fn delete_review(&self, id: Uuid) -> Result<(), Error> {
+        let result = sqlx::query!(
             r#"
-            DELETE FROM reviews WHERE id = $1 AND reviewer_id = $2
+            DELETE FROM reviews
+            WHERE id = $1
             "#,
-            id,
-            reviewer_id
+            id
         )
         .execute(&self.pool)
         .await?;
+
+        if result.rows_affected() == 0 {
+            return Err(Error::NotFound("Review not found".to_string()));
+        }
 
         Ok(())
     }

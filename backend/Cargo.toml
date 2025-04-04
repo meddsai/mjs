@@ -11,7 +11,7 @@ actix-cors = "0.6"
 actix-rt = "2.9"
 
 # Database
-sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "chrono", "uuid", "json"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "chrono", "uuid", "json", "macros"] }
 tokio = { version = "1.32", features = ["full"] }
 
 # Authentication

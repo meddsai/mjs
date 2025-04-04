@@ -1,0 +1,35 @@
+{
+    "db": "PostgreSQL",
+    "version": "16.8",
+    "describe": {
+        "article_status": {
+            "type": "enum",
+            "variants": [
+                "DRAFT",
+                "SUBMITTED",
+                "UNDER_REVIEW",
+                "ACCEPTED",
+                "REJECTED",
+                "PUBLISHED"
+            ]
+        },
+        "review_status": {
+            "type": "enum",
+            "variants": [
+                "PENDING",
+                "IN_PROGRESS",
+                "COMPLETED",
+                "REJECTED"
+            ]
+        },
+        "user_role": {
+            "type": "enum",
+            "variants": [
+                "ADMIN",
+                "EDITOR",
+                "REVIEWER",
+                "AUTHOR"
+            ]
+        }
+    }
+}

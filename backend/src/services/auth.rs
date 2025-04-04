@@ -1,46 +1,13 @@
-use crate::database::DbPool;
-use crate::models::user::{CreateUserInput, User, UserRole};
-use crate::models::{CreateUser, LoginUser};
+// backend/src/services/auth.rs
+
+use crate::models::user::{CreateUserRequest, UpdateUserRequest, User, UserRole};
+use crate::utils::error::Error;
 use argon2::{
     password_hash::{rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString},
     Argon2,
 };
-use chrono::Utc;
-use rand::thread_rng;
-use sqlx::Error;
 use sqlx::PgPool;
-use thiserror::Error;
 use uuid::Uuid;
-use validator::Validate;
-
-pub async fn register(_pool: &DbPool, _user: CreateUser) -> Result<String, Error> {
-    // TODO: Implement user registration
-    Ok("User registered successfully".to_string())
-}
-
-pub async fn login(_pool: &DbPool, _credentials: LoginUser) -> Result<String, Error> {
-    // TODO: Implement user login
-    Ok("Login successful".to_string())
-}
-
-pub async fn logout(_user_id: Uuid) -> Result<(), Error> {
-    // TODO: Implement user logout
-    Ok(())
-}
-
-#[derive(Debug, Error)]
-pub enum AuthError {
-    #[error("Database error: {0}")]
-    Database(#[from] sqlx::Error),
-    #[error("Validation error: {0}")]
-    Validation(#[from] validator::ValidationErrors),
-    #[error("Password hashing error: {0}")]
-    PasswordHash(#[from] argon2::password_hash::Error),
-    #[error("Email already exists")]
-    EmailExists,
-    #[error("Invalid credentials")]
-    InvalidCredentials,
-}
 
 pub struct AuthService {
     pool: PgPool,
@@ -51,66 +18,183 @@ impl AuthService {
         Self { pool }
     }
 
-    pub async fn register_user(
-        &self,
-        email: String,
-        password: String,
-        name: String,
-        role: UserRole,
-    ) -> Result<User, sqlx::Error> {
-        let password_hash = self.hash_password(&password);
+    pub async fn register(&self, user_data: CreateUserRequest) -> Result<User, Error> {
+        let salt = SaltString::generate(&mut OsRng);
+        let argon2 = Argon2::default();
+        let password_hash = argon2
+            .hash_password(user_data.password.as_bytes(), &salt)?
+            .to_string();
 
-        sqlx::query_as!(
+        let user = sqlx::query_as!(
             User,
             r#"
             INSERT INTO users (email, password_hash, name, role)
             VALUES ($1, $2, $3, $4)
-            RETURNING *
+            RETURNING id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
             "#,
-            email,
+            user_data.email,
             password_hash,
-            name,
-            role as UserRole,
-        )
-        .fetch_one(&self.pool)
-        .await
-    }
-
-    pub async fn verify_credentials(
-        &self,
-        email: &str,
-        password: &str,
-    ) -> Result<User, sqlx::Error> {
-        let user = sqlx::query_as!(
-            User,
-            r#"
-            SELECT * FROM users WHERE email = $1
-            "#,
-            email
+            user_data.name,
+            UserRole::AUTHOR as UserRole,
         )
         .fetch_one(&self.pool)
         .await?;
 
-        if self.verify_password(password, &user.password_hash) {
-            Ok(user)
-        } else {
-            Err(sqlx::Error::RowNotFound)
-        }
+        Ok(user)
     }
 
-    fn hash_password(&self, password: &str) -> String {
-        let salt = SaltString::generate(&mut OsRng);
-        let argon2 = Argon2::default();
-        argon2
-            .hash_password(password.as_bytes(), &salt)
-            .unwrap()
-            .to_string()
+    pub async fn get_user_by_id(&self, id: Uuid) -> Result<User, Error> {
+        let user = sqlx::query_as!(
+            User,
+            r#"
+            SELECT id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
+            FROM users
+            WHERE id = $1
+            "#,
+            id
+        )
+        .fetch_optional(&self.pool)
+        .await?
+        .ok_or(Error::NotFound("User not found".to_string()))?;
+
+        Ok(user)
     }
 
-    fn verify_password(&self, password: &str, hash: &str) -> bool {
-        let parsed_hash = PasswordHash::new(hash).unwrap();
-        Argon2::default()
+    pub async fn login(&self, email: String, password: String) -> Result<User, Error> {
+        let user = sqlx::query_as!(
+            User,
+            r#"
+            SELECT id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
+            FROM users
+            WHERE email = $1
+            "#,
+            email
+        )
+        .fetch_optional(&self.pool)
+        .await?
+        .ok_or(Error::NotFound("User not found".to_string()))?;
+
+        let parsed_hash = PasswordHash::new(&user.password_hash)?;
+        if !Argon2::default()
             .verify_password(password.as_bytes(), &parsed_hash)
             .is_ok()
+        {
+            return Err(Error::Unauthorized("Invalid password".to_string()));
+        }
+
+        Ok(user)
+    }
+
+    pub async fn update_user(
+        &self,
+        id: Uuid,
+        user_data: UpdateUserRequest,
+    ) -> Result<User, Error> {
+        // First get the current user data
+        let current_user = self.get_user_by_id(id).await?;
+
+        // Use separate queries depending on whether role is being updated
+        let user = match user_data.role {
+            Some(role) => {
+                sqlx::query_as!(
+                    User,
+                    r#"
+                    UPDATE users
+                    SET
+                        email = COALESCE($1, email),
+                        name = COALESCE($2, name),
+                        role = $3,
+                        updated_at = CURRENT_TIMESTAMP
+                    WHERE id = $4
+                    RETURNING id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
+                    "#,
+                    user_data.email,
+                    user_data.name,
+                    role as UserRole,
+                    id
+                )
+                .fetch_one(&self.pool)
+                .await?
+            },
+            None => {
+                sqlx::query_as!(
+                    User,
+                    r#"
+                    UPDATE users
+                    SET
+                        email = COALESCE($1, email),
+                        name = COALESCE($2, name),
+                        updated_at = CURRENT_TIMESTAMP
+                    WHERE id = $3
+                    RETURNING id, email, password_hash, name, role as "role: UserRole", created_at as "created_at!", updated_at as "updated_at!"
+                    "#,
+                    user_data.email,
+                    user_data.name,
+                    id
+                )
+                .fetch_one(&self.pool)
+                .await?
+            }
+        };
+
+        Ok(user)
+    }
+
+    pub async fn delete_user(&self, id: Uuid) -> Result<(), Error> {
+        sqlx::query!(
+            r#"
+            DELETE FROM users
+            WHERE id = $1
+            "#,
+            id
+        )
+        .execute(&self.pool)
+        .await?;
+
+        Ok(())
+    }
+}
+
+pub async fn logout(_user_id: Uuid) -> Result<(), Error> {
+    // TODO: Implement user logout (e.g., invalidate JWT token)
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use sqlx::postgres::PgPoolOptions;
+
+    async fn create_test_pool() -> PgPool {
+        let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+        PgPoolOptions::new()
+            .max_connections(5)
+            .connect(&database_url)
+            .await
+            .expect("Failed to create pool")
+    }
+
+    #[tokio::test]
+    async fn test_register_and_login() {
+        let pool = create_test_pool().await;
+        let auth_service = AuthService::new(pool);
+
+        // Test registration
+        let user_data = CreateUserRequest {
+            email: "test@example.com".to_string(),
+            password: "password123".to_string(),
+            name: "Test User".to_string(),
+        };
+
+        let user = auth_service.register(user_data).await.unwrap();
+        assert_eq!(user.email, "test@example.com");
+        assert_eq!(user.name, "Test User");
+
+        // Test login
+        let logged_in_user = auth_service
+            .login("test@example.com".to_string(), "password123".to_string())
+            .await
+            .unwrap();
+        assert_eq!(logged_in_user.id, user.id);
     }
 }

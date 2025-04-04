@@ -1,46 +1,47 @@
 use actix_web::{web, HttpResponse, Responder};
-use serde::{Deserialize, Serialize};
-use sqlx::PgPool;
+use serde::Serialize;
 
 use crate::{
-    models::user::{CreateUserInput, UserResponse},
-    services::{auth::AuthService, jwt::JwtService},
+    models::{
+        auth::LoginRequest,
+        user::{CreateUserRequest, UserResponse},
+    },
+    services::auth::AuthService,
 };
-
-#[derive(Debug, Deserialize)]
-pub struct LoginRequest {
-    email: String,
-    password: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct RegisterRequest {
-    email: String,
-    password: String,
-    name: String,
-    role: String,
-}
 
 #[derive(Debug, Serialize)]
 pub struct AuthResponse {
-    token: String,
+    pub user: UserResponse,
+    pub token: String,
 }
 
-async fn login(pool: web::Data<PgPool>, credentials: web::Json<LoginRequest>) -> impl Responder {
-    // TODO: Implement login logic
-    HttpResponse::Ok().json(AuthResponse {
-        token: "dummy_token".to_string(),
-    })
-}
-
-async fn register(
-    pool: web::Data<PgPool>,
-    user_data: web::Json<RegisterRequest>,
+pub async fn login(
+    auth_service: web::Data<AuthService>,
+    credentials: web::Json<LoginRequest>,
 ) -> impl Responder {
-    // TODO: Implement registration logic
-    HttpResponse::Created().json(AuthResponse {
-        token: "dummy_token".to_string(),
-    })
+    match auth_service
+        .login(credentials.email.clone(), credentials.password.clone())
+        .await
+    {
+        Ok(user) => HttpResponse::Ok().json(AuthResponse {
+            user: user.into_response(),
+            token: "dummy_token".to_string(),
+        }),
+        Err(e) => HttpResponse::Unauthorized().json(e.to_string()),
+    }
+}
+
+pub async fn register(
+    auth_service: web::Data<AuthService>,
+    user_data: web::Json<CreateUserRequest>,
+) -> impl Responder {
+    match auth_service.register(user_data.into_inner()).await {
+        Ok(user) => HttpResponse::Created().json(AuthResponse {
+            user: user.into_response(),
+            token: "dummy_token".to_string(),
+        }),
+        Err(e) => HttpResponse::BadRequest().json(e.to_string()),
+    }
 }
 
 pub fn configure_routes(cfg: &mut web::ServiceConfig) {

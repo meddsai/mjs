@@ -1,70 +1,77 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use sqlx::FromRow;
+use sqlx::Type;
 use uuid::Uuid;
 use validator::Validate;
+use std::fmt;
 
-#[derive(Debug, Serialize, Deserialize, sqlx::Type)]
-#[sqlx(type_name = "user_role")]
-#[sqlx(rename_all = "lowercase")]
+#[derive(Debug, Clone, Serialize, Deserialize, sqlx::Type)]
+#[sqlx(type_name = "user_role", rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum UserRole {
-    Admin,
-    Editor,
-    Author,
-    Reviewer,
-    Reader,
+    ADMIN,
+    EDITOR,
+    REVIEWER,
+    AUTHOR,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
+impl Default for UserRole {
+    fn default() -> Self {
+        UserRole::AUTHOR
+    }
+}
+
+impl fmt::Display for UserRole {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            UserRole::ADMIN => write!(f, "ADMIN"),
+            UserRole::EDITOR => write!(f, "EDITOR"),
+            UserRole::REVIEWER => write!(f, "REVIEWER"),
+            UserRole::AUTHOR => write!(f, "AUTHOR"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
     pub id: Uuid,
     pub email: String,
+    #[serde(skip_serializing)]
     pub password_hash: String,
-    pub first_name: String,
-    pub last_name: String,
+    pub name: String,
     pub role: UserRole,
-    pub institution: String,
-    pub department: Option<String>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Validate)]
-pub struct CreateUserInput {
+#[derive(Debug, Deserialize, Validate)]
+pub struct CreateUserRequest {
     #[validate(email)]
     pub email: String,
     #[validate(length(min = 8))]
     pub password: String,
     #[validate(length(min = 1))]
-    pub first_name: String,
-    #[validate(length(min = 1))]
-    pub last_name: String,
-    #[validate(length(min = 1))]
-    pub institution: String,
-    pub department: Option<String>,
+    pub name: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Validate)]
-pub struct UpdateProfileInput {
+#[derive(Debug, Deserialize, Validate)]
+pub struct UpdateUserRequest {
+    #[validate(email)]
+    pub email: Option<String>,
+    #[validate(length(min = 8))]
+    pub password: Option<String>,
     #[validate(length(min = 1))]
-    pub first_name: Option<String>,
-    #[validate(length(min = 1))]
-    pub last_name: Option<String>,
-    #[validate(length(min = 1))]
-    pub institution: Option<String>,
-    pub department: Option<String>,
+    pub name: Option<String>,
+    pub role: Option<UserRole>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Serialize)]
 pub struct UserResponse {
     pub id: Uuid,
     pub email: String,
-    pub first_name: String,
-    pub last_name: String,
+    pub name: String,
     pub role: UserRole,
-    pub institution: String,
-    pub department: Option<String>,
     pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
 }
 
 impl From<User> for UserResponse {
@@ -72,12 +79,10 @@ impl From<User> for UserResponse {
         Self {
             id: user.id,
             email: user.email,
-            first_name: user.first_name,
-            last_name: user.last_name,
+            name: user.name,
             role: user.role,
-            institution: user.institution,
-            department: user.department,
             created_at: user.created_at,
+            updated_at: user.updated_at,
         }
     }
 }
@@ -87,12 +92,10 @@ impl User {
         UserResponse {
             id: self.id,
             email: self.email,
-            first_name: self.first_name,
-            last_name: self.last_name,
+            name: self.name,
             role: self.role,
-            institution: self.institution,
-            department: self.department,
             created_at: self.created_at,
+            updated_at: self.updated_at,
         }
     }
 }

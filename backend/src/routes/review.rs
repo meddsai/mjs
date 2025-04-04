@@ -1,9 +1,10 @@
 use actix_web::{web, HttpResponse, Responder};
 use sqlx::PgPool;
+use uuid::Uuid;
 
 use crate::{
-    models::{CreateReviewRequest, UpdateReviewRequest},
-    services::ReviewService,
+    models::review::{CreateReviewRequest, ReviewResponse, UpdateReviewRequest},
+    services::review::ReviewService,
 };
 
 async fn create_review(
@@ -11,63 +12,59 @@ async fn create_review(
     review_data: web::Json<CreateReviewRequest>,
 ) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    // TODO: Get reviewer_id from authenticated user
-    let reviewer_id = 1; // Temporary hardcoded value
-    match review_service
-        .create_review(review_data.article_id, reviewer_id, review_data.into_inner())
-        .await
-    {
-        Ok(review) => HttpResponse::Created().json(review.into_response()),
-        Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
+    match review_service.create_review(review_data.into_inner()).await {
+        Ok(review) => HttpResponse::Created().json(ReviewResponse::from(review)),
+        Err(e) => HttpResponse::BadRequest().json(e.to_string()),
     }
 }
 
 async fn get_reviews(pool: web::Data<PgPool>) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    match review_service.get_reviews().await {
+    match review_service.get_all_reviews().await {
         Ok(reviews) => HttpResponse::Ok().json(
             reviews
                 .into_iter()
-                .map(|review| review.into_response())
+                .map(ReviewResponse::from)
                 .collect::<Vec<_>>(),
         ),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
     }
 }
 
-async fn get_review(pool: web::Data<PgPool>, review_id: web::Path<i32>) -> impl Responder {
+async fn get_review(pool: web::Data<PgPool>, review_id: web::Path<Uuid>) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    match review_service.get_review(review_id.into_inner()).await {
-        Ok(review) => HttpResponse::Ok().json(review.into_response()),
+    match review_service.get_review_by_id(review_id.into_inner()).await {
+        Ok(review) => HttpResponse::Ok().json(ReviewResponse::from(review)),
         Err(e) => HttpResponse::NotFound().json(e.to_string()),
     }
 }
 
 async fn get_article_reviews(
     pool: web::Data<PgPool>,
-    article_id: web::Path<i32>,
+    article_id: web::Path<Uuid>,
 ) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    match review_service.get_article_reviews(article_id.into_inner()).await {
+    match review_service.get_reviews_by_article(article_id.into_inner()).await {
         Ok(reviews) => HttpResponse::Ok().json(
             reviews
                 .into_iter()
-                .map(|review| review.into_response())
+                .map(ReviewResponse::from)
                 .collect::<Vec<_>>(),
         ),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
     }
 }
 
-async fn get_reviewer_reviews(pool: web::Data<PgPool>) -> impl Responder {
+async fn get_reviewer_reviews(
+    pool: web::Data<PgPool>,
+    reviewer_id: web::Path<Uuid>,
+) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    // TODO: Get reviewer_id from authenticated user
-    let reviewer_id = 1; // Temporary hardcoded value
-    match review_service.get_reviewer_reviews(reviewer_id).await {
+    match review_service.get_reviews_by_reviewer(reviewer_id.into_inner()).await {
         Ok(reviews) => HttpResponse::Ok().json(
             reviews
                 .into_iter()
-                .map(|review| review.into_response())
+                .map(ReviewResponse::from)
                 .collect::<Vec<_>>(),
         ),
         Err(e) => HttpResponse::InternalServerError().json(e.to_string()),
@@ -76,29 +73,22 @@ async fn get_reviewer_reviews(pool: web::Data<PgPool>) -> impl Responder {
 
 async fn update_review(
     pool: web::Data<PgPool>,
-    review_id: web::Path<i32>,
+    review_id: web::Path<Uuid>,
     review_data: web::Json<UpdateReviewRequest>,
 ) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    // TODO: Get reviewer_id from authenticated user
-    let reviewer_id = 1; // Temporary hardcoded value
     match review_service
-        .update_review(review_id.into_inner(), reviewer_id, review_data.into_inner())
+        .update_review(review_id.into_inner(), review_data.into_inner())
         .await
     {
-        Ok(review) => HttpResponse::Ok().json(review.into_response()),
+        Ok(review) => HttpResponse::Ok().json(ReviewResponse::from(review)),
         Err(e) => HttpResponse::NotFound().json(e.to_string()),
     }
 }
 
-async fn delete_review(pool: web::Data<PgPool>, review_id: web::Path<i32>) -> impl Responder {
+async fn delete_review(pool: web::Data<PgPool>, review_id: web::Path<Uuid>) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    // TODO: Get reviewer_id from authenticated user
-    let reviewer_id = 1; // Temporary hardcoded value
-    match review_service
-        .delete_review(review_id.into_inner(), reviewer_id)
-        .await
-    {
+    match review_service.delete_review(review_id.into_inner()).await {
         Ok(_) => HttpResponse::NoContent().finish(),
         Err(e) => HttpResponse::NotFound().json(e.to_string()),
     }
@@ -111,7 +101,7 @@ pub fn configure_routes(cfg: &mut web::ServiceConfig) {
             .route("", web::get().to(get_reviews))
             .route("/{id}", web::get().to(get_review))
             .route("/article/{id}", web::get().to(get_article_reviews))
-            .route("/reviewer", web::get().to(get_reviewer_reviews))
+            .route("/reviewer/{id}", web::get().to(get_reviewer_reviews))
             .route("/{id}", web::put().to(update_review))
             .route("/{id}", web::delete().to(delete_review)),
     );

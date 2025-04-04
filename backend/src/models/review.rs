@@ -1,40 +1,78 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use sqlx::FromRow;
+use sqlx::Type;
+use uuid::Uuid;
+use validator::Validate;
 
-#[derive(Debug, Serialize, Deserialize, sqlx::Type)]
-#[sqlx(type_name = "review_status")]
-#[sqlx(rename_all = "snake_case")]
+#[derive(Debug, Clone, Serialize, Deserialize, sqlx::Type)]
+#[sqlx(type_name = "review_status", rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum ReviewStatus {
-    Pending,
-    InProgress,
-    Completed,
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED,
+    REJECTED,
 }
 
-#[derive(Debug, FromRow)]
+impl Default for ReviewStatus {
+    fn default() -> Self {
+        ReviewStatus::PENDING
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Review {
-    pub id: i32,
-    pub article_id: i32,
-    pub reviewer_id: i32,
+    pub id: Uuid,
+    pub article_id: Uuid,
+    pub reviewer_id: Uuid,
     pub status: ReviewStatus,
-    pub content: Option<String>,
+    pub comments: Option<String>,
     pub rating: Option<i32>,
     pub created_at: DateTime<Utc>,
     pub updated_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Validate)]
 pub struct CreateReviewRequest {
-    pub article_id: i32,
-    pub content: String,
-    pub rating: i32,
+    pub article_id: Uuid,
+    pub reviewer_id: Uuid,
+    pub comments: Option<String>,
+    #[validate(range(min = 1, max = 5))]
+    pub rating: Option<i32>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Validate)]
 pub struct UpdateReviewRequest {
-    pub content: Option<String>,
-    pub rating: Option<i32>,
     pub status: Option<ReviewStatus>,
+    pub comments: Option<String>,
+    #[validate(range(min = 1, max = 5))]
+    pub rating: Option<i32>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct ReviewResponse {
+    pub id: Uuid,
+    pub article_id: Uuid,
+    pub reviewer_id: Uuid,
+    pub status: ReviewStatus,
+    pub comments: Option<String>,
+    pub rating: Option<i32>,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
+}
+
+impl From<Review> for ReviewResponse {
+    fn from(review: Review) -> Self {
+        Self {
+            id: review.id,
+            article_id: review.article_id,
+            reviewer_id: review.reviewer_id,
+            status: review.status,
+            comments: review.comments,
+            rating: review.rating,
+            created_at: review.created_at,
+            updated_at: review.updated_at,
+        }
+    }
 }
 
 impl Review {
@@ -44,22 +82,10 @@ impl Review {
             article_id: self.article_id,
             reviewer_id: self.reviewer_id,
             status: self.status,
-            content: self.content,
+            comments: self.comments,
             rating: self.rating,
             created_at: self.created_at,
             updated_at: self.updated_at,
         }
     }
-}
-
-#[derive(Debug, Serialize)]
-pub struct ReviewResponse {
-    pub id: i32,
-    pub article_id: i32,
-    pub reviewer_id: i32,
-    pub status: ReviewStatus,
-    pub content: Option<String>,
-    pub rating: Option<i32>,
-    pub created_at: DateTime<Utc>,
-    pub updated_at: DateTime<Utc>,
 }
