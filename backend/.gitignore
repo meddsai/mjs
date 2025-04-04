@@ -12,18 +12,49 @@ Cargo.lock
 .env
 .env.*
 !.env.example
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
 
 # IDE Rust specific
 *.rs.fmt
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # Generated files
 src/schema.rs
+*.sql
+migrations/*.sql
 
 # Database
 *.db
 *.db-*
 *.sqlite
 *.sqlite3
+pgdata/
+postgres-data/
 
 # Logs
 *.log
+logs/
+*.log.*
+
+# Credentials and secrets
+*.key
+*.pem
+*.cert
+*.crt
+*.pfx
+*.jks
+*.keystore
+*.truststore
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
