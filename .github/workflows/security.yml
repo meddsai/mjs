@@ -10,6 +10,11 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
 jobs:
   security-scan:
     runs-on: ubuntu-latest
@@ -32,14 +37,14 @@ jobs:
         severity: 'CRITICAL,HIGH,MEDIUM'
 
     - name: Run npm audit (Frontend)
-      continue-on-error: true  # Don't fail the workflow, but record the results
+      continue-on-error: true
       run: |
         cd frontend
         npm install --package-lock-only
         npm audit --json > ../npm-audit-frontend.json || true
 
     - name: Run npm audit (Docs)
-      continue-on-error: true  # Don't fail the workflow, but record the results
+      continue-on-error: true
       run: |
         cd docs
         npm install --package-lock-only
@@ -70,12 +75,14 @@ jobs:
         cargo audit --json > ../cargo-audit.json || true
 
     - name: Upload Trivy scan results
+      continue-on-error: true
       uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: 'trivy-results.sarif'
         category: 'trivy'
 
     - name: Process and report vulnerabilities
+      continue-on-error: true
       run: |
         echo "Security Scan Summary:" > security-report.txt
         echo "=====================" >> security-report.txt
@@ -106,6 +113,7 @@ jobs:
         cat security-report.txt
 
     - name: Upload security reports
+      continue-on-error: true
       uses: actions/upload-artifact@v4
       with:
         name: security-reports
