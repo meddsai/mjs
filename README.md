@@ -73,6 +73,7 @@ See our [Contributing Guide](docs/CONTRIBUTING.md) for details.
 - [User Guide](docs/USER_GUIDE.md): Learn how to use MJS
 - [API Documentation](docs/API.md): REST API reference
 - [Troubleshooting](docs/TROUBLESHOOTING.md): Common issues and solutions
+- [Template Guide](TEMPLATE.md): How to use MJS as a template for your journal
 
 ## 🆘 Need Help?
 
