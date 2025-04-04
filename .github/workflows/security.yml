@@ -3,7 +3,11 @@ name: Security Scan
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # Run weekly
+    - cron: '0 0 * * *'  # Run daily instead of weekly
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -16,12 +20,52 @@ jobs:
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
-        ignore-unfixed: true
+        ignore-unfixed: false  # Changed to false to catch all vulnerabilities
         format: 'sarif'
         output: 'trivy-results.sarif'
-        severity: 'CRITICAL,HIGH'
+        severity: 'CRITICAL,HIGH,MEDIUM'  # Added MEDIUM severity
+
+    - name: Run npm audit
+      run: |
+        cd frontend
+        npm audit --json > npm-audit.json
+        cd ../docs
+        npm audit --json > docs-npm-audit.json
+
+    - name: Run cargo audit
+      run: |
+        cd backend
+        cargo audit --json > cargo-audit.json
 
     - name: Upload Trivy scan results to GitHub Security tab
       uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: 'trivy-results.sarif'
+
+    - name: Upload npm audit results
+      uses: actions/upload-artifact@v4
+      with:
+        name: npm-audit-results
+        path: |
+          frontend/npm-audit.json
+          docs/docs-npm-audit.json
+
+    - name: Upload cargo audit results
+      uses: actions/upload-artifact@v4
+      with:
+        name: cargo-audit-results
+        path: backend/cargo-audit.json
+
+    - name: Check for dependency updates
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data: dependabotAlerts } = await github.rest.dependabot.listAlertsForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open'
+          });
+
+          if (dependabotAlerts.length > 0) {
+            core.setFailed(`Found ${dependabotAlerts.length} open security vulnerabilities. Please update dependencies.`);
+          }

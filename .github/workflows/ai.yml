@@ -70,6 +70,10 @@ jobs:
       run: poetry run mypy .
 
     - name: Test
-      run: poetry run pytest --cov
+      run: |
+        # Install the package in development mode
+        poetry install
+        # Run tests with PYTHONPATH set correctly
+        PYTHONPATH=$PYTHONPATH:$(pwd) poetry run pytest --cov
       env:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/mjs_ai_test
