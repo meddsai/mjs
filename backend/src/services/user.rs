@@ -50,7 +50,7 @@ impl UserService {
         user_data: UpdateUserRequest,
     ) -> Result<User, Error> {
         let current_user = self.get_user(id).await?;
-        
+
         let user = sqlx::query_as!(
             User,
             r#"
