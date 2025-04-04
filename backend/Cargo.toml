@@ -5,11 +5,35 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-actix-web = "4.4.0"
-tokio = { version = "1.36.0", features = ["full"] }
+# Web framework
+actix-web = "4.4"
+actix-cors = "0.6"
+actix-rt = "2.9"
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "chrono", "uuid"] }
+tokio = { version = "1.32", features = ["full"] }
+
+# Authentication
+jsonwebtoken = "9.1"
+bcrypt = "0.15"
+argon2 = "0.5"
+
+# Serialization
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "chrono"] }
+
+# Environment variables
 dotenv = "0.15"
-tracing = "0.1"
-tracing-subscriber = "0.3"
+
+# Logging
+env_logger = "0.10"
+log = "0.4"
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.4", features = ["v4", "serde"] }
+validator = { version = "0.16", features = ["derive"] }
+
+[dev-dependencies]
+sqlx-cli = "0.7"

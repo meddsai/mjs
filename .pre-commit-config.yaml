@@ -38,7 +38,7 @@ repos:
     hooks:
     -   id: rustfmt
         name: Rust Format
-        entry: bash -c 'cd backend && rustfmt --edition=2021 --check $(git diff --cached --name-only --diff-filter=ACMR | grep "\.rs$" | tr "\n" " ")'
+        entry: bash -c 'cd backend && cargo fmt -- --check'
         language: system
         types: [rust]
         pass_filenames: false
