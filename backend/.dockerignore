@@ -1,0 +1,37 @@
+# Git
+.git
+.gitignore
+
+# Rust
+/target
+**/*.rs.bk
+Cargo.lock
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+*.md
+docs/
+*.txt
+
+# Tests
+/tests
+*.test
+*.spec
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+/tmp

@@ -1,4 +1,4 @@
-FROM rust:1.75-slim-bullseye AS base
+FROM rust:1.81-slim-bullseye AS base
 WORKDIR /app
 
 FROM base AS development
