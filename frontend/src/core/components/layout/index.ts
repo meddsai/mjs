@@ -1,6 +1,4 @@
-import Header from './Header';
-import Navigation from './Navigation';
-import Footer from './Footer';
-import MainLayout from './MainLayout';
-
-export { Header, Navigation, Footer, MainLayout };
+export { default as Header } from './Header';
+export { default as Navigation } from './Navigation';
+export { default as Footer } from './Footer';
+export { default as MainLayout } from './MainLayout';
