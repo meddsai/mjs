@@ -3,7 +3,9 @@ pub mod auth;
 pub mod review;
 pub mod user;
 
-pub use user::{User, UserRole, CreateUserRequest, UpdateUserRequest, UserResponse};
-pub use article::{Article, ArticleStatus, CreateArticleRequest, UpdateArticleRequest, ArticleResponse};
-pub use review::{Review, ReviewStatus, CreateReviewRequest, UpdateReviewRequest, ReviewResponse};
+pub use article::{
+    Article, ArticleResponse, ArticleStatus, CreateArticleRequest, UpdateArticleRequest,
+};
 pub use auth::LoginRequest;
+pub use review::{CreateReviewRequest, Review, ReviewResponse, ReviewStatus, UpdateReviewRequest};
+pub use user::{CreateUserRequest, UpdateUserRequest, User, UserResponse, UserRole};

@@ -1,7 +1,7 @@
 use sqlx::PgPool;
 use uuid::Uuid;
 
-use crate::models::review::{Review, ReviewStatus, CreateReviewRequest, UpdateReviewRequest};
+use crate::models::review::{CreateReviewRequest, Review, ReviewStatus, UpdateReviewRequest};
 use crate::utils::error::Error;
 
 pub struct ReviewService {
@@ -13,10 +13,7 @@ impl ReviewService {
         Self { pool }
     }
 
-    pub async fn create_review(
-        &self,
-        review_data: CreateReviewRequest,
-    ) -> Result<Review, Error> {
+    pub async fn create_review(&self, review_data: CreateReviewRequest) -> Result<Review, Error> {
         let review = sqlx::query_as!(
             Review,
             r#"

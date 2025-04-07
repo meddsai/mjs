@@ -1,9 +1,9 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sqlx::Type;
+use std::fmt;
 use uuid::Uuid;
 use validator::Validate;
-use std::fmt;
 
 #[derive(Debug, Clone, Serialize, Deserialize, sqlx::Type)]
 #[sqlx(type_name = "user_role", rename_all = "SCREAMING_SNAKE_CASE")]

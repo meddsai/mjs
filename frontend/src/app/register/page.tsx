@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/core/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/core/components/ui/card";
 import { RegisterForm } from "@/core/components/auth/RegisterForm";
 import Link from "next/link";
+import { RegistrationSuccessModal } from "@/core/components/auth/RegistrationSuccessModal";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -12,9 +13,7 @@ export default function RegisterPage() {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleRegister = async (email: string, password: string, name: string) => {
-        console.log("Register form submitted with:", { email, password, name });
         setIsLoading(true);
-
         try {
             // TODO: Implement registration logic
             setShowSuccessModal(true);
@@ -45,17 +44,17 @@ export default function RegisterPage() {
                         isLoading={isLoading}
                     />
                 </CardContent>
-                <CardFooter className="flex flex-col space-y-4">
-                    <div className="text-sm text-center text-muted-foreground">
-                        Already have an account?{" "}
-                        <Link href="/login" className="text-primary hover:underline">
-                            Sign in
-                        </Link>
-                    </div>
-                </CardFooter>
+                <div className="text-center text-sm text-muted-foreground mb-4">
+                    Already have an account?{" "}
+                    <Link href="/login" className="text-primary hover:underline">
+                        Sign in
+                    </Link>
+                </div>
             </Card>
 
-            {/* TODO: Add RegistrationSuccessModal component */}
+            {showSuccessModal && (
+                <RegistrationSuccessModal onClose={handleCloseModal} />
+            )}
         </div>
     );
 }

@@ -1,7 +1,7 @@
-mod auth;
-mod user;
 mod article;
+mod auth;
 mod review;
+mod user;
 
 use actix_web::web;
 

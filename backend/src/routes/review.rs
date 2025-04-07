@@ -33,7 +33,10 @@ async fn get_reviews(pool: web::Data<PgPool>) -> impl Responder {
 
 async fn get_review(pool: web::Data<PgPool>, review_id: web::Path<Uuid>) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    match review_service.get_review_by_id(review_id.into_inner()).await {
+    match review_service
+        .get_review_by_id(review_id.into_inner())
+        .await
+    {
         Ok(review) => HttpResponse::Ok().json(ReviewResponse::from(review)),
         Err(e) => HttpResponse::NotFound().json(e.to_string()),
     }
@@ -44,7 +47,10 @@ async fn get_article_reviews(
     article_id: web::Path<Uuid>,
 ) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    match review_service.get_reviews_by_article(article_id.into_inner()).await {
+    match review_service
+        .get_reviews_by_article(article_id.into_inner())
+        .await
+    {
         Ok(reviews) => HttpResponse::Ok().json(
             reviews
                 .into_iter()
@@ -60,7 +66,10 @@ async fn get_reviewer_reviews(
     reviewer_id: web::Path<Uuid>,
 ) -> impl Responder {
     let review_service = ReviewService::new(pool.get_ref().clone());
-    match review_service.get_reviews_by_reviewer(reviewer_id.into_inner()).await {
+    match review_service
+        .get_reviews_by_reviewer(reviewer_id.into_inner())
+        .await
+    {
         Ok(reviews) => HttpResponse::Ok().json(
             reviews
                 .into_iter()

@@ -9,7 +9,6 @@ import { Input } from "@/core/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
 import { authService } from "@/core/services/auth";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
@@ -86,12 +85,6 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
-                <div className="text-sm text-center text-muted-foreground">
-                    Don't have an account?{" "}
-                    <Link href="/register" className="text-primary hover:underline">
-                        Register
-                    </Link>
-                </div>
             </form>
         </Form>
     );

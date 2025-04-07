@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react"
 import { MainLayout } from "@/core/components/layout"
 import { Button } from "@/core/components/ui/button"

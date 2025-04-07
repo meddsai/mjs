@@ -14,7 +14,10 @@ async fn create_article(
     let article_service = ArticleService::new(pool.get_ref().clone());
     // TODO: Get author_id from authenticated user
     let author_id = Uuid::new_v4(); // Temporary hardcoded value
-    match article_service.create_article(author_id, article_data.into_inner()).await {
+    match article_service
+        .create_article(author_id, article_data.into_inner())
+        .await
+    {
         Ok(article) => HttpResponse::Created().json(ArticleResponse::from(article)),
         Err(e) => HttpResponse::BadRequest().json(e.to_string()),
     }
@@ -35,15 +38,24 @@ async fn get_articles(pool: web::Data<PgPool>) -> impl Responder {
 
 async fn get_article(pool: web::Data<PgPool>, article_id: web::Path<Uuid>) -> impl Responder {
     let article_service = ArticleService::new(pool.get_ref().clone());
-    match article_service.get_article_by_id(article_id.into_inner()).await {
+    match article_service
+        .get_article_by_id(article_id.into_inner())
+        .await
+    {
         Ok(article) => HttpResponse::Ok().json(ArticleResponse::from(article)),
         Err(e) => HttpResponse::NotFound().json(e.to_string()),
     }
 }
 
-async fn get_author_articles(pool: web::Data<PgPool>, author_id: web::Path<Uuid>) -> impl Responder {
+async fn get_author_articles(
+    pool: web::Data<PgPool>,
+    author_id: web::Path<Uuid>,
+) -> impl Responder {
     let article_service = ArticleService::new(pool.get_ref().clone());
-    match article_service.get_articles_by_author(author_id.into_inner()).await {
+    match article_service
+        .get_articles_by_author(author_id.into_inner())
+        .await
+    {
         Ok(articles) => HttpResponse::Ok().json(
             articles
                 .into_iter()
@@ -71,7 +83,10 @@ async fn update_article(
 
 async fn delete_article(pool: web::Data<PgPool>, article_id: web::Path<Uuid>) -> impl Responder {
     let article_service = ArticleService::new(pool.get_ref().clone());
-    match article_service.delete_article(article_id.into_inner()).await {
+    match article_service
+        .delete_article(article_id.into_inner())
+        .await
+    {
         Ok(_) => HttpResponse::NoContent().finish(),
         Err(e) => HttpResponse::NotFound().json(e.to_string()),
     }

@@ -85,11 +85,7 @@ impl AuthService {
         Ok(user)
     }
 
-    pub async fn update_user(
-        &self,
-        id: Uuid,
-        user_data: UpdateUserRequest,
-    ) -> Result<User, Error> {
+    pub async fn update_user(&self, id: Uuid, user_data: UpdateUserRequest) -> Result<User, Error> {
         // First get the current user data
         let current_user = self.get_user_by_id(id).await?;
 

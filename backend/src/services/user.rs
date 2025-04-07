@@ -44,11 +44,7 @@ impl UserService {
         Ok(user)
     }
 
-    pub async fn update_user(
-        &self,
-        id: Uuid,
-        user_data: UpdateUserRequest,
-    ) -> Result<User, Error> {
+    pub async fn update_user(&self, id: Uuid, user_data: UpdateUserRequest) -> Result<User, Error> {
         let current_user = self.get_user(id).await?;
 
         let user = sqlx::query_as!(

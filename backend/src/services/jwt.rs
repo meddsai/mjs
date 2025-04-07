@@ -6,10 +6,10 @@ use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
-    pub sub: Uuid,        // user id
-    pub role: UserRole,   // user role
-    pub exp: i64,         // expiration time
-    pub iat: i64,         // issued at
+    pub sub: Uuid,      // user id
+    pub role: UserRole, // user role
+    pub exp: i64,       // expiration time
+    pub iat: i64,       // issued at
 }
 
 pub struct JwtService {
@@ -25,7 +25,11 @@ impl JwtService {
         }
     }
 
-    pub fn generate_token(&self, user_id: Uuid, role: UserRole) -> Result<String, jsonwebtoken::errors::Error> {
+    pub fn generate_token(
+        &self,
+        user_id: Uuid,
+        role: UserRole,
+    ) -> Result<String, jsonwebtoken::errors::Error> {
         let now = Utc::now();
         let claims = Claims {
             sub: user_id,
