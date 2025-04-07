@@ -42,9 +42,9 @@ This roadmap outlines the development strategy for the Modern Journal Systems (M
   - [x] Design schema (based on Supabase reference model)
   - [x] Configure PostgreSQL
   - [x] Set up migrations
-- [ ] API Implementation
-  - [ ] Core endpoints
-  - [🔄] Authentication (Rust-based implementation)
+- [🔄] API Implementation
+  - [x] Core endpoints
+  - [x] Authentication (JWT implementation)
   - [ ] Template management
 
 ## Phase 3: Frontend Migration 🔄
@@ -54,39 +54,49 @@ This roadmap outlines the development strategy for the Modern Journal Systems (M
   - [x] Next.js configuration
   - [x] TypeScript setup
   - [x] Build optimization
-- [🔄] Component Library
+- [x] Component Library
   - [x] Base components
     - [x] Header component
     - [x] Navigation component
     - [x] Footer component
     - [x] MainLayout component
+  - [x] Authentication components
+    - [x] Login form
+    - [x] Registration form
+    - [x] Password reset forms
+    - [x] Success modals
   - [🔄] Template system architecture
   - [🔄] Morton-style layout implementation
-- [🔄] Core Features
+- [x] Core Features
   - [x] Layout components
+  - [x] Authentication system
+    - [x] User registration
+    - [x] User login
+    - [x] Password reset
+    - [x] Protected routes
   - [🔄] Template system
-  - [🔄] Authentication (Rust backend integration)
-  - [ ] User management
+  - [🔄] User management
 
 ### Current Progress
 - ✅ Basic layout components implemented
+- ✅ Authentication system implemented
 - ✅ Database schema designed (based on Supabase model)
 - 🔄 Template system in development
 - 🔄 User management system in planning
-- 🔄 Rust backend authentication in development
-- 🔄 API endpoints in development
+- ✅ Rust backend authentication implemented
+- ✅ API endpoints for authentication
 - ✅ Backend services implementation
   - ✅ Article service with CRUD operations
   - ✅ Review service with CRUD operations
   - ✅ User service with role management
-  - 🔄 Authentication service (JWT implementation in progress)
+  - ✅ Authentication service (JWT implementation)
 
 ### Next Steps
-1. Complete Rust backend authentication implementation
+1. Complete template system development
 2. Implement user management system
-3. Finish template system development
-4. Set up remaining backend services
-5. Continue improving documentation
+3. Set up remaining backend services
+4. Continue improving documentation
+5. Add more authentication features (2FA, social login)
 
 ## Phase 4: AI/ML Integration (Months 18-30)
 
