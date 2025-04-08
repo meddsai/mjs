@@ -34,8 +34,8 @@ export function ForgotPasswordForm() {
       setIsLoading(true);
       await authService.requestPasswordReset(values);
       setIsSubmitted(true);
-    } catch (err: any) {
-      setError(err.message || "Failed to send reset email. Please try again.");
+    } catch (err: Error | unknown) {
+      setError(err instanceof Error ? err.message : "Failed to send reset email. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -46,7 +46,7 @@ export function ForgotPasswordForm() {
       <div className="space-y-4 text-center">
         <h3 className="text-lg font-medium">Check your email</h3>
         <p className="text-sm text-muted-foreground">
-          We've sent you a password reset link. Please check your email inbox.
+          We&apos;ve sent you a password reset link. Please check your email inbox.
         </p>
         <Button variant="outline" asChild>
           <Link href="/login">Back to login</Link>
@@ -59,7 +59,9 @@ export function ForgotPasswordForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         {error && (
-          <div className="text-sm text-red-500 text-center">{error}</div>
+          <div className="text-sm text-red-500 text-center">
+            We couldn&apos;t find an account with that email address
+          </div>
         )}
         <FormField
           control={form.control}

@@ -19,7 +19,7 @@ export const Sidebar = () => {
                 <p className="text-muted-foreground mb-4">
                     Modern Journal Systems is pioneering the future of academic publishing
                     through customizable, template-driven journal platforms that adapt to
-                    any discipline's unique needs.
+                    any discipline&apos;s unique needs.
                 </p>
                 <p className="text-muted-foreground mb-4">
                     Our mission is to democratize academic publishing by providing

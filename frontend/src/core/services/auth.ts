@@ -1,18 +1,12 @@
-import { apiClient } from './api';
+import { ApiService } from "./api";
 
-interface RegisterData {
+interface AuthCredentials {
   email: string;
   password: string;
-  name: string;
-  first_name?: string;
-  last_name?: string;
-  institution?: string;
-  department?: string;
 }
 
-interface LoginData {
-  email: string;
-  password: string;
+interface RegisterData extends AuthCredentials {
+  name: string;
 }
 
 interface AuthResponse {
@@ -21,76 +15,53 @@ interface AuthResponse {
     id: string;
     email: string;
     name: string;
-    role: string;
   };
 }
 
 interface ResetPasswordData {
-  email: string;
-}
-
-interface ResetPasswordConfirmData {
   token: string;
-  new_password: string;
+  password: string;
 }
 
-export const authService = {
-  async register(data: RegisterData): Promise<AuthResponse> {
-    const response = await apiClient.post<AuthResponse>('/auth/register', {
-      ...data,
-      first_name: data.name.split(' ')[0],
-      last_name: data.name.split(' ').slice(1).join(' '),
-    });
+class AuthService {
+  private api: ApiService;
 
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    return response.data;
-  },
-
-  async login(data: LoginData): Promise<AuthResponse> {
-    const response = await apiClient.post<AuthResponse>('/auth/login', data);
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-
-    return response.data;
-  },
-
-  async requestPasswordReset(data: ResetPasswordData): Promise<void> {
-    const response = await apiClient.post('/auth/forgot-password', data);
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-  },
-
-  async resetPassword(data: ResetPasswordConfirmData): Promise<void> {
-    const response = await apiClient.post('/auth/reset-password', data);
-
-    if (response.error) {
-      throw new Error(response.error);
-    }
-  },
-
-  async logout(): Promise<void> {
-    // Clear any stored tokens or user data
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-  },
-
-  getStoredToken(): string | null {
-    return localStorage.getItem('token');
-  },
-
-  getStoredUser(): any | null {
-    const userStr = localStorage.getItem('user');
-    return userStr ? JSON.parse(userStr) : null;
-  },
-
-  isAuthenticated(): boolean {
-    return !!this.getStoredToken();
+  constructor() {
+    this.api = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
   }
-};
+
+  async login(credentials: AuthCredentials) {
+    const response = await this.api.post<AuthResponse>("/auth/login", {
+      data: credentials
+    });
+    return response.data;
+  }
+
+  async register(data: RegisterData) {
+    const response = await this.api.post<AuthResponse>("/auth/register", {
+      data
+    });
+    return response.data;
+  }
+
+  async requestPasswordReset(data: { email: string }) {
+    const response = await this.api.post<{ message: string }>("/auth/forgot-password", {
+      data
+    });
+    return response.data;
+  }
+
+  async resetPassword(data: ResetPasswordData) {
+    const response = await this.api.post<{ message: string }>("/auth/reset-password", {
+      data
+    });
+    return response.data;
+  }
+
+  async logout() {
+    const response = await this.api.post<{ message: string }>("/auth/logout");
+    return response.data;
+  }
+}
+
+export const authService = new AuthService();

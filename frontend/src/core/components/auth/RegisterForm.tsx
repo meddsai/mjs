@@ -51,8 +51,8 @@ export function RegisterForm({ onSubmit, isLoading = false }: RegisterFormProps)
                 localStorage.setItem('user', JSON.stringify(response.user));
                 router.push('/dashboard');
             }
-        } catch (err: any) {
-            setError(err.message || "Registration failed. Please try again.");
+        } catch (err: Error | unknown) {
+            setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
         }
     };
 

@@ -45,8 +45,8 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
                 localStorage.setItem('user', JSON.stringify(response.user));
                 router.push('/dashboard');
             }
-        } catch (err: any) {
-            setError(err.message || "Login failed. Please check your credentials and try again.");
+        } catch (err: Error | unknown) {
+            setError(err instanceof Error ? err.message : "Invalid credentials");
         }
     };
 

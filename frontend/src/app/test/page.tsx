@@ -59,17 +59,17 @@ const TemplateDemoPage = () => {
 
     const [isPreviewMode, setIsPreviewMode] = useState(false)
 
-    const handleFeatureToggle = (feature: string) => {
+    const handleFeatureToggle = (feature: keyof TemplateConfig["features"]) => {
         setConfig(prev => ({
             ...prev,
             features: {
                 ...prev.features,
-                [feature]: !prev.features[feature as keyof typeof prev.features]
+                [feature]: !prev.features[feature]
             }
         }))
     }
 
-    const handleThemeChange = (key: string, value: any) => {
+    const handleThemeChange = (key: keyof TemplateConfig["theme"], value: string | number | boolean) => {
         setConfig(prev => ({
             ...prev,
             theme: {
@@ -120,19 +120,19 @@ const TemplateDemoPage = () => {
 
     return (
         <MainLayout>
-        <div className="container mx-auto p-8 space-y-8">
+            <div className="container mx-auto p-8 space-y-8">
                 <div className="flex justify-between items-center">
                     <div>
                         <h1 className="text-4xl font-bold">MJS Template Demo</h1>
                         <p className="text-xl text-muted-foreground">
                             Customize your journal platform using the options below
                         </p>
-                </div>
+                    </div>
                     <div className="space-x-4">
                         <Button variant="outline" onClick={handleReset}>Reset</Button>
                         <Button onClick={handleSaveConfig}>Save Configuration</Button>
+                    </div>
                 </div>
-            </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Configuration Panel */}
@@ -226,7 +226,7 @@ const TemplateDemoPage = () => {
                                                 <Switch
                                                     id={feature}
                                                     checked={enabled}
-                                                    onCheckedChange={() => handleFeatureToggle(feature)}
+                                                    onCheckedChange={() => handleFeatureToggle(feature as keyof TemplateConfig["features"])}
                                                 />
                                             </div>
                                         ))}
@@ -393,7 +393,7 @@ const TemplateDemoPage = () => {
                             </div>
                         </CardContent>
                     </Card>
-            </div>
+                </div>
 
                 {/* Action Buttons */}
                 <div className="flex justify-end space-x-4 mt-8">

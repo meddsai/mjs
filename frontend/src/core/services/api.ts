@@ -1,60 +1,50 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { API_BASE_URL, DEFAULT_HEADERS, ApiResponse, handleApiError } from '../config/api';
+import { ApiResponse, ApiError, ApiRequestConfig } from "@/core/config/api";
 
-class ApiClient {
-    private client: AxiosInstance;
+export class ApiService {
+    private baseUrl: string;
 
-    constructor() {
-        this.client = axios.create({
-            baseURL: API_BASE_URL,
-            headers: DEFAULT_HEADERS,
-        });
-
-        this.setupInterceptors();
+    constructor(baseUrl: string) {
+        this.baseUrl = baseUrl;
     }
 
-    private setupInterceptors() {
-        this.client.interceptors.response.use(
-            (response) => response,
-            (error) => Promise.reject(handleApiError(error))
-        );
-    }
-
-    async get<T>(url: string, params?: any): Promise<ApiResponse<T>> {
+    private async request<T = unknown, D = unknown>(
+        method: string,
+        endpoint: string,
+        config?: ApiRequestConfig<D>
+    ): Promise<ApiResponse<T>> {
         try {
-            const response: AxiosResponse = await this.client.get(url, { params });
-            return { data: response.data, status: response.status };
-        } catch (error: any) {
-            return { error: error.message, status: error.status };
+            const response = await fetch(`${this.baseUrl}${endpoint}`, {
+                method,
+                headers: {
+                    "Content-Type": "application/json",
+                    ...config?.headers,
+                },
+                body: config?.data ? JSON.stringify(config.data) : undefined,
+            });
+
+            const data = await response.json();
+            return { data, status: response.status };
+        } catch (error) {
+            if (error instanceof Error) {
+                throw { message: error.message, status: 500 } as ApiError;
+            }
+            throw { message: "An unknown error occurred", status: 500 } as ApiError;
         }
     }
 
-    async post<T>(url: string, data?: any): Promise<ApiResponse<T>> {
-        try {
-            const response: AxiosResponse = await this.client.post(url, data);
-            return { data: response.data, status: response.status };
-        } catch (error: any) {
-            return { error: error.message, status: error.status };
-        }
+    public async get<T = unknown>(endpoint: string, config?: ApiRequestConfig): Promise<ApiResponse<T>> {
+        return this.request<T>("GET", endpoint, config);
     }
 
-    async put<T>(url: string, data?: any): Promise<ApiResponse<T>> {
-        try {
-            const response: AxiosResponse = await this.client.put(url, data);
-            return { data: response.data, status: response.status };
-        } catch (error: any) {
-            return { error: error.message, status: error.status };
-        }
+    public async post<T = unknown, D = unknown>(endpoint: string, config?: ApiRequestConfig<D>): Promise<ApiResponse<T>> {
+        return this.request<T, D>("POST", endpoint, config);
     }
 
-    async delete<T>(url: string): Promise<ApiResponse<T>> {
-        try {
-            const response: AxiosResponse = await this.client.delete(url);
-            return { data: response.data, status: response.status };
-        } catch (error: any) {
-            return { error: error.message, status: error.status };
-        }
+    public async put<T = unknown, D = unknown>(endpoint: string, config?: ApiRequestConfig<D>): Promise<ApiResponse<T>> {
+        return this.request<T, D>("PUT", endpoint, config);
+    }
+
+    public async delete<T = unknown>(endpoint: string, config?: ApiRequestConfig): Promise<ApiResponse<T>> {
+        return this.request<T>("DELETE", endpoint, config);
     }
 }
-
-export const apiClient = new ApiClient();

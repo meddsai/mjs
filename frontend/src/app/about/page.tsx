@@ -64,7 +64,7 @@ const AboutPage = () => {
                                     <h3 className="font-semibold mb-2">Customizable</h3>
                                     <p className="text-3xl font-bold text-primary mb-2">100%</p>
                                     <p className="text-sm text-gray-700">
-                                        Fully customizable for any journal's needs
+                                        Fully customizable for any journal&apos;s needs
                                     </p>
                                 </div>
 

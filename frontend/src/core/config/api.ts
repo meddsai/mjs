@@ -4,7 +4,7 @@ export const DEFAULT_HEADERS = {
     'Content-Type': 'application/json',
 };
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
     data?: T;
     error?: string;
     status: number;
@@ -15,15 +15,21 @@ export interface ApiError {
     status: number;
 }
 
-export const handleApiError = (error: any): ApiError => {
-    if (error.response) {
+export interface ApiRequestConfig<T = unknown> {
+    data?: T;
+    headers?: Record<string, string>;
+    params?: Record<string, string>;
+}
+
+export const handleApiError = (error: Error | unknown): ApiError => {
+    if (error instanceof Error) {
         return {
-            message: error.response.data?.error || 'An error occurred',
-            status: error.response.status,
+            message: error.message,
+            status: 500,
         };
     }
     return {
-        message: error.message || 'Network error',
+        message: "An unknown error occurred",
         status: 500,
     };
 };

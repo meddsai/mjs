@@ -51,8 +51,8 @@ export function ResetPasswordForm() {
                 new_password: values.new_password,
             });
             router.push('/login?message=password_reset_success');
-        } catch (err: any) {
-            setError(err.message || "Failed to reset password. Please try again.");
+        } catch (err: Error | unknown) {
+            setError(err instanceof Error ? err.message : "Password reset failed. Please try again.");
         } finally {
             setIsLoading(false);
         }

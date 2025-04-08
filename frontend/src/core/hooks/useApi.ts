@@ -1,76 +1,66 @@
-import { useState, useCallback } from 'react';
-import { ApiResponse, ApiError } from '../config/api';
-import { apiClient } from '../services/api';
+import { useState } from "react";
+import { ApiResponse, ApiError } from "@/core/config/api";
 
 interface UseApiState<T> {
     data: T | null;
-    loading: boolean;
     error: ApiError | null;
+    isLoading: boolean;
 }
 
-export function useApi<T>() {
+interface UseApiResponse<T> extends UseApiState<T> {
+    execute: () => Promise<void>;
+    reset: () => void;
+}
+
+export function useApi<T>(
+    apiCall: () => Promise<ApiResponse<T>>
+): UseApiResponse<T> {
     const [state, setState] = useState<UseApiState<T>>({
         data: null,
-        loading: false,
         error: null,
+        isLoading: false,
     });
 
-    const request = useCallback(async (
-        method: 'get' | 'post' | 'put' | 'delete',
-        url: string,
-        data?: any
-    ) => {
-        setState(prev => ({ ...prev, loading: true, error: null }));
-
+    const execute = async () => {
         try {
-            let response: ApiResponse<T>;
-
-            switch (method) {
-                case 'get':
-                    response = await apiClient.get<T>(url, data);
-                    break;
-                case 'post':
-                    response = await apiClient.post<T>(url, data);
-                    break;
-                case 'put':
-                    response = await apiClient.put<T>(url, data);
-                    break;
-                case 'delete':
-                    response = await apiClient.delete<T>(url);
-                    break;
-                default:
-                    throw new Error(`Unsupported method: ${method}`);
-            }
+            setState((prev) => ({ ...prev, isLoading: true, error: null }));
+            const response = await apiCall();
 
             if (response.error) {
-                throw { message: response.error, status: response.status };
+                setState((prev) => ({
+                    ...prev,
+                    error: { message: response.error, status: response.status },
+                    isLoading: false,
+                }));
+            } else {
+                setState((prev) => ({
+                    ...prev,
+                    data: response.data || null,
+                    isLoading: false,
+                }));
             }
-
-            setState({
-                data: response.data || null,
-                loading: false,
-                error: null,
-            });
-
-            return response.data;
-        } catch (error: any) {
-            const apiError = {
-                message: error.message || 'An error occurred',
-                status: error.status || 500,
-            };
-
-            setState(prev => ({
+        } catch (error) {
+            setState((prev) => ({
                 ...prev,
-                loading: false,
-                error: apiError,
+                error: error instanceof Error
+                    ? { message: error.message, status: 500 }
+                    : { message: "An unknown error occurred", status: 500 },
+                isLoading: false,
             }));
-
-            throw apiError;
         }
-    }, []);
+    };
+
+    const reset = () => {
+        setState({
+            data: null,
+            error: null,
+            isLoading: false,
+        });
+    };
 
     return {
         ...state,
-        request,
+        execute,
+        reset,
     };
 }

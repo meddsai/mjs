@@ -141,8 +141,7 @@ export default function ForReviewersPage() {
                                 <div className="bg-muted/50 border rounded-lg p-6">
                                     <h3 className="text-lg font-semibold mb-3">Join Our Reviewer Pool</h3>
                                     <p className="text-muted-foreground mb-4">
-                                        We're always looking for qualified reviewers to join our team. If you're interested in
-                                        reviewing for our journal, please register your interest.
+                                        We&apos;re looking for experienced researchers to join our reviewer pool. If you&apos;re interested, please apply below.
                                     </p>
                                     <Button asChild>
                                         <Link href="/reviewer-application">Apply to be a Reviewer</Link>
