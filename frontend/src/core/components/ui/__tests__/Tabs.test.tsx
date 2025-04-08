@@ -1,71 +1,60 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
+import { TabsHeadless, TabsTriggerHeadless, TabsContentHeadless } from '../tabs-headless';
 
 describe('Tabs', () => {
-    it('renders tabs with correct content', () => {
+    it('renders tabs and content correctly', () => {
         render(
-            <Tabs defaultValue="tab1">
-                <TabsList>
-                    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-                    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-                </TabsList>
-                <TabsContent value="tab1">Content 1</TabsContent>
-                <TabsContent value="tab2">Content 2</TabsContent>
-            </Tabs>
+            <TabsHeadless>
+                <TabsTriggerHeadless value="tab1">Tab 1</TabsTriggerHeadless>
+                <TabsTriggerHeadless value="tab2">Tab 2</TabsTriggerHeadless>
+                <TabsContentHeadless value="tab1">Content 1</TabsContentHeadless>
+                <TabsContentHeadless value="tab2">Content 2</TabsContentHeadless>
+            </TabsHeadless>
         );
 
-        expect(screen.getByText('Tab 1')).toBeInTheDocument();
-        expect(screen.getByText('Tab 2')).toBeInTheDocument();
-        expect(screen.getByText('Content 1')).toBeInTheDocument();
-        expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
+        // Check if tabs are rendered
+        expect(screen.getByRole('tab', { name: 'Tab 1' })).toBeInTheDocument();
+        expect(screen.getByRole('tab', { name: 'Tab 2' })).toBeInTheDocument();
+
+        // Check if first tab content is visible and second is hidden
+        expect(screen.getByRole('tabpanel')).toHaveTextContent('Content 1');
     });
 
     it('switches content when tab is clicked', () => {
         render(
-            <Tabs defaultValue="tab1">
-                <TabsList>
-                    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-                    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-                </TabsList>
-                <TabsContent value="tab1">Content 1</TabsContent>
-                <TabsContent value="tab2">Content 2</TabsContent>
-            </Tabs>
+            <TabsHeadless>
+                <TabsTriggerHeadless value="tab1">Tab 1</TabsTriggerHeadless>
+                <TabsTriggerHeadless value="tab2">Tab 2</TabsTriggerHeadless>
+                <TabsContentHeadless value="tab1">Content 1</TabsContentHeadless>
+                <TabsContentHeadless value="tab2">Content 2</TabsContentHeadless>
+            </TabsHeadless>
         );
 
-        // Click second tab
+        // Click the second tab
         fireEvent.click(screen.getByRole('tab', { name: 'Tab 2' }));
 
-        // First tab content should be hidden, second tab content should be visible
-        expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
-        expect(screen.getByText('Content 2')).toBeInTheDocument();
+        // Check if second tab content is visible
+        expect(screen.getByRole('tabpanel')).toHaveTextContent('Content 2');
     });
 
     it('applies correct ARIA attributes to tabs', () => {
         render(
-            <Tabs defaultValue="tab1">
-                <TabsList>
-                    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
-                    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
-                </TabsList>
-                <TabsContent value="tab1">Content 1</TabsContent>
-                <TabsContent value="tab2">Content 2</TabsContent>
-            </Tabs>
+            <TabsHeadless>
+                <TabsTriggerHeadless value="tab1">Tab 1</TabsTriggerHeadless>
+                <TabsTriggerHeadless value="tab2">Tab 2</TabsTriggerHeadless>
+                <TabsContentHeadless value="tab1">Content 1</TabsContentHeadless>
+                <TabsContentHeadless value="tab2">Content 2</TabsContentHeadless>
+            </TabsHeadless>
         );
 
-        // Initial state
+        // Click the second tab
+        fireEvent.click(screen.getByRole('tab', { name: 'Tab 2' }));
+
+        // Check ARIA attributes
         const tab1 = screen.getByRole('tab', { name: 'Tab 1' });
         const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
 
-        expect(tab1).toHaveAttribute('data-state', 'active');
-        expect(tab2).toHaveAttribute('data-state', 'inactive');
-
-        // After clicking second tab
-        fireEvent.click(tab2);
-
-        // Need to get fresh references since Radix UI might remount the elements
-        const updatedTab1 = screen.getByRole('tab', { name: 'Tab 1' });
-        const updatedTab2 = screen.getByRole('tab', { name: 'Tab 2' });
-        expect(updatedTab1).toHaveAttribute('data-state', 'inactive');
-        expect(updatedTab2).toHaveAttribute('data-state', 'active');
+        expect(tab1).toHaveAttribute('aria-selected', 'false');
+        expect(tab2).toHaveAttribute('aria-selected', 'true');
     });
 });

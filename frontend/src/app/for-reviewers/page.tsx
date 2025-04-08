@@ -1,13 +1,8 @@
 "use client";
 
 import { MainLayout } from '@/core/components/layout';
-import {
-    Tabs as TabsHeadless,
-    TabsContent as TabsContentHeadless,
-    TabsList as TabsListHeadless,
-    TabsTrigger as TabsTriggerHeadless,
-} from '@/core/components/ui/tabs';
-import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
+import { TabsHeadless, TabsTriggerHeadless, TabsContentHeadless } from '@/core/components/ui/tabs-headless';
 import { Button } from '@/core/components/ui/button';
 import Link from 'next/link';
 
@@ -16,145 +11,114 @@ export default function ForReviewersPage() {
         <MainLayout>
             <main className="container mx-auto px-4 py-8">
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-3xl font-bold mb-6">Information for Reviewers</h1>
+                    <h1 className="text-3xl font-bold mb-6">For Reviewers</h1>
 
-                    <TabsHeadless defaultIndex={0} className="w-full">
-                        <TabsListHeadless className="grid w-full grid-cols-3">
-                            <TabsTriggerHeadless>Guidelines</TabsTriggerHeadless>
-                            <TabsTriggerHeadless>Review Process</TabsTriggerHeadless>
-                            <TabsTriggerHeadless>Benefits</TabsTriggerHeadless>
-                        </TabsListHeadless>
+                    <p className="text-muted-foreground mb-8">
+                        Thank you for your interest in reviewing for our journal. Peer review is a critical
+                        component of scholarly publishing, and we greatly value the contributions of our reviewers.
+                    </p>
 
-                        <TabsContentHeadless>
-                            <section className="space-y-6">
-                                <p className="text-muted-foreground mb-6">
-                                    Thank you for your interest in reviewing for our journal. Your expertise helps ensure the quality of published research.
-                                </p>
+                    <TabsHeadless className="w-full">
+                        <TabsTriggerHeadless value="guidelines">Guidelines</TabsTriggerHeadless>
+                        <TabsTriggerHeadless value="process">Review Process</TabsTriggerHeadless>
+                        <TabsTriggerHeadless value="benefits">Benefits</TabsTriggerHeadless>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>Review Criteria</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                                <li>Originality and significance</li>
-                                                <li>Scientific accuracy</li>
-                                                <li>Methodology</li>
-                                                <li>Presentation and clarity</li>
-                                                <li>Literature review</li>
-                                                <li>Ethical considerations</li>
-                                            </ul>
-                                        </CardContent>
-                                    </Card>
+                        <TabsContentHeadless value="guidelines">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Reviewer Guidelines</CardTitle>
+                                    <CardDescription>
+                                        Key points to consider when reviewing submissions
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <h3 className="text-lg font-semibold">Evaluation Criteria</h3>
+                                    <ul className="list-disc pl-6 space-y-2">
+                                        <li>Originality and significance of the research</li>
+                                        <li>Soundness of methodology and analysis</li>
+                                        <li>Clarity of presentation and writing</li>
+                                        <li>Appropriate use of citations and references</li>
+                                        <li>Adherence to ethical standards</li>
+                                    </ul>
 
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>Expectations</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                                <li>Complete reviews within agreed timeframe</li>
-                                                <li>Provide constructive feedback</li>
-                                                <li>Maintain confidentiality</li>
-                                                <li>Declare any conflicts of interest</li>
-                                                <li>Follow ethical guidelines</li>
-                                            </ul>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-                            </section>
+                                    <h3 className="text-lg font-semibold mt-6">Review Format</h3>
+                                    <ul className="list-disc pl-6 space-y-2">
+                                        <li>Provide a general overview of the submission</li>
+                                        <li>List major and minor concerns</li>
+                                        <li>Include specific recommendations for improvement</li>
+                                        <li>Be constructive and professional in your feedback</li>
+                                    </ul>
+                                </CardContent>
+                            </Card>
                         </TabsContentHeadless>
 
-                        <TabsContentHeadless>
-                            <section className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                                    <Card>
-                                        <CardContent className="pt-6">
-                                            <div className="text-2xl font-bold text-primary mb-2">1</div>
-                                            <h3 className="font-semibold mb-2">Invitation</h3>
-                                            <p className="text-sm text-muted-foreground">
-                                                Receive and respond to review invitations
-                                            </p>
-                                        </CardContent>
-                                    </Card>
+                        <TabsContentHeadless value="process">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Review Process</CardTitle>
+                                    <CardDescription>
+                                        Understanding the peer review workflow
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <h3 className="text-lg font-semibold">Timeline</h3>
+                                    <ul className="list-disc pl-6 space-y-2">
+                                        <li>Initial review request and acceptance (2-3 days)</li>
+                                        <li>First round review (2-3 weeks)</li>
+                                        <li>Revision review if needed (1-2 weeks)</li>
+                                        <li>Final recommendation</li>
+                                    </ul>
 
-                                    <Card>
-                                        <CardContent className="pt-6">
-                                            <div className="text-2xl font-bold text-primary mb-2">2</div>
-                                            <h3 className="font-semibold mb-2">Review</h3>
-                                            <p className="text-sm text-muted-foreground">
-                                                Access manuscript and submit review
-                                            </p>
-                                        </CardContent>
-                                    </Card>
-
-                                    <Card>
-                                        <CardContent className="pt-6">
-                                            <div className="text-2xl font-bold text-primary mb-2">3</div>
-                                            <h3 className="font-semibold mb-2">Decision</h3>
-                                            <p className="text-sm text-muted-foreground">
-                                                Receive notification of final decision
-                                            </p>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-
-                                <Card>
-                                    <CardContent className="pt-6">
-                                        <h3 className="font-semibold mb-2">Timeframe</h3>
-                                        <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                            <li>Initial response to invitation: 5 days</li>
-                                            <li>Complete review: 21 days</li>
-                                            <li>Revision review: 14 days</li>
-                                        </ul>
-                                    </CardContent>
-                                </Card>
-                            </section>
+                                    <h3 className="text-lg font-semibold mt-6">Steps</h3>
+                                    <ol className="list-decimal pl-6 space-y-2">
+                                        <li>Receive invitation to review</li>
+                                        <li>Accept or decline within 3 days</li>
+                                        <li>Access manuscript and supporting materials</li>
+                                        <li>Submit comprehensive review</li>
+                                        <li>Provide recommendation (Accept/Revise/Reject)</li>
+                                    </ol>
+                                </CardContent>
+                            </Card>
                         </TabsContentHeadless>
 
-                        <TabsContentHeadless>
-                            <section className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>Recognition</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                                <li>Annual acknowledgment</li>
-                                                <li>Certificate of contribution</li>
-                                                <li>Publons integration</li>
-                                            </ul>
-                                        </CardContent>
-                                    </Card>
+                        <TabsContentHeadless value="benefits">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Benefits of Reviewing</CardTitle>
+                                    <CardDescription>
+                                        Why become a reviewer for our journal
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <h3 className="text-lg font-semibold">Professional Development</h3>
+                                    <ul className="list-disc pl-6 space-y-2">
+                                        <li>Stay current with latest research</li>
+                                        <li>Improve your own writing and research</li>
+                                        <li>Gain recognition in your field</li>
+                                        <li>Build your academic reputation</li>
+                                    </ul>
 
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle>Professional Development</CardTitle>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                                <li>Stay current with research</li>
-                                                <li>Improve critical analysis skills</li>
-                                                <li>Network with experts</li>
-                                            </ul>
-                                        </CardContent>
-                                    </Card>
-                                </div>
-
-                                <div className="bg-muted/50 border rounded-lg p-6">
-                                    <h3 className="text-lg font-semibold mb-3">Join Our Reviewer Pool</h3>
-                                    <p className="text-muted-foreground mb-4">
-                                        We&apos;re looking for experienced researchers to join our reviewer pool. If you&apos;re interested, please apply below.
-                                    </p>
-                                    <Button asChild>
-                                        <Link href="/reviewer-application">Apply to be a Reviewer</Link>
-                                    </Button>
-                                </div>
-                            </section>
+                                    <h3 className="text-lg font-semibold mt-6">Reviewer Recognition</h3>
+                                    <ul className="list-disc pl-6 space-y-2">
+                                        <li>Annual acknowledgment in the journal</li>
+                                        <li>Certificate of contribution</li>
+                                        <li>Priority consideration for your submissions</li>
+                                        <li>Access to reviewer resources and workshops</li>
+                                    </ul>
+                                </CardContent>
+                            </Card>
                         </TabsContentHeadless>
                     </TabsHeadless>
+
+                    <div className="mt-8">
+                        <h2 className="text-2xl font-bold mb-4">Join Our Reviewer Pool</h2>
+                        <p className="text-muted-foreground mb-4">
+                            We&apos;re looking for experienced researchers to join our reviewer pool. If you&apos;re interested, please apply below.
+                        </p>
+                        <Button asChild>
+                            <Link href="/reviewer-application">Apply to be a Reviewer</Link>
+                        </Button>
+                    </div>
                 </div>
             </main>
         </MainLayout>
