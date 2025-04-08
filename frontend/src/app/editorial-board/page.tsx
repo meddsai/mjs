@@ -2,7 +2,7 @@
 
 import { MainLayout } from '@/core/components/layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/core/components/ui/avatar';
+import { PlaceholderAvatar } from '@/core/components/ui/placeholder-avatar';
 
 export default function EditorialBoardPage() {
     // Hardcoded data for now
@@ -10,21 +10,18 @@ export default function EditorialBoardPage() {
         editorInChief: {
             name: "Prof. Sarah Johnson",
             affiliation: "Stanford University",
-            bio: "Professor of Digital Publishing and Information Science with over 20 years of experience in academic publishing and digital transformation of scholarly communication.",
-            avatar: "/avatars/sarah-johnson.jpg"
+            bio: "Professor of Digital Publishing and Information Science with over 20 years of experience in academic publishing and digital transformation of scholarly communication."
         },
         associateEditors: [
             {
                 name: "Dr. Michael Chen",
                 affiliation: "MIT",
-                bio: "Expert in digital publishing platforms and open science initiatives.",
-                avatar: "/avatars/michael-chen.jpg"
+                bio: "Expert in digital publishing platforms and open science initiatives."
             },
             {
                 name: "Dr. Emily Williams",
                 affiliation: "Oxford University",
-                bio: "Specialist in scholarly communication and publication ethics.",
-                avatar: "/avatars/emily-williams.jpg"
+                bio: "Specialist in scholarly communication and publication ethics."
             }
         ],
         members: [
@@ -67,12 +64,7 @@ export default function EditorialBoardPage() {
                         <h2 className="text-2xl font-semibold mb-6">Editor-in-Chief</h2>
                         <Card className="mb-8">
                             <CardHeader className="flex flex-row items-center gap-4">
-                                <Avatar className="h-20 w-20">
-                                    <AvatarImage src={editorialBoard.editorInChief.avatar} />
-                                    <AvatarFallback>
-                                        {editorialBoard.editorInChief.name.split(' ').map(n => n[0]).join('')}
-                                    </AvatarFallback>
-                                </Avatar>
+                                <PlaceholderAvatar name={editorialBoard.editorInChief.name} className="h-20 w-20 text-2xl" />
                                 <div>
                                     <CardTitle>{editorialBoard.editorInChief.name}</CardTitle>
                                     <CardDescription>{editorialBoard.editorInChief.affiliation}</CardDescription>
@@ -90,12 +82,7 @@ export default function EditorialBoardPage() {
                             {editorialBoard.associateEditors.map((editor, index) => (
                                 <Card key={index}>
                                     <CardHeader className="flex flex-row items-center gap-4">
-                                        <Avatar>
-                                            <AvatarImage src={editor.avatar} />
-                                            <AvatarFallback>
-                                                {editor.name.split(' ').map(n => n[0]).join('')}
-                                            </AvatarFallback>
-                                        </Avatar>
+                                        <PlaceholderAvatar name={editor.name} />
                                         <div>
                                             <CardTitle>{editor.name}</CardTitle>
                                             <CardDescription>{editor.affiliation}</CardDescription>
@@ -112,9 +99,12 @@ export default function EditorialBoardPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {editorialBoard.members.map((member, index) => (
                                 <Card key={index}>
-                                    <CardHeader>
-                                        <CardTitle>{member.name}</CardTitle>
-                                        <CardDescription>{member.affiliation}</CardDescription>
+                                    <CardHeader className="flex flex-row items-center gap-4">
+                                        <PlaceholderAvatar name={member.name} />
+                                        <div>
+                                            <CardTitle>{member.name}</CardTitle>
+                                            <CardDescription>{member.affiliation}</CardDescription>
+                                        </div>
                                     </CardHeader>
                                     <CardContent>
                                         <p className="text-muted-foreground">{member.expertise}</p>

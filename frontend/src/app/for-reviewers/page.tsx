@@ -1,7 +1,12 @@
 "use client";
 
 import { MainLayout } from '@/core/components/layout';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/core/components/ui/tabs';
+import {
+    Tabs as TabsHeadless,
+    TabsContent as TabsContentHeadless,
+    TabsList as TabsListHeadless,
+    TabsTrigger as TabsTriggerHeadless,
+} from '@/core/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
 import { Button } from '@/core/components/ui/button';
 import Link from 'next/link';
@@ -13,14 +18,14 @@ export default function ForReviewersPage() {
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-3xl font-bold mb-6">Information for Reviewers</h1>
 
-                    <Tabs defaultValue="guidelines" className="w-full">
-                        <TabsList className="grid w-full grid-cols-3">
-                            <TabsTrigger value="guidelines">Guidelines</TabsTrigger>
-                            <TabsTrigger value="process">Review Process</TabsTrigger>
-                            <TabsTrigger value="benefits">Benefits</TabsTrigger>
-                        </TabsList>
+                    <TabsHeadless defaultIndex={0} className="w-full">
+                        <TabsListHeadless className="grid w-full grid-cols-3">
+                            <TabsTriggerHeadless>Guidelines</TabsTriggerHeadless>
+                            <TabsTriggerHeadless>Review Process</TabsTriggerHeadless>
+                            <TabsTriggerHeadless>Benefits</TabsTriggerHeadless>
+                        </TabsListHeadless>
 
-                        <TabsContent value="guidelines">
+                        <TabsContentHeadless>
                             <section className="space-y-6">
                                 <p className="text-muted-foreground mb-6">
                                     Thank you for your interest in reviewing for our journal. Your expertise helps ensure the quality of published research.
@@ -59,9 +64,9 @@ export default function ForReviewersPage() {
                                     </Card>
                                 </div>
                             </section>
-                        </TabsContent>
+                        </TabsContentHeadless>
 
-                        <TabsContent value="process">
+                        <TabsContentHeadless>
                             <section className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                                     <Card>
@@ -106,9 +111,9 @@ export default function ForReviewersPage() {
                                     </CardContent>
                                 </Card>
                             </section>
-                        </TabsContent>
+                        </TabsContentHeadless>
 
-                        <TabsContent value="benefits">
+                        <TabsContentHeadless>
                             <section className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                     <Card>
@@ -148,8 +153,8 @@ export default function ForReviewersPage() {
                                     </Button>
                                 </div>
                             </section>
-                        </TabsContent>
-                    </Tabs>
+                        </TabsContentHeadless>
+                    </TabsHeadless>
                 </div>
             </main>
         </MainLayout>

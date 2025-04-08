@@ -27,8 +27,19 @@ export {
 } from "./select"
 export { Textarea } from "./textarea"
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs"
+export {
+    Tabs as TabsHeadless,
+    TabsList as TabsListHeadless,
+    TabsTrigger as TabsTriggerHeadless,
+    TabsContent as TabsContentHeadless,
+} from "./tabs-headless"
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "./tooltip"
 export { Popover, PopoverTrigger, PopoverContent } from "./popover"
+export {
+    Popover as PopoverHeadless,
+    PopoverTrigger as PopoverTriggerHeadless,
+    PopoverContent as PopoverContentHeadless,
+} from "./popover-headless"
 export {
     Dialog,
     DialogPortal,
@@ -41,6 +52,15 @@ export {
     DialogTitle,
     DialogDescription,
 } from "./dialog"
+export {
+    Dialog as DialogHeadless,
+    DialogOverlay as DialogOverlayHeadless,
+    DialogContent as DialogContentHeadless,
+    DialogHeader as DialogHeaderHeadless,
+    DialogFooter as DialogFooterHeadless,
+    DialogTitle as DialogTitleHeadless,
+    DialogDescription as DialogDescriptionHeadless,
+} from "./dialog-headless"
 export {
     Sheet,
     SheetClose,
@@ -72,8 +92,29 @@ export {
     CarouselNext,
 } from "./carousel"
 export * from "./dropdown-menu"
+export {
+    DropdownMenu as DropdownMenuHeadless,
+    DropdownMenuTrigger as DropdownMenuTriggerHeadless,
+    DropdownMenuContent as DropdownMenuContentHeadless,
+    DropdownMenuItem as DropdownMenuItemHeadless,
+    DropdownMenuCheckboxItem as DropdownMenuCheckboxItemHeadless,
+    DropdownMenuRadioItem as DropdownMenuRadioItemHeadless,
+    DropdownMenuLabel as DropdownMenuLabelHeadless,
+    DropdownMenuSeparator as DropdownMenuSeparatorHeadless,
+    DropdownMenuShortcut as DropdownMenuShortcutHeadless,
+} from "./dropdown-menu-headless"
 export * from "./accordion"
-export * from "./alert-dialog"
+export {
+    AlertDialog as AlertDialogHeadless,
+    AlertDialogOverlay as AlertDialogOverlayHeadless,
+    AlertDialogContent as AlertDialogContentHeadless,
+    AlertDialogHeader as AlertDialogHeaderHeadless,
+    AlertDialogFooter as AlertDialogFooterHeadless,
+    AlertDialogTitle as AlertDialogTitleHeadless,
+    AlertDialogDescription as AlertDialogDescriptionHeadless,
+    AlertDialogAction as AlertDialogActionHeadless,
+    AlertDialogCancel as AlertDialogCancelHeadless,
+} from "./alert-dialog-headless"
 export * from "./aspect-ratio"
 export * from "./form"
 export * from "./hover-card"

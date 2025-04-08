@@ -13,9 +13,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <div className="min-h-screen flex flex-col">
             <Header />
             <Navigation />
-            <div className="flex-1">
+            <main role="main" className="flex-1 container mx-auto px-4">
                 {children}
-            </div>
+            </main>
             <Footer />
         </div>
     );

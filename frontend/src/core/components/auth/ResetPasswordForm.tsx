@@ -8,84 +8,69 @@ import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
 import { authService } from "@/core/services/auth";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Link } from "next/link";
+import Link from "next/link";
 
 const formSchema = z.object({
-    new_password: z.string().min(8, "Password must be at least 8 characters"),
-    confirm_password: z.string(),
-}).refine((data) => data.new_password === data.confirm_password, {
-    message: "Passwords don't match",
-    path: ["confirm_password"],
+    password: z.string()
+        .min(8, "Password must be at least 8 characters")
+        .max(100, "Password must be less than 100 characters"),
+    confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function ResetPasswordForm() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const token = searchParams.get('token');
+interface ResetPasswordFormProps {
+    token: string;
+    onSuccess?: () => void;
+}
 
+export function ResetPasswordForm({ token, onSuccess }: ResetPasswordFormProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            new_password: "",
-            confirm_password: "",
+            password: "",
+            confirmPassword: "",
         },
     });
 
     const handleSubmit = async (values: FormValues) => {
-        if (!token) {
-            setError("Invalid reset link. Please request a new one.");
-            return;
-        }
-
         try {
             setError(null);
             setIsLoading(true);
             await authService.resetPassword({
                 token,
-                new_password: values.new_password,
+                password: values.password,
             });
-            router.push('/login?message=password_reset_success');
+            onSuccess?.();
         } catch (err: Error | unknown) {
-            setError(err instanceof Error ? err.message : "Password reset failed. Please try again.");
+            setError(err instanceof Error ? err.message : "Failed to reset password. Please try again.");
         } finally {
             setIsLoading(false);
         }
     };
 
-    if (!token) {
-        return (
-            <div className="space-y-4 text-center">
-                <h3 className="text-lg font-medium">Invalid Reset Link</h3>
-                <p className="text-sm text-muted-foreground">
-                    The password reset link is invalid or has expired. Please request a new one.
-                </p>
-                <Button variant="outline" asChild>
-                    <Link href="/forgot-password">Request New Link</Link>
-                </Button>
-            </div>
-        );
-    }
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                 {error && (
-                    <div className="text-sm text-red-500 text-center">{error}</div>
+                    <div className="text-sm text-red-500 text-center">
+                        {error}
+                    </div>
                 )}
                 <FormField
                     control={form.control}
-                    name="new_password"
+                    name="password"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>New Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="Enter new password" {...field} />
+                                <Input type="password" placeholder="Enter your new password" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -93,12 +78,12 @@ export function ResetPasswordForm() {
                 />
                 <FormField
                     control={form.control}
-                    name="confirm_password"
+                    name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Confirm Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="Confirm new password" {...field} />
+                                <Input type="password" placeholder="Confirm your new password" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -107,6 +92,12 @@ export function ResetPasswordForm() {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Resetting..." : "Reset Password"}
                 </Button>
+                <div className="text-sm text-center text-muted-foreground">
+                    Remember your password?{" "}
+                    <Link href="/login" className="text-primary hover:underline">
+                        Sign in
+                    </Link>
+                </div>
             </form>
         </Form>
     );

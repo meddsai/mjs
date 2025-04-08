@@ -1,6 +1,6 @@
 "use client";
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/core/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/core/components/ui/dialog-headless";
 import { Button } from "@/core/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -18,8 +18,8 @@ export function RegistrationSuccessModal({ isOpen, onClose }: RegistrationSucces
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-md">
+        <Dialog open={isOpen} onClose={onClose}>
+            <DialogContent onClose={onClose} className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>Registration Successful!</DialogTitle>
                     <DialogDescription>

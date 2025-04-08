@@ -1,27 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/core/components/ui/card";
 import { RegisterForm } from "@/core/components/auth/RegisterForm";
-import Link from "next/link";
 import { RegistrationSuccessModal } from "@/core/components/auth/RegistrationSuccessModal";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-    const handleRegister = async (email: string, password: string, name: string) => {
-        setIsLoading(true);
-        try {
-            // TODO: Implement registration logic
-            setShowSuccessModal(true);
-        } catch (error) {
-            console.error("Registration failed:", error);
-        } finally {
-            setIsLoading(false);
-        }
+    const handleSuccess = () => {
+        setShowSuccessModal(true);
     };
 
     const handleCloseModal = () => {
@@ -30,31 +19,22 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-muted/40 px-4">
-            <Card className="w-full max-w-md">
-                <CardHeader className="space-y-1 text-center">
-                    <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-                    <CardDescription>
-                        Enter your information to create your account
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <RegisterForm
-                        onSubmit={handleRegister}
-                        isLoading={isLoading}
-                    />
-                </CardContent>
-                <div className="text-center text-sm text-muted-foreground mb-4">
-                    Already have an account?{" "}
-                    <Link href="/login" className="text-primary hover:underline">
-                        Sign in
-                    </Link>
+        <div className="min-h-screen flex items-center justify-center bg-background">
+            <div className="w-full max-w-md p-6 space-y-6">
+                <div className="space-y-2 text-center">
+                    <h1 className="text-2xl font-bold">Create an Account</h1>
+                    <p className="text-muted-foreground">
+                        Enter your information to create an account
+                    </p>
                 </div>
-            </Card>
 
-            {showSuccessModal && (
-                <RegistrationSuccessModal onClose={handleCloseModal} />
-            )}
+                <RegisterForm onSuccess={handleSuccess} />
+
+                <RegistrationSuccessModal
+                    isOpen={showSuccessModal}
+                    onClose={handleCloseModal}
+                />
+            </div>
         </div>
     );
 }

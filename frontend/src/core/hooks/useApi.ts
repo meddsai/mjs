@@ -29,7 +29,10 @@ export function useApi<T>(
             if (response.error) {
                 setState((prev) => ({
                     ...prev,
-                    error: { message: response.error, status: response.status },
+                    error: {
+                        message: response.error || "An unknown error occurred",
+                        status: response.status
+                    },
                     isLoading: false,
                 }));
             } else {

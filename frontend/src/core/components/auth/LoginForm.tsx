@@ -8,7 +8,7 @@ import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
 import { authService } from "@/core/services/auth";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
@@ -18,12 +18,11 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface LoginFormProps {
-    onSubmit?: (data: FormValues) => Promise<void>;
-    isLoading?: boolean;
+    onSuccess?: () => void;
 }
 
-export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
-    const router = useRouter();
+export function LoginForm({ onSuccess }: LoginFormProps) {
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const form = useForm<FormValues>({
@@ -37,16 +36,17 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
     const handleSubmit = async (values: FormValues) => {
         try {
             setError(null);
-            if (onSubmit) {
-                await onSubmit(values);
-            } else {
-                const response = await authService.login(values);
+            setIsLoading(true);
+            const response = await authService.login(values);
+            if (response?.token && response?.user) {
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('user', JSON.stringify(response.user));
-                router.push('/dashboard');
+                onSuccess?.();
             }
         } catch (err: Error | unknown) {
             setError(err instanceof Error ? err.message : "Invalid credentials");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -54,7 +54,9 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                 {error && (
-                    <div className="text-sm text-red-500 text-center">{error}</div>
+                    <div className="text-sm text-red-500 text-center">
+                        {error}
+                    </div>
                 )}
                 <FormField
                     control={form.control}
@@ -85,6 +87,11 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
+                <div className="text-sm text-center text-muted-foreground">
+                    <Link href="/forgot-password" className="text-primary hover:underline">
+                        Forgot password?
+                    </Link>
+                </div>
             </form>
         </Form>
     );

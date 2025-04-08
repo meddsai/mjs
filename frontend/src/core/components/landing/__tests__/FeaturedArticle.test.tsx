@@ -41,7 +41,7 @@ describe('FeaturedArticle', () => {
     it('renders article link', () => {
         render(<FeaturedArticle article={mockArticle} />);
 
-        const articleLink = screen.getByText('Read More');
+        const articleLink = screen.getByText('Read Full Article');
         expect(articleLink).toBeInTheDocument();
         expect(articleLink.closest('a')).toHaveAttribute('href', '/article/1');
     });

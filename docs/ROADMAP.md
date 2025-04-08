@@ -18,14 +18,14 @@ This roadmap outlines the development strategy for the Modern Journal Systems (M
   - [x] Configure TypeScript
   - [x] Set up ESLint/Prettier
   - [x] Implement hot-reload
-- [x] Create development environment documentation
-  - [x] Document setup procedures
-  - [x] Create troubleshooting guides
-  - [x] Define development standards
-- [x] Set up development workflow guidelines
-  - [x] Git workflow (feature branches, PR templates)
-  - [x] Code review process
-  - [x] Documentation requirements
+  - [x] Create development environment documentation
+    - [x] Document setup procedures
+    - [x] Create troubleshooting guides
+    - [x] Define development standards
+  - [x] Set up development workflow guidelines
+    - [x] Git workflow (feature branches, PR templates)
+    - [x] Code review process
+    - [x] Documentation requirements
 - [x] Configure CI/CD pipelines
   - [x] Set up GitHub Actions workflows
   - [x] Configure automated testing

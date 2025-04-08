@@ -8,12 +8,14 @@ import { Button } from "@/core/components/ui/button";
 import { Input } from "@/core/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
 import { authService } from "@/core/services/auth";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const formSchema = z.object({
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
     name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Please enter a valid email address"),
+    password: z.string()
+        .min(8, "Password must be at least 8 characters")
+        .max(100, "Password must be less than 100 characters"),
     institution: z.string().optional(),
     department: z.string().optional(),
 });
@@ -21,20 +23,19 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface RegisterFormProps {
-    onSubmit?: (data: FormValues) => Promise<void>;
-    isLoading?: boolean;
+    onSuccess?: () => void;
 }
 
-export function RegisterForm({ onSubmit, isLoading = false }: RegisterFormProps) {
-    const router = useRouter();
+export function RegisterForm({ onSuccess }: RegisterFormProps) {
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
+            name: "",
             email: "",
             password: "",
-            name: "",
             institution: "",
             department: "",
         },
@@ -43,16 +44,17 @@ export function RegisterForm({ onSubmit, isLoading = false }: RegisterFormProps)
     const handleSubmit = async (values: FormValues) => {
         try {
             setError(null);
-            if (onSubmit) {
-                await onSubmit(values);
-            } else {
-                const response = await authService.register(values);
+            setIsLoading(true);
+            const response = await authService.register(values);
+            if (response?.token && response?.user) {
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('user', JSON.stringify(response.user));
-                router.push('/dashboard');
+                onSuccess?.();
             }
         } catch (err: Error | unknown) {
             setError(err instanceof Error ? err.message : "Registration failed. Please try again.");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -60,14 +62,16 @@ export function RegisterForm({ onSubmit, isLoading = false }: RegisterFormProps)
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                 {error && (
-                    <div className="text-sm text-red-500 text-center">{error}</div>
+                    <div className="text-sm text-red-500 text-center">
+                        {error}
+                    </div>
                 )}
                 <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Full Name</FormLabel>
+                            <FormLabel>Name</FormLabel>
                             <FormControl>
                                 <Input placeholder="Enter your full name" {...field} />
                             </FormControl>
@@ -95,7 +99,7 @@ export function RegisterForm({ onSubmit, isLoading = false }: RegisterFormProps)
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="Enter your password" {...field} />
+                                <Input type="password" placeholder="Create a password" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -130,6 +134,12 @@ export function RegisterForm({ onSubmit, isLoading = false }: RegisterFormProps)
                 <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? "Creating account..." : "Create account"}
                 </Button>
+                <div className="text-sm text-center text-muted-foreground">
+                    Already have an account?{" "}
+                    <Link href="/login" className="text-primary hover:underline">
+                        Sign in
+                    </Link>
+                </div>
             </form>
         </Form>
     );

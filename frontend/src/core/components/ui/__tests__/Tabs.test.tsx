@@ -17,7 +17,7 @@ describe('Tabs', () => {
         expect(screen.getByText('Tab 1')).toBeInTheDocument();
         expect(screen.getByText('Tab 2')).toBeInTheDocument();
         expect(screen.getByText('Content 1')).toBeInTheDocument();
-        expect(screen.queryByText('Content 2')).not.toBeVisible();
+        expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
     });
 
     it('switches content when tab is clicked', () => {
@@ -32,12 +32,15 @@ describe('Tabs', () => {
             </Tabs>
         );
 
-        fireEvent.click(screen.getByText('Tab 2'));
-        expect(screen.queryByText('Content 1')).not.toBeVisible();
-        expect(screen.getByText('Content 2')).toBeVisible();
+        // Click second tab
+        fireEvent.click(screen.getByRole('tab', { name: 'Tab 2' }));
+
+        // First tab content should be hidden, second tab content should be visible
+        expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
+        expect(screen.getByText('Content 2')).toBeInTheDocument();
     });
 
-    it('applies correct classes to active tab', () => {
+    it('applies correct ARIA attributes to tabs', () => {
         render(
             <Tabs defaultValue="tab1">
                 <TabsList>
@@ -49,14 +52,20 @@ describe('Tabs', () => {
             </Tabs>
         );
 
-        const tab1 = screen.getByText('Tab 1').closest('button');
-        const tab2 = screen.getByText('Tab 2').closest('button');
+        // Initial state
+        const tab1 = screen.getByRole('tab', { name: 'Tab 1' });
+        const tab2 = screen.getByRole('tab', { name: 'Tab 2' });
 
-        expect(tab1).toHaveClass('data-[state=active]:bg-primary');
-        expect(tab2).not.toHaveClass('data-[state=active]:bg-primary');
+        expect(tab1).toHaveAttribute('data-state', 'active');
+        expect(tab2).toHaveAttribute('data-state', 'inactive');
 
-        fireEvent.click(screen.getByText('Tab 2'));
-        expect(tab1).not.toHaveClass('data-[state=active]:bg-primary');
-        expect(tab2).toHaveClass('data-[state=active]:bg-primary');
+        // After clicking second tab
+        fireEvent.click(tab2);
+
+        // Need to get fresh references since Radix UI might remount the elements
+        const updatedTab1 = screen.getByRole('tab', { name: 'Tab 1' });
+        const updatedTab2 = screen.getByRole('tab', { name: 'Tab 2' });
+        expect(updatedTab1).toHaveAttribute('data-state', 'inactive');
+        expect(updatedTab2).toHaveAttribute('data-state', 'active');
     });
 });
