@@ -9,6 +9,7 @@ import { Input } from "@/core/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
 import { authService } from "@/core/services/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
@@ -22,6 +23,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSuccess }: LoginFormProps) {
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -84,9 +86,19 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Signing in..." : "Sign in"}
-                </Button>
+                <div className="flex gap-2">
+                    <Button type="submit" className="flex-1" disabled={isLoading}>
+                        {isLoading ? "Signing in..." : "Sign in"}
+                    </Button>
+                    <Button 
+                        type="button" 
+                        variant="outline" 
+                        className="flex-1"
+                        onClick={() => router.push('/')}
+                    >
+                        Cancel
+                    </Button>
+                </div>
                 <div className="text-sm text-center text-muted-foreground">
                     <Link href="/forgot-password" className="text-primary hover:underline">
                         Forgot password?
