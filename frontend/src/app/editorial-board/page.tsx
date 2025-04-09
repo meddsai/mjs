@@ -1,51 +1,57 @@
-"use client";
+'use client';
 
 import { MainLayout } from '@/core/components/layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
 import { PlaceholderAvatar } from '@/core/components/ui/placeholder-avatar';
 
 export default function EditorialBoardPage() {
     // Hardcoded data for now
     const editorialBoard = {
         editorInChief: {
-            name: "Prof. Sarah Johnson",
-            affiliation: "Stanford University",
-            bio: "Professor of Digital Publishing and Information Science with over 20 years of experience in academic publishing and digital transformation of scholarly communication."
+            name: 'Prof. Sarah Johnson',
+            affiliation: 'Stanford University',
+            bio: 'Professor of Digital Publishing and Information Science with over 20 years of experience in academic publishing and digital transformation of scholarly communication.',
         },
         associateEditors: [
             {
-                name: "Dr. Michael Chen",
-                affiliation: "MIT",
-                bio: "Expert in digital publishing platforms and open science initiatives."
+                name: 'Dr. Michael Chen',
+                affiliation: 'MIT',
+                bio: 'Expert in digital publishing platforms and open science initiatives.',
             },
             {
-                name: "Dr. Emily Williams",
-                affiliation: "Oxford University",
-                bio: "Specialist in scholarly communication and publication ethics."
-            }
+                name: 'Dr. Emily Williams',
+                affiliation: 'Oxford University',
+                bio: 'Specialist in scholarly communication and publication ethics.',
+            },
         ],
         members: [
             {
-                name: "Prof. David Lee",
-                affiliation: "University of California, Berkeley",
-                expertise: "Digital Libraries and Information Systems"
+                name: 'Prof. David Lee',
+                affiliation: 'University of California, Berkeley',
+                expertise: 'Digital Libraries and Information Systems',
             },
             {
-                name: "Dr. Maria Garcia",
-                affiliation: "Harvard University",
-                expertise: "Publication Ethics and Research Integrity"
+                name: 'Dr. Maria Garcia',
+                affiliation: 'Harvard University',
+                expertise: 'Publication Ethics and Research Integrity',
             },
             {
-                name: "Prof. James Wilson",
-                affiliation: "University of Cambridge",
-                expertise: "Scholarly Communication and Metrics"
+                name: 'Prof. James Wilson',
+                affiliation: 'University of Cambridge',
+                expertise: 'Scholarly Communication and Metrics',
             },
             {
-                name: "Dr. Lisa Brown",
-                affiliation: "University of Toronto",
-                expertise: "Open Access Publishing and Policy"
-            }
-        ]
+                name: 'Dr. Lisa Brown',
+                affiliation: 'University of Toronto',
+                expertise: 'Open Access Publishing and Policy',
+            },
+        ],
     };
 
     return (
@@ -56,18 +62,24 @@ export default function EditorialBoardPage() {
 
                     <section className="mb-8">
                         <p className="text-muted-foreground mb-8">
-                            Our Editorial Board consists of leading experts in digital publishing and academic communication.
-                            The board plays a vital role in maintaining academic standards, overseeing the peer-review process,
-                            and guiding strategic direction.
+                            Our Editorial Board consists of leading experts in digital publishing
+                            and academic communication. The board plays a vital role in maintaining
+                            academic standards, overseeing the peer-review process, and guiding
+                            strategic direction.
                         </p>
 
                         <h2 className="text-2xl font-semibold mb-6">Editor-in-Chief</h2>
                         <Card className="mb-8">
                             <CardHeader className="flex flex-row items-center gap-4">
-                                <PlaceholderAvatar name={editorialBoard.editorInChief.name} className="h-20 w-20 text-2xl" />
+                                <PlaceholderAvatar
+                                    name={editorialBoard.editorInChief.name}
+                                    className="h-20 w-20 text-2xl"
+                                />
                                 <div>
                                     <CardTitle>{editorialBoard.editorInChief.name}</CardTitle>
-                                    <CardDescription>{editorialBoard.editorInChief.affiliation}</CardDescription>
+                                    <CardDescription>
+                                        {editorialBoard.editorInChief.affiliation}
+                                    </CardDescription>
                                 </div>
                             </CardHeader>
                             <CardContent>

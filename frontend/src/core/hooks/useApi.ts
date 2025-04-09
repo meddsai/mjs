@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { ApiResponse, ApiError } from "@/core/config/api";
+import { useState } from 'react';
+import { ApiResponse, ApiError } from '@/core/config/api';
 
 interface UseApiState<T> {
     data: T | null;
@@ -12,9 +12,7 @@ interface UseApiResponse<T> extends UseApiState<T> {
     reset: () => void;
 }
 
-export function useApi<T>(
-    apiCall: () => Promise<ApiResponse<T>>
-): UseApiResponse<T> {
+export function useApi<T>(apiCall: () => Promise<ApiResponse<T>>): UseApiResponse<T> {
     const [state, setState] = useState<UseApiState<T>>({
         data: null,
         error: null,
@@ -30,8 +28,8 @@ export function useApi<T>(
                 setState((prev) => ({
                     ...prev,
                     error: {
-                        message: response.error || "An unknown error occurred",
-                        status: response.status
+                        message: response.error || 'An unknown error occurred',
+                        status: response.status,
                     },
                     isLoading: false,
                 }));
@@ -45,9 +43,10 @@ export function useApi<T>(
         } catch (error) {
             setState((prev) => ({
                 ...prev,
-                error: error instanceof Error
-                    ? { message: error.message, status: 500 }
-                    : { message: "An unknown error occurred", status: 500 },
+                error:
+                    error instanceof Error
+                        ? { message: error.message, status: 500 }
+                        : { message: 'An unknown error occurred', status: 500 },
                 isLoading: false,
             }));
         }

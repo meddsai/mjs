@@ -223,7 +223,26 @@ The system uses PostgreSQL with the following tables:
    - Implement form validation
    - Follow responsive design principles
 
-4. **Security**:
+4. **Code Quality and Formatting**:
+   - Install pre-commit hooks: `pre-commit install`
+   - Install pre-push hooks: `pre-commit install --hook-type pre-push`
+   - Required global dependencies:
+     ```bash
+     # Install Node.js (if not already installed)
+     curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+     sudo apt-get install -y nodejs
+
+     # Install Prettier and Tailwind CSS plugin
+     npm install -g prettier prettier-plugin-tailwindcss
+     ```
+   - Pre-commit hooks include:
+     - Frontend: Type checking, linting, and Prettier formatting
+     - Backend: Rust formatting and Python code style
+     - General: YAML validation, whitespace checks, and security checks
+   - Heavy checks (tests, builds) run on push stage
+   - Lightweight checks (formatting, linting) run on commit stage
+
+5. **Security**:
    - Store sensitive data in environment variables
    - Implement proper authentication and authorization
    - Sanitize user inputs

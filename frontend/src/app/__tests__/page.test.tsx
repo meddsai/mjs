@@ -12,9 +12,11 @@ describe('Home', () => {
     it('renders the description', () => {
         render(<Home />);
         const description = screen.getByText((content, element) => {
-            return element?.tagName.toLowerCase() === 'p' &&
+            return (
+                element?.tagName.toLowerCase() === 'p' &&
                 element?.className.includes('text-primary-foreground') &&
-                content.includes('Modern Journal Systems');
+                content.includes('Modern Journal Systems')
+            );
         });
         expect(description).toBeInTheDocument();
     });

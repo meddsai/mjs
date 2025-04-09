@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function Footer() {
     return (
@@ -11,12 +11,11 @@ export default function Footer() {
                     <div>
                         <h3 className="font-bold mb-4">MJS Journal</h3>
                         <p className="text-sm text-muted-foreground mb-4">
-                            Modern Journal Systems<br />
+                            Modern Journal Systems
+                            <br />
                             Template-Based Academic Publishing
                         </p>
-                        <p className="text-sm text-muted-foreground">
-                            ISSN: 2345-XXXX
-                        </p>
+                        <p className="text-sm text-muted-foreground">ISSN: 2345-XXXX</p>
                     </div>
 
                     {/* For Authors */}
@@ -24,22 +23,34 @@ export default function Footer() {
                         <h3 className="font-bold mb-4">For Authors</h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <Link href="/submit-manuscript" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/submit-manuscript"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Submit Manuscript
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/author-guidelines" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/author-guidelines"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Author Guidelines
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/publication-ethics" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/publication-ethics"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Publication Ethics
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/publication-fees" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/publication-fees"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Publication Fees
                                 </Link>
                             </li>
@@ -51,22 +62,34 @@ export default function Footer() {
                         <h3 className="font-bold mb-4">Journal Info</h3>
                         <ul className="space-y-2 text-sm">
                             <li>
-                                <Link href="/about" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/about"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     About the Journal
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/editorial-board" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/editorial-board"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Editorial Board
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/indexing" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/indexing"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Indexing & Impact
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/contact" className="text-muted-foreground hover:text-primary">
+                                <Link
+                                    href="/contact"
+                                    className="text-muted-foreground hover:text-primary"
+                                >
                                     Contact
                                 </Link>
                             </li>

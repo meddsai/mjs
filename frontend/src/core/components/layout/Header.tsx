@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { SearchIcon } from "lucide-react";
+import Link from 'next/link';
+import { SearchIcon } from 'lucide-react';
 
 export default function Header() {
     return (
@@ -10,14 +10,22 @@ export default function Header() {
             <div className="bg-background py-2 border-b">
                 <div className="container mx-auto px-4 flex justify-between items-center">
                     <div className="flex items-center gap-4 text-sm">
-                        <Link href="/browse-templates" className="hover:text-primary">Browse Templates</Link>
+                        <Link href="/browse-templates" className="hover:text-primary">
+                            Browse Templates
+                        </Link>
                         <span className="text-muted-foreground">|</span>
-                        <Link href="/documentation" className="hover:text-primary">Documentation</Link>
+                        <Link href="/documentation" className="hover:text-primary">
+                            Documentation
+                        </Link>
                     </div>
                     <div className="flex items-center gap-4 text-sm">
-                        <Link href="/login" className="hover:text-primary">Log in</Link>
+                        <Link href="/login" className="hover:text-primary">
+                            Log in
+                        </Link>
                         <span className="text-muted-foreground">|</span>
-                        <Link href="/register" className="hover:text-primary">Register</Link>
+                        <Link href="/register" className="hover:text-primary">
+                            Register
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -28,10 +36,13 @@ export default function Header() {
                     <div className="flex flex-col md:flex-row justify-between items-center">
                         <div className="flex items-center">
                             <Link href="/" className="flex items-start">
-                                <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground">MJS</h1>
+                                <h1 className="text-3xl md:text-4xl font-bold text-primary-foreground">
+                                    MJS
+                                </h1>
                                 <div className="ml-4 border-l border-primary-foreground/30 pl-4">
                                     <p className="text-sm md:text-base text-primary-foreground">
-                                        Modern Journal Systems<br />
+                                        Modern Journal Systems
+                                        <br />
                                         Create your academic journal
                                     </p>
                                 </div>

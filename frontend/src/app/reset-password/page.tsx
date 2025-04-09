@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useSearchParams, useRouter } from "next/navigation";
-import { ResetPasswordForm } from "@/core/components/auth/ResetPasswordForm";
-import { Button } from "@/core/components/ui/button";
-import Link from "next/link";
+import { useSearchParams, useRouter } from 'next/navigation';
+import { ResetPasswordForm } from '@/core/components/auth/ResetPasswordForm';
+import { Button } from '@/core/components/ui/button';
+import Link from 'next/link';
 
 export default function ResetPasswordPage() {
     const router = useRouter();
@@ -35,9 +35,7 @@ export default function ResetPasswordPage() {
             <div className="w-full max-w-md p-6 space-y-6">
                 <div className="space-y-2 text-center">
                     <h1 className="text-2xl font-bold">Reset Password</h1>
-                    <p className="text-muted-foreground">
-                        Enter your new password
-                    </p>
+                    <p className="text-muted-foreground">Enter your new password</p>
                 </div>
 
                 <ResetPasswordForm token={token} onSuccess={handleSuccess} />

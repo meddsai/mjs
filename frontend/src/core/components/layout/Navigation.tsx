@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { MenuIcon, X } from "lucide-react";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import Link from 'next/link';
+import { MenuIcon, X } from 'lucide-react';
+import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,64 +18,71 @@ export default function Navigation() {
                     <div className="hidden md:flex space-x-8">
                         <Link
                             href="/"
-                            className={`py-4 ${isActive('/')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             Home
                         </Link>
                         <Link
                             href="/current-issue"
-                            className={`py-4 ${isActive('/current-issue')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/current-issue')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             Current Issue
                         </Link>
                         <Link
                             href="/archives"
-                            className={`py-4 ${isActive('/archives')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/archives')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             Archives
                         </Link>
                         <Link
                             href="/for-authors"
-                            className={`py-4 ${isActive('/for-authors')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/for-authors')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             For Authors
                         </Link>
                         <Link
                             href="/for-reviewers"
-                            className={`py-4 ${isActive('/for-reviewers')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/for-reviewers')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             For Reviewers
                         </Link>
                         <Link
                             href="/editorial-board"
-                            className={`py-4 ${isActive('/editorial-board')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/editorial-board')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             Editorial Board
                         </Link>
                         <Link
                             href="/about"
-                            className={`py-4 ${isActive('/about')
-                                ? 'text-primary border-b-2 border-primary'
-                                : 'text-foreground hover:text-primary'
-                                }`}
+                            className={`py-4 ${
+                                isActive('/about')
+                                    ? 'text-primary border-b-2 border-primary'
+                                    : 'text-foreground hover:text-primary'
+                            }`}
                         >
                             About
                         </Link>
@@ -85,7 +92,11 @@ export default function Navigation() {
                         className="md:hidden p-2"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
-                        {mobileMenuOpen ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
+                        {mobileMenuOpen ? (
+                            <X className="h-6 w-6" />
+                        ) : (
+                            <MenuIcon className="h-6 w-6" />
+                        )}
                     </button>
                 </div>
 

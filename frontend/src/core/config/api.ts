@@ -29,7 +29,7 @@ export const handleApiError = (error: Error | unknown): ApiError => {
         };
     }
     return {
-        message: "An unknown error occurred",
+        message: 'An unknown error occurred',
         status: 500,
     };
 };

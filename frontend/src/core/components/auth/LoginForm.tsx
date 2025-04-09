@@ -1,19 +1,26 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/core/components/ui/button";
-import { Input } from "@/core/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
-import { authService } from "@/core/services/auth";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/core/components/ui/button';
+import { Input } from '@/core/components/ui/input';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/core/components/ui/form';
+import { authService } from '@/core/services/auth';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
-    email: z.string().email("Please enter a valid email address"),
-    password: z.string().min(1, "Password is required"),
+    email: z.string().email('Please enter a valid email address'),
+    password: z.string().min(1, 'Password is required'),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -30,8 +37,8 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
-            password: "",
+            email: '',
+            password: '',
         },
     });
 
@@ -46,7 +53,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                 onSuccess?.();
             }
         } catch (err: Error | unknown) {
-            setError(err instanceof Error ? err.message : "Invalid credentials");
+            setError(err instanceof Error ? err.message : 'Invalid credentials');
         } finally {
             setIsLoading(false);
         }
@@ -55,11 +62,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-                {error && (
-                    <div className="text-sm text-red-500 text-center">
-                        {error}
-                    </div>
-                )}
+                {error && <div className="text-sm text-red-500 text-center">{error}</div>}
                 <FormField
                     control={form.control}
                     name="email"
@@ -80,7 +83,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="Enter your password" {...field} />
+                                <Input
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -88,11 +95,11 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                 />
                 <div className="flex gap-2">
                     <Button type="submit" className="flex-1" disabled={isLoading}>
-                        {isLoading ? "Signing in..." : "Sign in"}
+                        {isLoading ? 'Signing in...' : 'Sign in'}
                     </Button>
-                    <Button 
-                        type="button" 
-                        variant="outline" 
+                    <Button
+                        type="button"
+                        variant="outline"
                         className="flex-1"
                         onClick={() => router.push('/')}
                     >

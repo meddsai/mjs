@@ -20,13 +20,18 @@ const AboutPage = () => {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
                             <p className="text-gray-700 mb-4">
-                                Modern Journal Systems (MJS) is a next-generation scholarly publishing platform that can be customized for any academic journal.
-                                Our mission is to provide a modern, flexible, and user-friendly platform for academic publishing that meets the needs of researchers,
-                                editors, and readers in the digital age.
+                                Modern Journal Systems (MJS) is a next-generation scholarly
+                                publishing platform that can be customized for any academic journal.
+                                Our mission is to provide a modern, flexible, and user-friendly
+                                platform for academic publishing that meets the needs of
+                                researchers, editors, and readers in the digital age.
                             </p>
                             <p className="text-gray-700 mb-6">
-                                MJS provides an interdisciplinary platform for researchers, clinicians, and technologists to collaborate on innovative solutions.
-                                The platform welcomes original research, systematic reviews, clinical applications, and technological advancements across various fields.
+                                MJS provides an interdisciplinary platform for researchers,
+                                clinicians, and technologists to collaborate on innovative
+                                solutions. The platform welcomes original research, systematic
+                                reviews, clinical applications, and technological advancements
+                                across various fields.
                             </p>
                         </section>
                     </TabsContent>
@@ -35,9 +40,11 @@ const AboutPage = () => {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold mb-4">Platform History</h2>
                             <p className="text-gray-700 mb-6">
-                                MJS was established in 2024 in response to the need for modern, flexible journal management systems.
-                                Built by a team of researchers and developers with experience in both academic publishing and software development,
-                                the platform aims to bridge the gap between traditional publishing and modern technology.
+                                MJS was established in 2024 in response to the need for modern,
+                                flexible journal management systems. Built by a team of researchers
+                                and developers with experience in both academic publishing and
+                                software development, the platform aims to bridge the gap between
+                                traditional publishing and modern technology.
                             </p>
 
                             <div className="relative border-l-2 border-primary/30 pl-6 ml-4 space-y-8 mb-6">
@@ -47,8 +54,9 @@ const AboutPage = () => {
                                     </div>
                                     <h3 className="font-semibold mb-2">Planning Phase (2023)</h3>
                                     <p className="text-sm text-gray-700">
-                                        Initial planning and scope definition took place, focusing on creating a flexible platform
-                                        that could be customized for different types of academic journals.
+                                        Initial planning and scope definition took place, focusing
+                                        on creating a flexible platform that could be customized for
+                                        different types of academic journals.
                                     </p>
                                 </div>
                             </div>

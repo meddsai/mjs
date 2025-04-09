@@ -1,11 +1,23 @@
 import React from 'react';
 import { MainLayout } from '@/core/components/layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
 import { Button } from '@/core/components/ui/button';
 import { Input } from '@/core/components/ui/input';
 import { Label } from '@/core/components/ui/label';
 import { Textarea } from '@/core/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/core/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/core/components/ui/select';
 
 const ContactPage = () => {
     return (
@@ -29,16 +41,20 @@ const ContactPage = () => {
                             <div>
                                 <h3 className="font-semibold mb-2">Address</h3>
                                 <p className="text-muted-foreground">
-                                    MJS Platform<br />
-                                    Department of Research<br />
-                                    University of Technology<br />
+                                    MJS Platform
+                                    <br />
+                                    Department of Research
+                                    <br />
+                                    University of Technology
+                                    <br />
                                     City, Country
                                 </p>
                             </div>
                             <div>
                                 <h3 className="font-semibold mb-2">Office Hours</h3>
                                 <p className="text-muted-foreground">
-                                    Monday - Friday: 9:00 AM - 5:00 PM<br />
+                                    Monday - Friday: 9:00 AM - 5:00 PM
+                                    <br />
                                     Saturday - Sunday: Closed
                                 </p>
                             </div>
@@ -49,7 +65,8 @@ const ContactPage = () => {
                         <CardHeader>
                             <CardTitle>Send a Message</CardTitle>
                             <CardDescription>
-                                Fill out the form below and we&apos;ll get back to you as soon as possible.
+                                Fill out the form below and we&apos;ll get back to you as soon as
+                                possible.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -61,7 +78,9 @@ const ContactPage = () => {
                                             <SelectValue placeholder="Select a subject" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="support">Technical Support</SelectItem>
+                                            <SelectItem value="support">
+                                                Technical Support
+                                            </SelectItem>
                                             <SelectItem value="billing">Billing Inquiry</SelectItem>
                                             <SelectItem value="feature">Feature Request</SelectItem>
                                             <SelectItem value="other">Other</SelectItem>
@@ -88,7 +107,9 @@ const ContactPage = () => {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full">Send Message</Button>
+                                <Button type="submit" className="w-full">
+                                    Send Message
+                                </Button>
                             </form>
                         </CardContent>
                     </Card>

@@ -13,7 +13,7 @@ const publicRoutes = [
     '/for-authors',
     '/for-reviewers',
     '/editorial-board',
-    '/about'
+    '/about',
 ];
 
 // List of protected routes that require authentication
@@ -22,7 +22,7 @@ const protectedRoutes = [
     '/submissions',
     '/profile',
     '/reviewer-application',
-    '/reviewer-dashboard'
+    '/reviewer-dashboard',
 ];
 
 export function middleware(request: NextRequest) {
@@ -35,7 +35,7 @@ export function middleware(request: NextRequest) {
     }
 
     // Redirect to login if no token is present and route is protected
-    if (!token && protectedRoutes.some(route => pathname.startsWith(route))) {
+    if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
         const loginUrl = new URL('/login', request.url);
         loginUrl.searchParams.set('redirect', pathname);
         return NextResponse.redirect(loginUrl);

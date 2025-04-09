@@ -1,37 +1,40 @@
-"use client";
+'use client';
 
-import { Layout, Settings, Code, Database, Shield, Zap } from "lucide-react";
+import { Layout, Settings, Code, Database, Shield, Zap } from 'lucide-react';
 
 export const Features = () => {
     const features = [
         {
-            title: "Customizable Templates",
-            description: "Choose from a variety of professionally designed templates and customize them to match your journal's needs.",
+            title: 'Customizable Templates',
+            description:
+                "Choose from a variety of professionally designed templates and customize them to match your journal's needs.",
             icon: Layout,
         },
         {
-            title: "Easy Configuration",
-            description: "Configure your journal settings, workflows, and permissions with an intuitive interface.",
+            title: 'Easy Configuration',
+            description:
+                'Configure your journal settings, workflows, and permissions with an intuitive interface.',
             icon: Settings,
         },
         {
-            title: "Developer Friendly",
-            description: "Built with modern technologies and an extensible architecture for developers.",
+            title: 'Developer Friendly',
+            description:
+                'Built with modern technologies and an extensible architecture for developers.',
             icon: Code,
         },
         {
-            title: "Robust Database",
+            title: 'Robust Database',
             description: "Store and manage your journal's content with a powerful database system.",
             icon: Database,
         },
         {
-            title: "Secure Platform",
+            title: 'Secure Platform',
             description: "Enterprise-grade security to protect your journal's data and users.",
             icon: Shield,
         },
         {
-            title: "Fast Performance",
-            description: "Optimized for speed and performance to ensure a smooth experience.",
+            title: 'Fast Performance',
+            description: 'Optimized for speed and performance to ensure a smooth experience.',
             icon: Zap,
         },
     ];

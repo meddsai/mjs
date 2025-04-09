@@ -6,11 +6,11 @@ const mockArticle = {
     title: 'Test Article',
     authors: [
         { id: '1', name: 'John Doe' },
-        { id: '2', name: 'Jane Smith' }
+        { id: '2', name: 'Jane Smith' },
     ],
     abstract: 'This is a test abstract',
     keywords: ['test', 'article'],
-    pdfUrl: '/article/1/pdf'
+    pdfUrl: '/article/1/pdf',
 };
 
 describe('FeaturedArticle', () => {

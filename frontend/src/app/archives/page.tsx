@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { MainLayout } from '@/core/components/layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/core/components/ui/card';
@@ -13,32 +13,32 @@ export default function ArchivesPage() {
                 year: 2024,
                 issues: [
                     {
-                        id: "2024-1",
+                        id: '2024-1',
                         volume: 1,
                         number: 1,
-                        title: "Advances in Digital Publishing",
-                        date: "March 2024",
+                        title: 'Advances in Digital Publishing',
+                        date: 'March 2024',
                         articleCount: 4,
-                        specialIssue: false
-                    }
-                ]
-            }
+                        specialIssue: false,
+                    },
+                ],
+            },
         ],
         volumes: [
             {
                 number: 1,
                 issues: [
                     {
-                        id: "2024-1",
+                        id: '2024-1',
                         number: 1,
-                        title: "Advances in Digital Publishing",
-                        date: "March 2024",
+                        title: 'Advances in Digital Publishing',
+                        date: 'March 2024',
                         articleCount: 4,
-                        specialIssue: false
-                    }
-                ]
-            }
-        ]
+                        specialIssue: false,
+                    },
+                ],
+            },
+        ],
     };
 
     return (
@@ -48,8 +48,8 @@ export default function ArchivesPage() {
                     <h1 className="text-3xl font-bold mb-6">Archives</h1>
 
                     <p className="text-muted-foreground mb-8">
-                        Browse all published issues of the journal. Our archives contain a comprehensive
-                        collection of research articles, reviews, and studies.
+                        Browse all published issues of the journal. Our archives contain a
+                        comprehensive collection of research articles, reviews, and studies.
                     </p>
 
                     <Tabs defaultValue="by-year" className="w-full">
@@ -72,7 +72,8 @@ export default function ArchivesPage() {
                                                                 href={`/issue/${issue.id}`}
                                                                 className="hover:text-primary"
                                                             >
-                                                                Volume {issue.volume}, Issue {issue.number}
+                                                                Volume {issue.volume}, Issue{' '}
+                                                                {issue.number}
                                                             </Link>
                                                         </CardTitle>
                                                     </CardHeader>
@@ -103,7 +104,9 @@ export default function ArchivesPage() {
                             <div className="space-y-8">
                                 {archives.volumes.map((volume) => (
                                     <section key={volume.number}>
-                                        <h2 className="text-2xl font-semibold mb-4">Volume {volume.number}</h2>
+                                        <h2 className="text-2xl font-semibold mb-4">
+                                            Volume {volume.number}
+                                        </h2>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {volume.issues.map((issue) => (
                                                 <Card key={issue.id}>

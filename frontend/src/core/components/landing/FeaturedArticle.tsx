@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Brain } from "lucide-react";
+import Link from 'next/link';
+import { Brain } from 'lucide-react';
 
 interface Author {
     id: string;
@@ -26,7 +26,9 @@ export const FeaturedArticle = ({ article }: FeaturedArticleProps) => {
         <section className="bg-muted/30 p-8 rounded-lg">
             <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="flex-1">
-                    <div className="text-sm font-medium text-muted-foreground mb-2">FEATURED ARTICLE</div>
+                    <div className="text-sm font-medium text-muted-foreground mb-2">
+                        FEATURED ARTICLE
+                    </div>
                     <h2 className="text-2xl font-bold mb-4">
                         <Link href={`/article/${article.id}`} className="hover:text-primary">
                             {article.title}

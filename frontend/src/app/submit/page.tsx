@@ -1,11 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { MainLayout } from "@/core/components/layout";
-import { Button } from "@/core/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/core/components/ui/card";
-import { useApi } from "@/core/hooks/useApi";
-import { ApiService } from "@/core/services/api";
+import { useState } from 'react';
+import { MainLayout } from '@/core/components/layout';
+import { Button } from '@/core/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
+import { useApi } from '@/core/hooks/useApi';
+import { ApiService } from '@/core/services/api';
 
 interface SubmissionResponse {
     id: string;
@@ -13,15 +19,15 @@ interface SubmissionResponse {
     message: string;
 }
 
-const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || "");
+const apiService = new ApiService(process.env.NEXT_PUBLIC_API_URL || '');
 
 export default function SubmitPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { error, execute } = useApi<SubmissionResponse>(() =>
-        apiService.post("/submissions", {
+        apiService.post('/submissions', {
             data: {
                 // Add submission data here
-            }
+            },
         })
     );
 
@@ -43,18 +49,12 @@ export default function SubmitPage() {
                 <Card>
                     <CardHeader>
                         <CardTitle>Submit Manuscript</CardTitle>
-                        <CardDescription>
-                            Submit your manuscript for review
-                        </CardDescription>
+                        <CardDescription>Submit your manuscript for review</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        {error && (
-                            <div className="text-sm text-red-500 mb-4">
-                                {error.message}
-                            </div>
-                        )}
+                        {error && <div className="text-sm text-red-500 mb-4">{error.message}</div>}
                         <Button onClick={handleSubmit} disabled={isSubmitting}>
-                            {isSubmitting ? "Submitting..." : "Submit"}
+                            {isSubmitting ? 'Submitting...' : 'Submit'}
                         </Button>
                     </CardContent>
                 </Card>

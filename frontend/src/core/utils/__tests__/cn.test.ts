@@ -10,9 +10,9 @@ describe('cn utility function', () => {
     });
 
     it('handles conditional classes', () => {
-        expect(cn('base', { 'conditional': true })).toBe('base conditional');
-        expect(cn('base', { 'conditional': false })).toBe('base');
-        expect(cn('base', { 'conditional1': true, 'conditional2': false })).toBe('base conditional1');
+        expect(cn('base', { conditional: true })).toBe('base conditional');
+        expect(cn('base', { conditional: false })).toBe('base');
+        expect(cn('base', { conditional1: true, conditional2: false })).toBe('base conditional1');
     });
 
     it('handles arrays of classes', () => {
@@ -21,7 +21,9 @@ describe('cn utility function', () => {
     });
 
     it('handles mixed inputs', () => {
-        expect(cn('base', ['class1', 'class2'], { 'conditional': true })).toBe('base class1 class2 conditional');
-        expect(cn('base', ['class1', null], { 'conditional': false })).toBe('base class1');
+        expect(cn('base', ['class1', 'class2'], { conditional: true })).toBe(
+            'base class1 class2 conditional'
+        );
+        expect(cn('base', ['class1', null], { conditional: false })).toBe('base class1');
     });
 });

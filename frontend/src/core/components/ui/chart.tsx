@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 import {
     CartesianGrid,
     Line,
@@ -8,9 +8,9 @@ import {
     XAxis,
     YAxis,
     TooltipProps as RechartsTooltipProps,
-} from "recharts"
+} from 'recharts';
 
-import { cn } from "@/core/utils"
+import { cn } from '@/core/utils';
 
 interface ChartData {
     name: string;
@@ -32,9 +32,7 @@ function CustomTooltip({ active, payload, label }: RechartsTooltipProps<number, 
                         <span className="text-[0.70rem] uppercase text-muted-foreground">
                             {label}
                         </span>
-                        <span className="font-bold text-muted-foreground">
-                            {payload[0].value}
-                        </span>
+                        <span className="font-bold text-muted-foreground">{payload[0].value}</span>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,13 @@
-"use client";
+'use client';
 
 import { MainLayout } from '@/core/components/layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
 import { Badge } from '@/core/components/ui/badge';
 import Link from 'next/link';
 
@@ -17,20 +23,21 @@ export default function CurrentIssuePage() {
                             <CardHeader>
                                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                                     <div>
-                                        <CardTitle>Inaugural Issue: Digital Publishing Innovation</CardTitle>
+                                        <CardTitle>
+                                            Inaugural Issue: Digital Publishing Innovation
+                                        </CardTitle>
                                         <CardDescription>
                                             Volume 1, Issue 1 • June 2024
                                         </CardDescription>
                                     </div>
-                                    <Badge variant="secondary">
-                                        3 Articles
-                                    </Badge>
+                                    <Badge variant="secondary">3 Articles</Badge>
                                 </div>
                             </CardHeader>
                             <CardContent>
                                 <p className="text-muted-foreground">
-                                    Our inaugural issue explores the latest advances in digital publishing platforms,
-                                    open science initiatives, and modern scholarly communication.
+                                    Our inaugural issue explores the latest advances in digital
+                                    publishing platforms, open science initiatives, and modern
+                                    scholarly communication.
                                 </p>
                             </CardContent>
                         </Card>
@@ -47,25 +54,46 @@ export default function CurrentIssuePage() {
                                                 Research Article
                                             </Badge>
                                             <CardTitle className="text-xl">
-                                                <Link href="/article/2024-1-1" className="hover:text-primary">
-                                                    Modern Journal Systems: A New Paradigm for Academic Publishing
+                                                <Link
+                                                    href="/article/2024-1-1"
+                                                    className="hover:text-primary"
+                                                >
+                                                    Modern Journal Systems: A New Paradigm for
+                                                    Academic Publishing
                                                 </Link>
                                             </CardTitle>
                                             <CardDescription>
-                                                <Link href="/author/sj1" className="hover:text-primary">Sarah Johnson</Link>,{' '}
-                                                <Link href="/author/mc1" className="hover:text-primary">Michael Chen</Link>
+                                                <Link
+                                                    href="/author/sj1"
+                                                    className="hover:text-primary"
+                                                >
+                                                    Sarah Johnson
+                                                </Link>
+                                                ,{' '}
+                                                <Link
+                                                    href="/author/mc1"
+                                                    className="hover:text-primary"
+                                                >
+                                                    Michael Chen
+                                                </Link>
                                             </CardDescription>
                                         </div>
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-muted-foreground mb-4">
-                                        This paper introduces Modern Journal Systems (MJS), a next-generation publishing
-                                        platform designed to meet the evolving needs of academic publishing in the digital age.
-                                        We discuss the architecture, features, and potential impact on scholarly communication.
+                                        This paper introduces Modern Journal Systems (MJS), a
+                                        next-generation publishing platform designed to meet the
+                                        evolving needs of academic publishing in the digital age. We
+                                        discuss the architecture, features, and potential impact on
+                                        scholarly communication.
                                     </p>
                                     <div className="flex flex-wrap gap-2">
-                                        {["digital publishing", "open science", "scholarly communication"].map((keyword) => (
+                                        {[
+                                            'digital publishing',
+                                            'open science',
+                                            'scholarly communication',
+                                        ].map((keyword) => (
                                             <Link
                                                 key={keyword}
                                                 href={`/search?keyword=${encodeURIComponent(keyword)}`}
@@ -86,24 +114,44 @@ export default function CurrentIssuePage() {
                                                 Review
                                             </Badge>
                                             <CardTitle className="text-xl">
-                                                <Link href="/article/2024-1-2" className="hover:text-primary">
-                                                    The Evolution of Academic Publishing Platforms: A Systematic Review
+                                                <Link
+                                                    href="/article/2024-1-2"
+                                                    className="hover:text-primary"
+                                                >
+                                                    The Evolution of Academic Publishing Platforms:
+                                                    A Systematic Review
                                                 </Link>
                                             </CardTitle>
                                             <CardDescription>
-                                                <Link href="/author/ew1" className="hover:text-primary">Emily Williams</Link>,{' '}
-                                                <Link href="/author/dl1" className="hover:text-primary">David Lee</Link>
+                                                <Link
+                                                    href="/author/ew1"
+                                                    className="hover:text-primary"
+                                                >
+                                                    Emily Williams
+                                                </Link>
+                                                ,{' '}
+                                                <Link
+                                                    href="/author/dl1"
+                                                    className="hover:text-primary"
+                                                >
+                                                    David Lee
+                                                </Link>
                                             </CardDescription>
                                         </div>
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-muted-foreground mb-4">
-                                        A comprehensive review of academic publishing platforms over the past decade,
-                                        analyzing trends, challenges, and future directions in digital scholarly communication.
+                                        A comprehensive review of academic publishing platforms over
+                                        the past decade, analyzing trends, challenges, and future
+                                        directions in digital scholarly communication.
                                     </p>
                                     <div className="flex flex-wrap gap-2">
-                                        {["systematic review", "publishing platforms", "digital transformation"].map((keyword) => (
+                                        {[
+                                            'systematic review',
+                                            'publishing platforms',
+                                            'digital transformation',
+                                        ].map((keyword) => (
                                             <Link
                                                 key={keyword}
                                                 href={`/search?keyword=${encodeURIComponent(keyword)}`}
@@ -124,24 +172,38 @@ export default function CurrentIssuePage() {
                                                 Technical Report
                                             </Badge>
                                             <CardTitle className="text-xl">
-                                                <Link href="/article/2024-1-3" className="hover:text-primary">
-                                                    Implementing FAIR Principles in Modern Publishing Systems
+                                                <Link
+                                                    href="/article/2024-1-3"
+                                                    className="hover:text-primary"
+                                                >
+                                                    Implementing FAIR Principles in Modern
+                                                    Publishing Systems
                                                 </Link>
                                             </CardTitle>
                                             <CardDescription>
-                                                <Link href="/author/jw1" className="hover:text-primary">James Wilson</Link>
+                                                <Link
+                                                    href="/author/jw1"
+                                                    className="hover:text-primary"
+                                                >
+                                                    James Wilson
+                                                </Link>
                                             </CardDescription>
                                         </div>
                                     </div>
                                 </CardHeader>
                                 <CardContent>
                                     <p className="text-muted-foreground mb-4">
-                                        This technical report outlines the implementation of FAIR (Findable, Accessible,
-                                        Interoperable, Reusable) principles in modern journal systems, providing practical
-                                        guidelines and case studies.
+                                        This technical report outlines the implementation of FAIR
+                                        (Findable, Accessible, Interoperable, Reusable) principles
+                                        in modern journal systems, providing practical guidelines
+                                        and case studies.
                                     </p>
                                     <div className="flex flex-wrap gap-2">
-                                        {["FAIR principles", "data management", "interoperability"].map((keyword) => (
+                                        {[
+                                            'FAIR principles',
+                                            'data management',
+                                            'interoperability',
+                                        ].map((keyword) => (
                                             <Link
                                                 key={keyword}
                                                 href={`/search?keyword=${encodeURIComponent(keyword)}`}

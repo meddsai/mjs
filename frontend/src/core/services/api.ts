@@ -1,4 +1,4 @@
-import { ApiResponse, ApiError, ApiRequestConfig } from "@/core/config/api";
+import { ApiResponse, ApiError, ApiRequestConfig } from '@/core/config/api';
 
 export class ApiService {
     private baseUrl: string;
@@ -16,7 +16,7 @@ export class ApiService {
             const response = await fetch(`${this.baseUrl}${endpoint}`, {
                 method,
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json',
                     ...config?.headers,
                 },
                 body: config?.data ? JSON.stringify(config.data) : undefined,
@@ -28,23 +28,35 @@ export class ApiService {
             if (error instanceof Error) {
                 throw { message: error.message, status: 500 } as ApiError;
             }
-            throw { message: "An unknown error occurred", status: 500 } as ApiError;
+            throw { message: 'An unknown error occurred', status: 500 } as ApiError;
         }
     }
 
-    public async get<T = unknown>(endpoint: string, config?: ApiRequestConfig): Promise<ApiResponse<T>> {
-        return this.request<T>("GET", endpoint, config);
+    public async get<T = unknown>(
+        endpoint: string,
+        config?: ApiRequestConfig
+    ): Promise<ApiResponse<T>> {
+        return this.request<T>('GET', endpoint, config);
     }
 
-    public async post<T = unknown, D = unknown>(endpoint: string, config?: ApiRequestConfig<D>): Promise<ApiResponse<T>> {
-        return this.request<T, D>("POST", endpoint, config);
+    public async post<T = unknown, D = unknown>(
+        endpoint: string,
+        config?: ApiRequestConfig<D>
+    ): Promise<ApiResponse<T>> {
+        return this.request<T, D>('POST', endpoint, config);
     }
 
-    public async put<T = unknown, D = unknown>(endpoint: string, config?: ApiRequestConfig<D>): Promise<ApiResponse<T>> {
-        return this.request<T, D>("PUT", endpoint, config);
+    public async put<T = unknown, D = unknown>(
+        endpoint: string,
+        config?: ApiRequestConfig<D>
+    ): Promise<ApiResponse<T>> {
+        return this.request<T, D>('PUT', endpoint, config);
     }
 
-    public async delete<T = unknown>(endpoint: string, config?: ApiRequestConfig): Promise<ApiResponse<T>> {
-        return this.request<T>("DELETE", endpoint, config);
+    public async delete<T = unknown>(
+        endpoint: string,
+        config?: ApiRequestConfig
+    ): Promise<ApiResponse<T>> {
+        return this.request<T>('DELETE', endpoint, config);
     }
 }

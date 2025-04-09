@@ -1,24 +1,34 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/core/components/ui/button";
-import { Input } from "@/core/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/core/components/ui/form";
-import { authService } from "@/core/services/auth";
-import Link from "next/link";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/core/components/ui/button';
+import { Input } from '@/core/components/ui/input';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/core/components/ui/form';
+import { authService } from '@/core/services/auth';
+import Link from 'next/link';
 
-const formSchema = z.object({
-    password: z.string()
-        .min(8, "Password must be at least 8 characters")
-        .max(100, "Password must be less than 100 characters"),
-    confirmPassword: z.string()
-}).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-});
+const formSchema = z
+    .object({
+        password: z
+            .string()
+            .min(8, 'Password must be at least 8 characters')
+            .max(100, 'Password must be less than 100 characters'),
+        confirmPassword: z.string(),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+        message: 'Passwords do not match',
+        path: ['confirmPassword'],
+    });
 
 type FormValues = z.infer<typeof formSchema>;
 
@@ -34,8 +44,8 @@ export function ResetPasswordForm({ token, onSuccess }: ResetPasswordFormProps) 
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            password: "",
-            confirmPassword: "",
+            password: '',
+            confirmPassword: '',
         },
     });
 
@@ -49,7 +59,9 @@ export function ResetPasswordForm({ token, onSuccess }: ResetPasswordFormProps) 
             });
             onSuccess?.();
         } catch (err: Error | unknown) {
-            setError(err instanceof Error ? err.message : "Failed to reset password. Please try again.");
+            setError(
+                err instanceof Error ? err.message : 'Failed to reset password. Please try again.'
+            );
         } finally {
             setIsLoading(false);
         }
@@ -58,11 +70,7 @@ export function ResetPasswordForm({ token, onSuccess }: ResetPasswordFormProps) 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
-                {error && (
-                    <div className="text-sm text-red-500 text-center">
-                        {error}
-                    </div>
-                )}
+                {error && <div className="text-sm text-red-500 text-center">{error}</div>}
                 <FormField
                     control={form.control}
                     name="password"
@@ -70,7 +78,11 @@ export function ResetPasswordForm({ token, onSuccess }: ResetPasswordFormProps) 
                         <FormItem>
                             <FormLabel>New Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="Enter your new password" {...field} />
+                                <Input
+                                    type="password"
+                                    placeholder="Enter your new password"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -83,17 +95,21 @@ export function ResetPasswordForm({ token, onSuccess }: ResetPasswordFormProps) 
                         <FormItem>
                             <FormLabel>Confirm Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="Confirm your new password" {...field} />
+                                <Input
+                                    type="password"
+                                    placeholder="Confirm your new password"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Resetting..." : "Reset Password"}
+                    {isLoading ? 'Resetting...' : 'Reset Password'}
                 </Button>
                 <div className="text-sm text-center text-muted-foreground">
-                    Remember your password?{" "}
+                    Remember your password?{' '}
                     <Link href="/login" className="text-primary hover:underline">
                         Sign in
                     </Link>

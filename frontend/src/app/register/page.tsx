@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { RegisterForm } from "@/core/components/auth/RegisterForm";
-import { RegistrationSuccessModal } from "@/core/components/auth/RegistrationSuccessModal";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { RegisterForm } from '@/core/components/auth/RegisterForm';
+import { RegistrationSuccessModal } from '@/core/components/auth/RegistrationSuccessModal';
+import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -15,7 +15,7 @@ export default function RegisterPage() {
 
     const handleCloseModal = () => {
         setShowSuccessModal(false);
-        router.push("/login");
+        router.push('/login');
     };
 
     return (
@@ -30,10 +30,7 @@ export default function RegisterPage() {
 
                 <RegisterForm onSuccess={handleSuccess} />
 
-                <RegistrationSuccessModal
-                    isOpen={showSuccessModal}
-                    onClose={handleCloseModal}
-                />
+                <RegistrationSuccessModal isOpen={showSuccessModal} onClose={handleCloseModal} />
             </div>
         </div>
     );

@@ -1,46 +1,52 @@
-"use client";
+'use client';
 
-import { useState } from "react"
-import { MainLayout } from "@/core/components/layout"
-import { Button } from "@/core/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/core/components/ui/card"
-import { Input } from "@/core/components/ui/input"
-import { Label } from "@/core/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/core/components/ui/radio-group"
-import { ScrollArea } from "@/core/components/ui/scroll-area"
-import { Separator } from "@/core/components/ui/separator"
-import { Slider } from "@/core/components/ui/slider"
-import { Switch } from "@/core/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/core/components/ui/tabs"
-import { siteConfig } from "@/core/config/site"
-import { themeConfig } from "@/core/config/theme"
-import { toast } from "@/core/components/ui/use-toast"
+import { useState } from 'react';
+import { MainLayout } from '@/core/components/layout';
+import { Button } from '@/core/components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
+import { Input } from '@/core/components/ui/input';
+import { Label } from '@/core/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/core/components/ui/radio-group';
+import { ScrollArea } from '@/core/components/ui/scroll-area';
+import { Separator } from '@/core/components/ui/separator';
+import { Slider } from '@/core/components/ui/slider';
+import { Switch } from '@/core/components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/core/components/ui/tabs';
+import { siteConfig } from '@/core/config/site';
+import { themeConfig } from '@/core/config/theme';
+import { toast } from '@/core/components/ui/use-toast';
 
 interface TemplateConfig {
-    journalName: string
-    primaryColor: string
-    layout: string
+    journalName: string;
+    primaryColor: string;
+    layout: string;
     features: {
-        openAccess: boolean
-        peerReview: boolean
-        manuscriptSubmission: boolean
-        authorDashboard: boolean
-        analytics: boolean
-        socialSharing: boolean
-        comments: boolean
-    }
+        openAccess: boolean;
+        peerReview: boolean;
+        manuscriptSubmission: boolean;
+        authorDashboard: boolean;
+        analytics: boolean;
+        socialSharing: boolean;
+        comments: boolean;
+    };
     theme: {
-        fontFamily: string
-        borderRadius: number
-        darkMode: boolean
-    }
+        fontFamily: string;
+        borderRadius: number;
+        darkMode: boolean;
+    };
 }
 
 const TemplateDemoPage = () => {
     const [config, setConfig] = useState<TemplateConfig>({
-        journalName: "My Journal",
-        primaryColor: "#0066cc",
-        layout: "modern",
+        journalName: 'My Journal',
+        primaryColor: '#0066cc',
+        layout: 'modern',
         features: {
             openAccess: true,
             peerReview: true,
@@ -51,55 +57,58 @@ const TemplateDemoPage = () => {
             comments: false,
         },
         theme: {
-            fontFamily: "sans-serif",
+            fontFamily: 'sans-serif',
             borderRadius: 0.5,
             darkMode: false,
         },
-    })
+    });
 
-    const [isPreviewMode, setIsPreviewMode] = useState(false)
+    const [isPreviewMode, setIsPreviewMode] = useState(false);
 
-    const handleFeatureToggle = (feature: keyof TemplateConfig["features"]) => {
-        setConfig(prev => ({
+    const handleFeatureToggle = (feature: keyof TemplateConfig['features']) => {
+        setConfig((prev) => ({
             ...prev,
             features: {
                 ...prev.features,
-                [feature]: !prev.features[feature]
-            }
-        }))
-    }
+                [feature]: !prev.features[feature],
+            },
+        }));
+    };
 
-    const handleThemeChange = (key: keyof TemplateConfig["theme"], value: string | number | boolean) => {
-        setConfig(prev => ({
+    const handleThemeChange = (
+        key: keyof TemplateConfig['theme'],
+        value: string | number | boolean
+    ) => {
+        setConfig((prev) => ({
             ...prev,
             theme: {
                 ...prev.theme,
-                [key]: value
-            }
-        }))
-    }
+                [key]: value,
+            },
+        }));
+    };
 
     const handleSaveConfig = () => {
         // In a real implementation, this would save to a config file
         toast({
-            title: "Configuration Saved",
-            description: "Your journal configuration has been saved successfully.",
-        })
-    }
+            title: 'Configuration Saved',
+            description: 'Your journal configuration has been saved successfully.',
+        });
+    };
 
     const handleApplyChanges = () => {
-        setIsPreviewMode(true)
+        setIsPreviewMode(true);
         toast({
-            title: "Changes Applied",
-            description: "Your changes have been applied to the preview.",
-        })
-    }
+            title: 'Changes Applied',
+            description: 'Your changes have been applied to the preview.',
+        });
+    };
 
     const handleReset = () => {
         setConfig({
-            journalName: "My Journal",
-            primaryColor: "#0066cc",
-            layout: "modern",
+            journalName: 'My Journal',
+            primaryColor: '#0066cc',
+            layout: 'modern',
             features: {
                 openAccess: true,
                 peerReview: true,
@@ -110,13 +119,13 @@ const TemplateDemoPage = () => {
                 comments: false,
             },
             theme: {
-                fontFamily: "sans-serif",
+                fontFamily: 'sans-serif',
                 borderRadius: 0.5,
                 darkMode: false,
             },
-        })
-        setIsPreviewMode(false)
-    }
+        });
+        setIsPreviewMode(false);
+    };
 
     return (
         <MainLayout>
@@ -129,7 +138,9 @@ const TemplateDemoPage = () => {
                         </p>
                     </div>
                     <div className="space-x-4">
-                        <Button variant="outline" onClick={handleReset}>Reset</Button>
+                        <Button variant="outline" onClick={handleReset}>
+                            Reset
+                        </Button>
                         <Button onClick={handleSaveConfig}>Save Configuration</Button>
                     </div>
                 </div>
@@ -158,7 +169,12 @@ const TemplateDemoPage = () => {
                                         <Input
                                             id="journalName"
                                             value={config.journalName}
-                                            onChange={(e) => setConfig(prev => ({ ...prev, journalName: e.target.value }))}
+                                            onChange={(e) =>
+                                                setConfig((prev) => ({
+                                                    ...prev,
+                                                    journalName: e.target.value,
+                                                }))
+                                            }
                                             placeholder="Enter your journal name"
                                         />
                                     </div>
@@ -170,10 +186,17 @@ const TemplateDemoPage = () => {
                                             <Input
                                                 type="color"
                                                 value={config.primaryColor}
-                                                onChange={(e) => setConfig(prev => ({ ...prev, primaryColor: e.target.value }))}
+                                                onChange={(e) =>
+                                                    setConfig((prev) => ({
+                                                        ...prev,
+                                                        primaryColor: e.target.value,
+                                                    }))
+                                                }
                                                 className="w-20 h-10 p-1"
                                             />
-                                            <span className="text-sm text-muted-foreground">{config.primaryColor}</span>
+                                            <span className="text-sm text-muted-foreground">
+                                                {config.primaryColor}
+                                            </span>
                                         </div>
                                     </div>
 
@@ -182,11 +205,17 @@ const TemplateDemoPage = () => {
                                         <Label>Layout Style</Label>
                                         <RadioGroup
                                             value={config.layout}
-                                            onValueChange={(value) => setConfig(prev => ({ ...prev, layout: value }))}
+                                            onValueChange={(value) =>
+                                                setConfig((prev) => ({ ...prev, layout: value }))
+                                            }
                                             className="grid grid-cols-3 gap-4"
                                         >
                                             <div>
-                                                <RadioGroupItem value="modern" id="modern" className="peer sr-only" />
+                                                <RadioGroupItem
+                                                    value="modern"
+                                                    id="modern"
+                                                    className="peer sr-only"
+                                                />
                                                 <Label
                                                     htmlFor="modern"
                                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -195,7 +224,11 @@ const TemplateDemoPage = () => {
                                                 </Label>
                                             </div>
                                             <div>
-                                                <RadioGroupItem value="classic" id="classic" className="peer sr-only" />
+                                                <RadioGroupItem
+                                                    value="classic"
+                                                    id="classic"
+                                                    className="peer sr-only"
+                                                />
                                                 <Label
                                                     htmlFor="classic"
                                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -204,7 +237,11 @@ const TemplateDemoPage = () => {
                                                 </Label>
                                             </div>
                                             <div>
-                                                <RadioGroupItem value="minimal" id="minimal" className="peer sr-only" />
+                                                <RadioGroupItem
+                                                    value="minimal"
+                                                    id="minimal"
+                                                    className="peer sr-only"
+                                                />
                                                 <Label
                                                     htmlFor="minimal"
                                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -218,18 +255,27 @@ const TemplateDemoPage = () => {
 
                                 <TabsContent value="features" className="space-y-4">
                                     <div className="space-y-2">
-                                        {Object.entries(config.features).map(([feature, enabled]) => (
-                                            <div key={feature} className="flex items-center justify-between">
-                                                <Label htmlFor={feature} className="capitalize">
-                                                    {feature.replace(/([A-Z])/g, ' $1').trim()}
-                                                </Label>
-                                                <Switch
-                                                    id={feature}
-                                                    checked={enabled}
-                                                    onCheckedChange={() => handleFeatureToggle(feature as keyof TemplateConfig["features"])}
-                                                />
-                                            </div>
-                                        ))}
+                                        {Object.entries(config.features).map(
+                                            ([feature, enabled]) => (
+                                                <div
+                                                    key={feature}
+                                                    className="flex items-center justify-between"
+                                                >
+                                                    <Label htmlFor={feature} className="capitalize">
+                                                        {feature.replace(/([A-Z])/g, ' $1').trim()}
+                                                    </Label>
+                                                    <Switch
+                                                        id={feature}
+                                                        checked={enabled}
+                                                        onCheckedChange={() =>
+                                                            handleFeatureToggle(
+                                                                feature as keyof TemplateConfig['features']
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            )
+                                        )}
                                     </div>
                                 </TabsContent>
 
@@ -239,11 +285,17 @@ const TemplateDemoPage = () => {
                                         <Label>Font Family</Label>
                                         <RadioGroup
                                             value={config.theme.fontFamily}
-                                            onValueChange={(value) => handleThemeChange('fontFamily', value)}
+                                            onValueChange={(value) =>
+                                                handleThemeChange('fontFamily', value)
+                                            }
                                             className="grid grid-cols-2 gap-4"
                                         >
                                             <div>
-                                                <RadioGroupItem value="sans-serif" id="sans-serif" className="peer sr-only" />
+                                                <RadioGroupItem
+                                                    value="sans-serif"
+                                                    id="sans-serif"
+                                                    className="peer sr-only"
+                                                />
                                                 <Label
                                                     htmlFor="sans-serif"
                                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -252,7 +304,11 @@ const TemplateDemoPage = () => {
                                                 </Label>
                                             </div>
                                             <div>
-                                                <RadioGroupItem value="serif" id="serif" className="peer sr-only" />
+                                                <RadioGroupItem
+                                                    value="serif"
+                                                    id="serif"
+                                                    className="peer sr-only"
+                                                />
                                                 <Label
                                                     htmlFor="serif"
                                                     className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
@@ -268,7 +324,9 @@ const TemplateDemoPage = () => {
                                         <Label>Border Radius</Label>
                                         <Slider
                                             value={[config.theme.borderRadius * 100]}
-                                            onValueChange={([value]) => handleThemeChange('borderRadius', value / 100)}
+                                            onValueChange={([value]) =>
+                                                handleThemeChange('borderRadius', value / 100)
+                                            }
                                             max={100}
                                             step={1}
                                         />
@@ -283,7 +341,9 @@ const TemplateDemoPage = () => {
                                         <Switch
                                             id="darkMode"
                                             checked={config.theme.darkMode}
-                                            onCheckedChange={(checked) => handleThemeChange('darkMode', checked)}
+                                            onCheckedChange={(checked) =>
+                                                handleThemeChange('darkMode', checked)
+                                            }
                                         />
                                     </div>
                                 </TabsContent>
@@ -302,10 +362,12 @@ const TemplateDemoPage = () => {
                         <CardContent>
                             <div
                                 className={`space-y-4 ${isPreviewMode ? 'animate-fade-in' : ''}`}
-                                style={{
-                                    fontFamily: config.theme.fontFamily,
-                                    '--border-radius': `${config.theme.borderRadius}rem`,
-                                } as React.CSSProperties}
+                                style={
+                                    {
+                                        fontFamily: config.theme.fontFamily,
+                                        '--border-radius': `${config.theme.borderRadius}rem`,
+                                    } as React.CSSProperties
+                                }
                             >
                                 {/* Preview Header */}
                                 <div className="border rounded-lg p-4">
@@ -341,24 +403,38 @@ const TemplateDemoPage = () => {
 
                                 {/* Preview Content */}
                                 <div className="border rounded-lg p-4">
-                                    <h3 className="text-lg font-semibold mb-2">Featured Articles</h3>
+                                    <h3 className="text-lg font-semibold mb-2">
+                                        Featured Articles
+                                    </h3>
                                     <div className="space-y-2">
                                         <div className="p-2 border rounded">
-                                            <h4 className="font-medium">Recent Research in {config.journalName}</h4>
-                                            <p className="text-sm text-muted-foreground">Published: Today</p>
+                                            <h4 className="font-medium">
+                                                Recent Research in {config.journalName}
+                                            </h4>
+                                            <p className="text-sm text-muted-foreground">
+                                                Published: Today
+                                            </p>
                                             {config.features.socialSharing && (
                                                 <div className="mt-2 flex space-x-2">
-                                                    <Button variant="ghost" size="sm">Share</Button>
-                                                    <Button variant="ghost" size="sm">Tweet</Button>
+                                                    <Button variant="ghost" size="sm">
+                                                        Share
+                                                    </Button>
+                                                    <Button variant="ghost" size="sm">
+                                                        Tweet
+                                                    </Button>
                                                 </div>
                                             )}
                                         </div>
                                         <div className="p-2 border rounded">
                                             <h4 className="font-medium">New Discoveries</h4>
-                                            <p className="text-sm text-muted-foreground">Published: Yesterday</p>
+                                            <p className="text-sm text-muted-foreground">
+                                                Published: Yesterday
+                                            </p>
                                             {config.features.comments && (
                                                 <div className="mt-2">
-                                                    <Button variant="ghost" size="sm">View Comments (3)</Button>
+                                                    <Button variant="ghost" size="sm">
+                                                        View Comments (3)
+                                                    </Button>
                                                 </div>
                                             )}
                                         </div>
@@ -371,7 +447,8 @@ const TemplateDemoPage = () => {
                                         <div>
                                             <h4 className="font-semibold mb-2">About</h4>
                                             <p className="text-sm text-muted-foreground">
-                                                {config.journalName} is a leading academic journal in its field.
+                                                {config.journalName} is a leading academic journal
+                                                in its field.
                                             </p>
                                         </div>
                                         <div>
@@ -385,7 +462,11 @@ const TemplateDemoPage = () => {
                                         <div>
                                             <h4 className="font-semibold mb-2">Contact</h4>
                                             <p className="text-sm text-muted-foreground">
-                                                Email: contact@{config.journalName.toLowerCase().replace(/\s+/g, '')}.org
+                                                Email: contact@
+                                                {config.journalName
+                                                    .toLowerCase()
+                                                    .replace(/\s+/g, '')}
+                                                .org
                                             </p>
                                         </div>
                                     </div>
@@ -397,12 +478,14 @@ const TemplateDemoPage = () => {
 
                 {/* Action Buttons */}
                 <div className="flex justify-end space-x-4 mt-8">
-                    <Button variant="outline" onClick={handleReset}>Reset</Button>
+                    <Button variant="outline" onClick={handleReset}>
+                        Reset
+                    </Button>
                     <Button onClick={handleApplyChanges}>Apply Changes</Button>
                 </div>
             </div>
         </MainLayout>
-    )
-}
+    );
+};
 
-export default TemplateDemoPage
+export default TemplateDemoPage;

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useState } from "react";
-import { type TemplateConfig, defaultTemplateConfig } from "@/templates/default/template.config";
+import React, { createContext, useContext, useState } from 'react';
+import { type TemplateConfig, defaultTemplateConfig } from '@/templates/default/template.config';
 
 interface TemplateContextType {
     template: TemplateConfig;
@@ -23,7 +23,7 @@ export function TemplateProvider({ children }: { children: React.ReactNode }) {
 export function useTemplate() {
     const context = useContext(TemplateContext);
     if (context === undefined) {
-        throw new Error("useTemplate must be used within a TemplateProvider");
+        throw new Error('useTemplate must be used within a TemplateProvider');
     }
     return context;
 }

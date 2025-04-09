@@ -1,8 +1,13 @@
-"use client";
+'use client';
 
 import { MainLayout } from '@/core/components/layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/core/components/ui/tabs';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/core/components/ui/accordion';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '@/core/components/ui/accordion';
 import { Card, CardContent } from '@/core/components/ui/card';
 import { Button } from '@/core/components/ui/button';
 import Link from 'next/link';
@@ -26,7 +31,8 @@ export default function ForAuthorsPage() {
                             <section className="space-y-6">
                                 <div className="prose max-w-none">
                                     <p className="text-muted-foreground mb-6">
-                                        Welcome to the author guidelines. Please read these instructions carefully before submitting your manuscript.
+                                        Welcome to the author guidelines. Please read these
+                                        instructions carefully before submitting your manuscript.
                                     </p>
                                 </div>
 
@@ -38,7 +44,9 @@ export default function ForAuthorsPage() {
                                                 <li>Use 12-point font size</li>
                                                 <li>Double-space the manuscript</li>
                                                 <li>Number all pages consecutively</li>
-                                                <li>Use standard file formats (.doc, .docx, or .pdf)</li>
+                                                <li>
+                                                    Use standard file formats (.doc, .docx, or .pdf)
+                                                </li>
                                             </ul>
                                         </AccordionContent>
                                     </AccordionItem>
@@ -64,7 +72,9 @@ export default function ForAuthorsPage() {
                                         <AccordionTrigger>References</AccordionTrigger>
                                         <AccordionContent>
                                             <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                                <li>Cite references in the text by name and year</li>
+                                                <li>
+                                                    Cite references in the text by name and year
+                                                </li>
                                                 <li>List references alphabetically</li>
                                                 <li>Include DOI when available</li>
                                             </ul>
@@ -79,7 +89,9 @@ export default function ForAuthorsPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                                     <Card>
                                         <CardContent className="pt-6">
-                                            <div className="text-2xl font-bold text-primary mb-2">1</div>
+                                            <div className="text-2xl font-bold text-primary mb-2">
+                                                1
+                                            </div>
                                             <h3 className="font-semibold mb-2">Prepare</h3>
                                             <p className="text-sm text-muted-foreground">
                                                 Format your manuscript according to the guidelines
@@ -89,7 +101,9 @@ export default function ForAuthorsPage() {
 
                                     <Card>
                                         <CardContent className="pt-6">
-                                            <div className="text-2xl font-bold text-primary mb-2">2</div>
+                                            <div className="text-2xl font-bold text-primary mb-2">
+                                                2
+                                            </div>
                                             <h3 className="font-semibold mb-2">Submit</h3>
                                             <p className="text-sm text-muted-foreground">
                                                 Submit through our online system
@@ -99,7 +113,9 @@ export default function ForAuthorsPage() {
 
                                     <Card>
                                         <CardContent className="pt-6">
-                                            <div className="text-2xl font-bold text-primary mb-2">3</div>
+                                            <div className="text-2xl font-bold text-primary mb-2">
+                                                3
+                                            </div>
                                             <h3 className="font-semibold mb-2">Review</h3>
                                             <p className="text-sm text-muted-foreground">
                                                 Track your submission through peer review
@@ -117,8 +133,9 @@ export default function ForAuthorsPage() {
                         <TabsContent value="ethics">
                             <section className="space-y-6">
                                 <p className="text-muted-foreground mb-6">
-                                    We are committed to maintaining high standards of publication ethics and follow
-                                    the guidelines set by the Committee on Publication Ethics (COPE).
+                                    We are committed to maintaining high standards of publication
+                                    ethics and follow the guidelines set by the Committee on
+                                    Publication Ethics (COPE).
                                 </p>
 
                                 <Accordion type="single" collapsible className="w-full">
@@ -126,9 +143,15 @@ export default function ForAuthorsPage() {
                                         <AccordionTrigger>Authorship</AccordionTrigger>
                                         <AccordionContent>
                                             <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                                                <li>All authors must have made substantial contributions</li>
+                                                <li>
+                                                    All authors must have made substantial
+                                                    contributions
+                                                </li>
                                                 <li>Order of authorship must be agreed upon</li>
-                                                <li>Changes to authorship must be approved by all authors</li>
+                                                <li>
+                                                    Changes to authorship must be approved by all
+                                                    authors
+                                                </li>
                                             </ul>
                                         </AccordionContent>
                                     </AccordionItem>
@@ -137,8 +160,9 @@ export default function ForAuthorsPage() {
                                         <AccordionTrigger>Plagiarism</AccordionTrigger>
                                         <AccordionContent>
                                             <p className="text-muted-foreground">
-                                                All submissions are checked for plagiarism. Authors must ensure their work is original
-                                                and properly cite all sources.
+                                                All submissions are checked for plagiarism. Authors
+                                                must ensure their work is original and properly cite
+                                                all sources.
                                             </p>
                                         </AccordionContent>
                                     </AccordionItem>
@@ -147,8 +171,9 @@ export default function ForAuthorsPage() {
                                         <AccordionTrigger>Conflict of Interest</AccordionTrigger>
                                         <AccordionContent>
                                             <p className="text-muted-foreground">
-                                                Authors must declare any potential conflicts of interest that could influence
-                                                their research or its interpretation.
+                                                Authors must declare any potential conflicts of
+                                                interest that could influence their research or its
+                                                interpretation.
                                             </p>
                                         </AccordionContent>
                                     </AccordionItem>
@@ -165,9 +190,12 @@ export default function ForAuthorsPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <Card>
                                         <CardContent className="pt-6">
-                                            <h3 className="font-semibold mb-2">Article Processing Charges</h3>
+                                            <h3 className="font-semibold mb-2">
+                                                Article Processing Charges
+                                            </h3>
                                             <p className="text-muted-foreground mb-4">
-                                                Please contact the editorial office for current APC rates.
+                                                Please contact the editorial office for current APC
+                                                rates.
                                             </p>
                                         </CardContent>
                                     </Card>
@@ -176,7 +204,8 @@ export default function ForAuthorsPage() {
                                         <CardContent className="pt-6">
                                             <h3 className="font-semibold mb-2">Waivers</h3>
                                             <p className="text-muted-foreground mb-4">
-                                                Waivers are available for authors from low-income countries.
+                                                Waivers are available for authors from low-income
+                                                countries.
                                             </p>
                                         </CardContent>
                                     </Card>

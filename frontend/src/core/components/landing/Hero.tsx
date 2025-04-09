@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { Button } from "@/core/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import Link from 'next/link';
+import { Button } from '@/core/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export const Hero = () => {
     return (
@@ -13,7 +13,8 @@ export const Hero = () => {
                         Create Your Academic Journal
                     </h1>
                     <p className="text-xl mb-8 text-primary-foreground/80">
-                        MJS provides customizable templates and tools to help you create and manage your academic journal.
+                        MJS provides customizable templates and tools to help you create and manage
+                        your academic journal.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" asChild>
@@ -23,9 +24,7 @@ export const Hero = () => {
                             </Link>
                         </Button>
                         <Button size="lg" variant="outline" className="bg-transparent" asChild>
-                            <Link href="/docs">
-                                Learn More
-                            </Link>
+                            <Link href="/docs">Learn More</Link>
                         </Button>
                     </div>
                 </div>

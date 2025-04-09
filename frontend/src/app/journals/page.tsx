@@ -1,6 +1,12 @@
 import React from 'react';
 import { MainLayout } from '@/core/components/layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/core/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
 import { Button } from '@/core/components/ui/button';
 
 const JournalsPage = () => {
@@ -9,7 +15,8 @@ const JournalsPage = () => {
         {
             id: 'journal-1',
             title: 'Journal of Medical Research',
-            description: 'A peer-reviewed journal focusing on medical research and clinical studies.',
+            description:
+                'A peer-reviewed journal focusing on medical research and clinical studies.',
             impactFactor: '3.2',
             submissionCount: 156,
             publishedCount: 42,
@@ -50,7 +57,9 @@ const JournalsPage = () => {
                             <CardContent>
                                 <div className="grid grid-cols-2 gap-4 mb-4">
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Impact Factor</p>
+                                        <p className="text-sm text-muted-foreground">
+                                            Impact Factor
+                                        </p>
                                         <p className="font-semibold">{journal.impactFactor}</p>
                                     </div>
                                     <div>
@@ -63,9 +72,15 @@ const JournalsPage = () => {
                                     </div>
                                 </div>
                                 <div className="flex space-x-2">
-                                    <Button variant="outline" className="flex-1">View</Button>
-                                    <Button variant="outline" className="flex-1">Edit</Button>
-                                    <Button variant="outline" className="flex-1">Settings</Button>
+                                    <Button variant="outline" className="flex-1">
+                                        View
+                                    </Button>
+                                    <Button variant="outline" className="flex-1">
+                                        Edit
+                                    </Button>
+                                    <Button variant="outline" className="flex-1">
+                                        Settings
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>

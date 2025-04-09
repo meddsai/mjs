@@ -1,7 +1,13 @@
-"use client";
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/core/components/ui/card";
-import { ForgotPasswordForm } from "@/core/components/auth/ForgotPasswordForm";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/core/components/ui/card';
+import { ForgotPasswordForm } from '@/core/components/auth/ForgotPasswordForm';
 
 export default function ForgotPasswordPage() {
     return (
@@ -10,7 +16,8 @@ export default function ForgotPasswordPage() {
                 <CardHeader className="space-y-1 text-center">
                     <CardTitle className="text-2xl font-bold">Forgot Password</CardTitle>
                     <CardDescription>
-                        Enter your email address and we&apos;ll send you a link to reset your password
+                        Enter your email address and we&apos;ll send you a link to reset your
+                        password
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

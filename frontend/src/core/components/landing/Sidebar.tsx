@@ -1,14 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import {
-    BookText,
-    FileText,
-    Users,
-    Settings,
-    Layout,
-    Workflow
-} from "lucide-react";
+import Link from 'next/link';
+import { BookText, FileText, Users, Settings, Layout, Workflow } from 'lucide-react';
 
 export const Sidebar = () => {
     return (
@@ -17,14 +10,14 @@ export const Sidebar = () => {
             <section className="bg-card p-6 rounded-lg">
                 <h2 className="text-xl font-bold mb-4">About MJS</h2>
                 <p className="text-muted-foreground mb-4">
-                    Modern Journal Systems is pioneering the future of academic publishing
-                    through customizable, template-driven journal platforms that adapt to
-                    any discipline&apos;s unique needs.
+                    Modern Journal Systems is pioneering the future of academic publishing through
+                    customizable, template-driven journal platforms that adapt to any
+                    discipline&apos;s unique needs.
                 </p>
                 <p className="text-muted-foreground mb-4">
-                    Our mission is to democratize academic publishing by providing
-                    cutting-edge tools that make scholarly communication more accessible,
-                    efficient, and impactful.
+                    Our mission is to democratize academic publishing by providing cutting-edge
+                    tools that make scholarly communication more accessible, efficient, and
+                    impactful.
                 </p>
                 <Link href="/about" className="text-primary hover:underline">
                     Learn More
@@ -100,9 +93,9 @@ export const Sidebar = () => {
             <section className="bg-[#0A1A2F] text-white p-6 rounded-lg">
                 <h2 className="text-xl font-bold mb-4">Template Development</h2>
                 <p className="text-gray-300 mb-4">
-                    Join our template development program and help shape the future of
-                    academic publishing. Submit your innovative template designs for
-                    our upcoming template marketplace.
+                    Join our template development program and help shape the future of academic
+                    publishing. Submit your innovative template designs for our upcoming template
+                    marketplace.
                 </p>
                 <Link
                     href="/template-guidelines"
