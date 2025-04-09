@@ -312,9 +312,7 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <ConfigContext.Provider value={config}>
-            <AuthProvider>
-                {children}
-            </AuthProvider>
+            <AuthProvider>{children}</AuthProvider>
         </ConfigContext.Provider>
     );
 }

@@ -39,7 +39,7 @@ export function useArticles() {
             setLoading(true);
             setError(null);
             const newArticle = await articleService.createArticle(data);
-            setArticles(prev => [...prev, newArticle]);
+            setArticles((prev) => [...prev, newArticle]);
             return newArticle;
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to create article');
@@ -54,9 +54,9 @@ export function useArticles() {
             setLoading(true);
             setError(null);
             const updatedArticle = await articleService.updateArticle(id, data);
-            setArticles(prev => prev.map(article =>
-                article.id === id ? updatedArticle : article
-            ));
+            setArticles((prev) =>
+                prev.map((article) => (article.id === id ? updatedArticle : article))
+            );
             return updatedArticle;
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to update article');
@@ -71,7 +71,7 @@ export function useArticles() {
             setLoading(true);
             setError(null);
             await articleService.deleteArticle(id);
-            setArticles(prev => prev.filter(article => article.id !== id));
+            setArticles((prev) => prev.filter((article) => article.id !== id));
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to delete article');
             throw err;
@@ -85,9 +85,9 @@ export function useArticles() {
             setLoading(true);
             setError(null);
             const updatedArticle = await articleService.submitForReview(id);
-            setArticles(prev => prev.map(article =>
-                article.id === id ? updatedArticle : article
-            ));
+            setArticles((prev) =>
+                prev.map((article) => (article.id === id ? updatedArticle : article))
+            );
             return updatedArticle;
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to submit article for review');
@@ -108,4 +108,4 @@ export function useArticles() {
         deleteArticle,
         submitForReview,
     };
-} 
+}
