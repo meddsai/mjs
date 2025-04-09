@@ -1,13 +1,11 @@
 // backend/src/main.rs
 use actix_cors::Cors;
-use actix_web::{middleware::Logger, web, App, HttpServer};
+use actix_web::{web, App, HttpServer};
 use dotenv::dotenv;
 use sqlx::postgres::PgPoolOptions;
-use std::env;
-use std::time::Duration;
+use tracing;
+use tracing_subscriber;
 
-mod config;
-mod database;
 mod models;
 mod routes;
 mod services;
@@ -22,57 +20,33 @@ pub async fn health_check() -> impl actix_web::Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    // Load environment variables
     dotenv().ok();
+    tracing_subscriber::fmt::init();
 
-    // Initialize logger
-    env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
-
-    // Get configuration from environment
-    let host = env::var("HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
-    let port = env::var("PORT")
-        .unwrap_or_else(|_| "8080".to_string())
-        .parse::<u16>()
-        .expect("PORT must be a number");
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    let cors_origins = env::var("CORS_ORIGINS").expect("CORS_ORIGINS must be set");
-
-    // Test database connection
-    println!("Testing database connection...");
+    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let pool = PgPoolOptions::new()
         .max_connections(5)
-        .acquire_timeout(Duration::from_secs(3))
         .connect(&database_url)
         .await
         .expect("Failed to create pool");
 
-    // Test the connection
-    sqlx::query!("SELECT 1 as one")
-        .fetch_one(&pool)
-        .await
-        .expect("Failed to connect to database");
-    println!("Database connection successful!");
+    let addr = "127.0.0.1:8080";
+    tracing::info!("Server listening on {}", addr);
 
-    // Create shared application state
-    let app_state = web::Data::new(pool);
-
-    // Start HTTP server
     HttpServer::new(move || {
-        // Configure CORS
-        let cors = Cors::default()
-            .allowed_origin(&cors_origins)
-            .allow_any_method()
-            .allow_any_header()
-            .max_age(3600);
-
         App::new()
-            .wrap(Logger::default())
-            .wrap(cors)
-            .app_data(app_state.clone())
-            .service(routes::health::health_check)
-            .configure(routes::configure_routes)
+            .app_data(web::Data::new(pool.clone()))
+            .wrap(Cors::permissive())
+            .service(
+                web::scope("/api")
+                    .configure(routes::configure_auth_routes)
+                    .configure(routes::configure_user_routes)
+                    .configure(routes::configure_article_routes)
+                    .configure(routes::configure_review_routes)
+                    .configure(routes::configure_health_routes),
+            )
     })
-    .bind((host, port))?
+    .bind(addr)?
     .run()
     .await
 }

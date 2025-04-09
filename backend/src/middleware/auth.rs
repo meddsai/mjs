@@ -13,6 +13,9 @@ use std::{
 use crate::{
     models::user::UserRole,
     services::jwt::{Claims, JwtService},
+    services::auth::AuthService,
+    utils::error::Error,
+    sqlx::PgPool,
 };
 
 pub struct AuthMiddleware<S> {

@@ -18,3 +18,7 @@ pub async fn health_check(pool: web::Data<PgPool>) -> impl Responder {
         })),
     }
 }
+
+pub fn configure_routes(cfg: &mut web::ServiceConfig) {
+    cfg.service(health_check);
+}

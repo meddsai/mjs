@@ -1,67 +1,43 @@
 import { ApiService } from './api';
+import { LoginRequest, RegisterRequest, AuthResponse, User } from '../../types/user';
 
-interface AuthCredentials {
-    email: string;
-    password: string;
-}
-
-interface RegisterData extends AuthCredentials {
-    name: string;
-}
-
-interface AuthResponse {
-    token: string;
-    user: {
-        id: string;
-        email: string;
-        name: string;
-    };
-}
-
-interface ResetPasswordData {
-    token: string;
-    password: string;
-}
-
-class AuthService {
+export class AuthService {
     private api: ApiService;
 
     constructor() {
-        this.api = new ApiService(process.env.NEXT_PUBLIC_API_URL || '');
+        this.api = new ApiService(process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api');
     }
 
-    async login(credentials: AuthCredentials) {
-        const response = await this.api.post<AuthResponse>('/auth/login', {
-            data: credentials,
-        });
-        return response.data;
+    async login(data: LoginRequest): Promise<AuthResponse> {
+        const response = await this.api.post<AuthResponse>('/auth/login', data);
+        if (response.data) {
+            localStorage.setItem('token', response.data.token);
+        }
+        return response.data!;
     }
 
-    async register(data: RegisterData) {
-        const response = await this.api.post<AuthResponse>('/auth/register', {
-            data,
-        });
-        return response.data;
+    async register(data: RegisterRequest): Promise<AuthResponse> {
+        const response = await this.api.post<AuthResponse>('/auth/register', data);
+        if (response.data) {
+            localStorage.setItem('token', response.data.token);
+        }
+        return response.data!;
     }
 
-    async requestPasswordReset(data: { email: string }) {
-        const response = await this.api.post<{ message: string }>('/auth/forgot-password', {
-            data,
-        });
-        return response.data;
+    async getCurrentUser(): Promise<User> {
+        const response = await this.api.get<User>('/auth/me');
+        return response.data!;
     }
 
-    async resetPassword(data: ResetPasswordData) {
-        const response = await this.api.post<{ message: string }>('/auth/reset-password', {
-            data,
-        });
-        return response.data;
+    logout(): void {
+        localStorage.removeItem('token');
     }
 
-    async logout() {
-        const response = await this.api.post<{ message: string }>('/auth/logout');
-        return response.data;
+    getToken(): string | null {
+        return localStorage.getItem('token');
+    }
+
+    isAuthenticated(): boolean {
+        return !!this.getToken();
     }
 }
-
-export const authService = new AuthService();

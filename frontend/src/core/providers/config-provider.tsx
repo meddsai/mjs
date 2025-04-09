@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext } from 'react';
 import { type JournalConfig } from '@/config/journal.config';
+import { AuthProvider } from '../contexts/AuthContext';
 
 interface ConfigContextType {
     journalConfig: JournalConfig;
@@ -309,7 +310,13 @@ export function ConfigProvider({ children }: { children: React.ReactNode }) {
         },
     };
 
-    return <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>;
+    return (
+        <ConfigContext.Provider value={config}>
+            <AuthProvider>
+                {children}
+            </AuthProvider>
+        </ConfigContext.Provider>
+    );
 }
 
 export function useConfig() {

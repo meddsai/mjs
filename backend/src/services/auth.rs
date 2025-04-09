@@ -6,16 +6,58 @@ use argon2::{
     password_hash::{rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString},
     Argon2,
 };
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
+use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
+use std::env;
 use uuid::Uuid;
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Claims {
+    pub sub: Uuid,
+    pub role: UserRole,
+    pub exp: usize,
+}
 
 pub struct AuthService {
     pool: PgPool,
+    jwt_secret: String,
 }
 
 impl AuthService {
     pub fn new(pool: PgPool) -> Self {
-        Self { pool }
+        let jwt_secret = env::var("JWT_SECRET").unwrap_or_else(|_| "your-secret-key".to_string());
+        Self { pool, jwt_secret }
+    }
+
+    pub fn generate_token(&self, user: &User) -> Result<String, Error> {
+        let expiration = chrono::Utc::now()
+            .checked_add_signed(chrono::Duration::days(7))
+            .expect("valid timestamp")
+            .timestamp() as usize;
+
+        let claims = Claims {
+            sub: user.id,
+            role: user.role.clone(),
+            exp: expiration,
+        };
+
+        encode(
+            &Header::default(),
+            &claims,
+            &EncodingKey::from_secret(self.jwt_secret.as_bytes()),
+        )
+        .map_err(|_| Error::Internal("Failed to generate token".to_string()))
+    }
+
+    pub fn validate_token(&self, token: &str) -> Result<Claims, Error> {
+        decode::<Claims>(
+            token,
+            &DecodingKey::from_secret(self.jwt_secret.as_bytes()),
+            &Validation::default(),
+        )
+        .map(|data| data.claims)
+        .map_err(|_| Error::Unauthorized("Invalid token".to_string()))
     }
 
     pub async fn register(&self, user_data: CreateUserRequest) -> Result<User, Error> {
@@ -60,7 +102,7 @@ impl AuthService {
         Ok(user)
     }
 
-    pub async fn login(&self, email: String, password: String) -> Result<User, Error> {
+    pub async fn login(&self, email: String, password: String) -> Result<(User, String), Error> {
         let user = sqlx::query_as!(
             User,
             r#"
@@ -82,12 +124,13 @@ impl AuthService {
             return Err(Error::Unauthorized("Invalid password".to_string()));
         }
 
-        Ok(user)
+        let token = self.generate_token(&user)?;
+        Ok((user, token))
     }
 
     pub async fn update_user(&self, id: Uuid, user_data: UpdateUserRequest) -> Result<User, Error> {
         // First get the current user data
-        let current_user = self.get_user_by_id(id).await?;
+        let _current_user = self.get_user_by_id(id).await?;
 
         // Use separate queries depending on whether role is being updated
         let user = match user_data.role {
@@ -111,7 +154,7 @@ impl AuthService {
                 )
                 .fetch_one(&self.pool)
                 .await?
-            },
+            }
             None => {
                 sqlx::query_as!(
                     User,
@@ -187,7 +230,7 @@ mod tests {
         assert_eq!(user.name, "Test User");
 
         // Test login
-        let logged_in_user = auth_service
+        let (logged_in_user, token) = auth_service
             .login("test@example.com".to_string(), "password123".to_string())
             .await
             .unwrap();

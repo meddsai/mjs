@@ -1,47 +1,52 @@
+use crate::models::user::User;
+use crate::services::auth::AuthService;
+use crate::utils::error::Error;
 use actix_web::{web, HttpResponse, Responder};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
+use sqlx::PgPool;
 
-use crate::{
-    models::{
-        auth::LoginRequest,
-        user::{CreateUserRequest, UserResponse},
-    },
-    services::auth::AuthService,
-};
+use crate::models::auth::LoginRequest;
 
 #[derive(Debug, Serialize)]
 pub struct AuthResponse {
-    pub user: UserResponse,
-    pub token: String,
+    user: User,
+    token: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RegisterRequest {
+    email: String,
+    password: String,
+    name: String,
 }
 
 pub async fn login(
-    auth_service: web::Data<AuthService>,
-    credentials: web::Json<LoginRequest>,
-) -> impl Responder {
-    match auth_service
-        .login(credentials.email.clone(), credentials.password.clone())
-        .await
-    {
-        Ok(user) => HttpResponse::Ok().json(AuthResponse {
-            user: user.into_response(),
-            token: "dummy_token".to_string(),
-        }),
-        Err(e) => HttpResponse::Unauthorized().json(e.to_string()),
-    }
+    pool: web::Data<PgPool>,
+    login_request: web::Json<LoginRequest>,
+) -> Result<HttpResponse, Error> {
+    let auth_service = AuthService::new(pool.get_ref().clone());
+    let (user, token) = auth_service
+        .login(login_request.email.clone(), login_request.password.clone())
+        .await?;
+
+    Ok(HttpResponse::Ok().json(AuthResponse { user, token }))
 }
 
 pub async fn register(
-    auth_service: web::Data<AuthService>,
-    user_data: web::Json<CreateUserRequest>,
-) -> impl Responder {
-    match auth_service.register(user_data.into_inner()).await {
-        Ok(user) => HttpResponse::Created().json(AuthResponse {
-            user: user.into_response(),
-            token: "dummy_token".to_string(),
-        }),
-        Err(e) => HttpResponse::BadRequest().json(e.to_string()),
-    }
+    pool: web::Data<PgPool>,
+    register_request: web::Json<RegisterRequest>,
+) -> Result<HttpResponse, Error> {
+    let auth_service = AuthService::new(pool.get_ref().clone());
+    let user = auth_service
+        .register(crate::models::user::CreateUserRequest {
+            email: register_request.email.clone(),
+            password: register_request.password.clone(),
+            name: register_request.name.clone(),
+        })
+        .await?;
+    let token = auth_service.generate_token(&user)?;
+
+    Ok(HttpResponse::Created().json(AuthResponse { user, token }))
 }
 
 pub fn configure_routes(cfg: &mut web::ServiceConfig) {
