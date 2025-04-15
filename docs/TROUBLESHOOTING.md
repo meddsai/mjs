@@ -10,6 +10,9 @@ Welcome to the MJS troubleshooting guide! This document helps you solve common i
 - [AI Service Issues](#ai-service-issues)
 - [Git and Version Control Issues](#git-and-version-control-issues)
 - [Performance Issues](#performance-issues)
+- [Production Issues](#production-issues)
+- [Finding and Interpreting Logs](#finding-and-interpreting-logs)
+- [Known Issues & Workarounds](#known-issues-and-workarounds)
 
 ## First-Time Setup Issues
 
@@ -214,6 +217,28 @@ brew install git docker node python3
    ```bash
    sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
    ```
+
+## Production Issues
+
+### Scaling Problems
+- See [SCALING.md](./SCALING.md) for horizontal/vertical scaling tips
+- Check resource usage with `docker stats` and adjust service limits
+
+### Database Migrations
+- See [UPGRADE.md](./UPGRADE.md) for migration steps and troubleshooting
+- Always back up your data before running migrations
+
+### Cache Invalidation
+- Restart Redis or clear cache if stale data appears
+
+## Finding and Interpreting Logs
+- Use `docker compose logs <service>` to view logs for any service
+- For advanced log aggregation and monitoring, see [MONITORING.md](./MONITORING.md)
+- Check logs for error messages and stack traces to diagnose issues
+
+## Known Issues & Workarounds
+- See [issues](https://github.com/balinesthesia/mjs/issues) for up-to-date list
+- Known limitations and planned fixes are tracked in [ROADMAP.md](./ROADMAP.md)
 
 ## Still Having Issues?
 

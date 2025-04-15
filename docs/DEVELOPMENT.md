@@ -158,3 +158,27 @@ git push
 - Join our Discord community for real-time help
 
 Remember: Everyone was a beginner once. Take your time to understand the parts you're working with, and don't hesitate to ask for help!
+
+## Environment Configuration
+
+Each service uses a `.env` file for configuration. Copy `.env.example` to `.env` in each directory and adjust as needed. See [CONFIGURATION.md](./CONFIGURATION.md) for all options and secrets management.
+
+## Cross-Service Debugging & Hot Reload
+
+- Use Docker Compose for multi-service development.
+- Each service supports hot-reload (see respective README sections).
+- Debugging tips:
+  - Use VS Code launch configs for each language
+  - Logs are available via `docker compose logs <service>`
+  - See [MONITORING.md](./MONITORING.md) for advanced logging/metrics
+
+## Code Quality & Pre-commit Hooks
+
+- Code style and linting are enforced via pre-commit hooks (see [PRECOMMIT.md](./PRECOMMIT.md)).
+- Run `pre-commit run --all-files` to check before pushing.
+- See [CONTRIBUTING.md](./CONTRIBUTING.md) for code standards.
+
+## Upgrading Dependencies & Migrations
+
+- Use `npm update`, `cargo update`, or `poetry update` for dependencies.
+- Database and data migrations are documented in [UPGRADE.md](./UPGRADE.md).

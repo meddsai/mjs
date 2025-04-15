@@ -3,77 +3,110 @@
 <!-- Build Status badge to be added once CI is set up -->
 <!-- [![Build Status](https://github.com/balinesthesia/mjs/actions/workflows/main.yml/badge.svg)](https://github.com/balinesthesia/mjs/actions/workflows/main.yml) -->
 
-Welcome to MJS! We're building a modern, open-source journal system that's both powerful and easy to use. Whether you're a developer, researcher, or journal editor, we've got you covered.
+Welcome to MJS! We're building a modern, open-source journal system for the next generation of academic publishing. Whether you're a developer, researcher, or journal editor, MJS is designed to be powerful, extensible, and easy to use.
 
 ## 🌟 Key Features
 
-- **Modern UI**: Beautiful, responsive interface built with React and Tailwind
-- **Smart Search**: AI-powered search and recommendations
-- **Fast Backend**: High-performance Rust backend
-- **Easy Setup**: Docker-based deployment for quick starts
+- **Modern UI:** Responsive, accessible interface built with React and Tailwind CSS
+- **AI-Powered Search:** Smart recommendations and full-text search
+- **High-Performance Backend:** Rust (Actix Web) for secure, scalable APIs
+- **Pluggable Architecture:** (Planned) Support for plugins and custom modules
+- **Easy Deployment:** Docker-based setup for local and production environments
+- **Robust Security:** OAuth2/OpenID Connect (Keycloak), HTTPS-ready, secure session management
+- **Internationalization:** (Planned) Multi-language support for global journals
+
+## 🏗️ Architecture Overview
+
+MJS is a full-stack system with clear separation of concerns:
+
+- **Frontend:** React + TypeScript (Next.js) — user interface, SSR, SEO
+- **Backend:** Rust (Actix Web) — REST API, business logic, authentication
+- **AI/ML Service:** Python (FastAPI) — peer review matching, citation analysis, recommendations
+- **Database:** PostgreSQL — structured, reliable data storage
+- **File Storage:** MinIO — scalable object storage for PDFs and media
+- **Search:** Meilisearch — fast, typo-tolerant article search
+- **Caching:** Redis — performance optimization for frequent queries
+- **Authentication:** Keycloak — OAuth2, OpenID Connect
+- **Deployment:** Docker, Kubernetes — scalable, portable infrastructure
+- **Monitoring:** Prometheus, Grafana — system health and performance
+- **Code Quality:** Pre-commit hooks, CI/CD (see [CI_CD.md](docs/CI_CD.md))
+
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for a detailed diagram, extensibility, and service interactions.
 
 ## 🚀 Quick Start
 
-Choose your path based on your interests and expertise:
-
 ### For Users
+
 ```bash
-# One-command setup with Docker
 docker compose up
 ```
-Visit http://localhost:5173 to start using MJS!
+Visit [http://localhost:5173](http://localhost:5173) to start using MJS!
 
 ### For Developers
 
-Pick the area you want to work on:
-
-#### Frontend Development (React + TypeScript)
+#### Frontend (React + TypeScript)
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-#### Backend Development (Rust)
+#### Backend (Rust)
 ```bash
 cd backend
 cargo build
 cargo run
 ```
 
-#### AI Service Development (Python + FastAPI)
+#### AI Service (Python + FastAPI)
 ```bash
 cd ai-service
 poetry install
 poetry run uvicorn src.main:app --reload
 ```
 
-## ⏱️ Time Expectations
+#### Configuration
 
-- **Quick Start**: 5-10 minutes
-- **First Build**: 30-45 minutes
-- **Development Setup**: 15-20 minutes
-- **Hot Reload**: Almost instant
+- Copy `.env.example` to `.env` in each service directory and adjust settings as needed.
+- See [`docs/CONFIGURATION.md`](docs/CONFIGURATION.md) for environment variables and secrets.
 
-## 🤝 Contributing
+## 🧪 Testing & Code Quality
 
-We welcome contributors of all experience levels! Here's how you can help:
+- **Frontend:** `npm test` (Jest, React Testing Library)
+- **Backend:** `cargo test`
+- **AI Service:** `pytest`
+- **Linting/Formatting:** Prettier (TS), rustfmt (Rust), black (Python)
+- **CI/CD:** GitHub Actions (see [CI_CD.md](docs/CI_CD.md))
+- **Pre-commit hooks:** See [PRECOMMIT.md](docs/PRECOMMIT.md)
 
-1. **Frontend**: React components, UI/UX improvements
-2. **Backend**: API endpoints, database optimizations
-3. **AI**: Search improvements, recommendation system
-4. **Documentation**: Help us make MJS more accessible
-5. **Testing**: Help catch bugs before they reach production
+## 🔒 Security
 
-See our [Contributing Guide](docs/CONTRIBUTING.md) for details.
+- OAuth2/OpenID Connect via Keycloak
+- Secure session cookies (`SameSite`, `Secure`)
+- HTTPS recommended for all deployments
+- See [`SECURITY.md`](docs/SECURITY.md) for vulnerability reporting, secure configuration, and best practices
+
+## 🔌 Extensibility & Plugins
+
+- (Planned) Plugin/module system for custom features and integrations
+- API-first design for easy integration with external systems
+- See [`docs/PLUGINS.md`](docs/PLUGINS.md) for roadmap and guidelines
 
 ## 📚 Documentation
 
-- [Development Guide](docs/DEVELOPMENT.md): Start here for development setup
-- [User Guide](docs/USER_GUIDE.md): Learn how to use MJS
-- [API Documentation](docs/API.md): REST API reference
-- [Troubleshooting](docs/TROUBLESHOOTING.md): Common issues and solutions
-- [Template Guide](TEMPLATE.md): How to use MJS as a template for your journal
+- [Architecture](docs/ARCHITECTURE.md)
+- [Development Guide](docs/DEVELOPMENT.md)
+- [User Guide](docs/USER_GUIDE.md)
+- [API Reference](docs/API.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
+- [Template Guide](TEMPLATE.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Security](docs/SECURITY.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Plugins](docs/PLUGINS.md)
+- [Upgrade & Migration](docs/UPGRADE.md)
+- [Internationalization](docs/INTERNATIONALIZATION.md)
 
 ## 🆘 Need Help?
 
@@ -82,21 +115,34 @@ See our [Contributing Guide](docs/CONTRIBUTING.md) for details.
 3. Join our [Discord community](https://discord.gg/mjs)
 4. Create a new issue
 
-## 🛣️ Roadmap
+## 🛣️ Roadmap & Upgrade Policy
 
-See our [Roadmap](docs/ROADMAP.md) for planned features and improvements.
+- See [ROADMAP.md](docs/ROADMAP.md) for planned features, plugin system, and migration guides.
+- Upgrade instructions and compatibility notes will be provided with each release (see [UPGRADE.md](docs/UPGRADE.md)).
+
+## 📝 Known Issues & Limitations
+
+- MJS is under active development and not yet production-ready.
+- See [issues](https://github.com/balinesthesia/mjs/issues) for current bugs and limitations.
 
 ## 📜 License
 
-MJS is open source under the [MIT License](LICENSE).
+MJS is open source under the [MIT License](LICENSE).  
+**Note:** Some components and code are derived from [Open Journal Systems (OJS)](https://pkp.sfu.ca/software/ojs/) and are used under the GNU GPL v3. See [LICENSE](LICENSE) for details.
+
+## 🤝 Contributing
+
+We welcome contributors of all experience levels!  
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](docs/CODE_OF_CONDUCT.md).
 
 ## 🙏 Acknowledgments
 
-Thanks to all our contributors and the open source community!
+Thanks to all contributors and the open source community!  
+Inspired by [OJS](https://pkp.sfu.ca/software/ojs/) and the [Public Knowledge Project](https://pkp.sfu.ca/).
 
 ---
 
-Remember: Every expert was once a beginner. Don't hesitate to ask questions and contribute!
+_Remember: Every expert was once a beginner. Don't hesitate to ask questions and contribute!_
 
 ## Usage
 

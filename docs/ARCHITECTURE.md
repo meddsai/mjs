@@ -9,6 +9,10 @@ This document outlines the architectural design of Modern Journal Systems (MJS),
 - [Inter-Service Communication](#inter-service-communication)
 - [Development Workflow](#development-workflow)
 - [Future Improvements](#future-improvements)
+- [Extensibility & Plugin Architecture](#extensibility-plugin-architecture)
+- [API-First Design & Versioning](#api-first-design-versioning)
+- [Error Handling & Logging](#error-handling-logging)
+- [Internationalization/Localization](#internationalizationlocalization)
 
 ## Architectural Overview
 
@@ -180,6 +184,31 @@ ai-service/
    - Service-to-service authentication
    - Secrets management
    - Security automation
+
+## Extensibility & Plugin Architecture
+
+MJS is designed for extensibility. (Planned) plugin/module system will allow developers to add custom features, integrations, and UI components without modifying the core. Plugins will be able to:
+- Register new API endpoints
+- Add UI components or pages
+- Hook into workflow events
+- Extend data models
+
+See [PLUGINS.md](./PLUGINS.md) for details and roadmap.
+
+## API-First Design & Versioning
+
+All core functionality is exposed via RESTful APIs, documented with OpenAPI/Swagger. API versioning ensures backward compatibility. See [API.md](./API.md) for standards, endpoint documentation, and extension guidelines.
+
+## Error Handling & Logging
+
+- Centralized logging for all services (see [MONITORING.md](./MONITORING.md))
+- Consistent error formats (JSON)
+- Error propagation and retry mechanisms
+- Logs are accessible via Docker/Kubernetes and can be shipped to external systems (e.g., ELK, Grafana)
+
+## Internationalization/Localization
+
+MJS aims to support multiple locales for both UI and content. See [INTERNATIONALIZATION.md](./INTERNATIONALIZATION.md) for how to add new languages and localize content.
 
 ## Contributing
 

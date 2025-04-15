@@ -322,3 +322,23 @@ This roadmap outlines the development strategy for the Modern Journal Systems (M
   - [ ] Maintenance
 
 Note: This roadmap is subject to adjustment based on project progress, user feedback, and changing requirements. Regular reviews and updates will be conducted to ensure alignment with project goals.
+
+## Cross-Cutting Concerns & Milestones
+
+### Extensibility & Plugins
+- [ ] Plugin/module system for custom features and integrations
+- [ ] Plugin API documentation and developer guide
+
+### Internationalization
+- [ ] Multi-language UI and content support
+- [ ] Locale management and translation tools
+
+### Upgrade & Migration
+- [ ] Upgrade guides for each major release
+- [ ] Data migration tools and documentation
+
+### Security & Production Readiness
+- [ ] Security audit and hardening
+- [ ] Incident response plan
+- [ ] Production deployment best practices
+- [ ] Compliance and privacy documentation

@@ -279,3 +279,30 @@ export const handleIncident = async (incident: SecurityIncident) => {
 - Monitoring
 - Incident response
 - Regular audits
+
+## Secure Configuration Management
+
+- Never commit secrets or sensitive data to version control.
+- Use `.env` files for local development and Docker/Kubernetes secrets for production.
+- See [CONFIGURATION.md](./CONFIGURATION.md) for secure environment variable usage.
+
+## Session & Cookie Security
+
+- All session cookies should be set with `SameSite=Strict` or `Lax`, `Secure`, and `HttpOnly` flags.
+- Use HTTPS in all production deployments to protect cookies and tokens.
+- See [CONFIGURATION.md](./CONFIGURATION.md) for session settings.
+
+## Incident Response & Responsible Disclosure
+
+- If you discover a vulnerability, please report it via the process in this document or email the security team (see below).
+- We will acknowledge receipt within 48 hours and provide a timeline for remediation.
+- After a fix is released, we will credit the reporter (if desired) and publish a security advisory.
+
+## Reporting Vulnerabilities
+
+- Email: security@balinesthesia.com (or use the GitHub security advisory feature)
+- Please include:
+  - Description of the issue
+  - Steps to reproduce
+  - Impact assessment
+  - Your contact for follow-up

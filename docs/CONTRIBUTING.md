@@ -299,3 +299,17 @@ poetry version      # AI/ML
 - Maintainer support
 - Professional support
 - Emergency support
+
+## Documentation Standards
+
+- All public functions, classes, and modules should be documented with docstrings or JSDoc/Rustdoc style comments.
+- API endpoints must be documented in [API.md](./API.md) using OpenAPI/Swagger format.
+- Architectural changes should be reflected in [ARCHITECTURE.md](./ARCHITECTURE.md).
+- Security-relevant changes must be documented in [SECURITY.md](./SECURITY.md).
+
+## Writing and Updating Documentation
+
+- Update or create relevant markdown files in `docs/` for new features, APIs, or workflows.
+- Follow the style and structure of existing documentation.
+- Add links to new docs in the main [README.md](../README.md) and [index.md](./index.md) if appropriate.
+- For major changes, include diagrams or code samples as needed.
