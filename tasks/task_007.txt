@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: Set up MinIO and File Storage Service
+# Status: not_started
+# Dependencies: 3, 6
+# Priority: medium
+# Description: Configure MinIO for scalable object storage to handle PDFs and media files
+# Details:
+Deploy MinIO using Docker. Create buckets for different file types (articles, supplementary materials, user uploads). Implement file upload and download services in the backend. Add file validation, virus scanning, and metadata extraction. Create secure, time-limited URLs for file access. Implement file versioning for article revisions. Configure backup and replication strategies.
+
+# Test Strategy:
+Test file upload and download functionality with various file types and sizes. Verify secure URL generation and access controls. Test concurrent uploads and downloads for performance. Validate backup and restore procedures.

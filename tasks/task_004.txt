@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: Setup PostgreSQL Database and Schema
+# Status: not_started
+# Dependencies: 3
+# Priority: high
+# Description: Configure PostgreSQL database with appropriate schema for the journal system
+# Details:
+Create Docker configuration for PostgreSQL. Design database schema for users, journals, articles, submissions, and reviews. Implement migrations using a Rust migration tool like Diesel or SQLx. Set up connection pooling in the backend. Create initialization scripts for development environment. Document entity relationships and constraints. Implement basic CRUD operations for core entities.
+
+# Test Strategy:
+Verify database migrations run successfully. Test connection from backend services. Validate CRUD operations with unit and integration tests. Ensure proper indexing for performance-critical queries.

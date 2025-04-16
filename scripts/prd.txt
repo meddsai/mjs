@@ -1,0 +1,67 @@
+# Modern Journal System (MJS) Product Requirements Document
+
+## Overview
+MJS is a modern, open-source journal system designed for academic publishing. It aims to provide a powerful, extensible, and user-friendly platform for developers, researchers, and journal editors.
+
+## Key Features
+- **Modern UI**: Responsive, accessible interface built with React and Tailwind CSS.
+- **AI-Powered Search**: Smart recommendations and full-text search capabilities.
+- **High-Performance Backend**: Rust (Actix Web) for secure, scalable APIs.
+- **Pluggable Architecture**: Support for plugins and custom modules.
+- **Easy Deployment**: Docker-based setup for local and production environments.
+- **Robust Security**: OAuth2/OpenID Connect (Keycloak), HTTPS-ready, secure session management.
+- **Internationalization**: Multi-language support for global journals.
+
+## Architecture Overview
+MJS follows a modular, microservices-based architecture with clear separation of concerns:
+- **Frontend**: React + TypeScript (Next.js) — user interface, SSR, SEO.
+- **Backend**: Rust (Actix Web) — REST API, business logic, authentication.
+- **AI/ML Service**: Python (FastAPI) — peer review matching, citation analysis, recommendations.
+- **Database**: PostgreSQL — structured, reliable data storage.
+- **File Storage**: MinIO — scalable object storage for PDFs and media.
+- **Search**: Meilisearch — fast, typo-tolerant article search.
+- **Caching**: Redis — performance optimization for frequent queries.
+- **Authentication**: Keycloak — OAuth2, OpenID Connect.
+- **Deployment**: Docker, Kubernetes — scalable, portable infrastructure.
+- **Monitoring**: Prometheus, Grafana — system health and performance.
+- **Code Quality**: Pre-commit hooks, CI/CD.
+
+## Development Phases
+1. **Phase 1 (Months 1-6)**: Infrastructure and Foundation
+   - Set up Next.js development environment.
+   - Configure CI/CD pipelines.
+
+2. **Phase 2 (Months 6-15)**: Backend Services
+   - Rust Backend Setup.
+   - Database Setup.
+   - API Implementation.
+
+3. **Phase 3 (Months 12-24)**: Frontend Migration
+   - Next.js/React Setup.
+   - Component Library.
+   - Core Features.
+
+4. **Phase 4 (Months 18-30)**: AI/ML Integration
+   - Python Services.
+   - Peer Review Features.
+   - Citation System.
+
+5. **Phase 5 (Months 27-33)**: Testing and Validation
+   - Testing Infrastructure.
+   - Performance Testing.
+   - Validation.
+
+6. **Phase 6 (Months 30-36)**: Deployment and Rollout
+   - Staging Deployment.
+   - Production Preparation.
+   - Production Rollout.
+
+## Risk Management
+- **Technical Risks**: Performance bottlenecks, data migration issues, integration challenges, security vulnerabilities.
+- **Mitigation Strategies**: Regular backups, comprehensive testing, phased rollout, monitoring and alerting, rollback procedures.
+
+## Success Metrics
+- Performance metrics to be defined based on user feedback and system requirements.
+
+## Documentation
+- Comprehensive documentation available in the `docs` directory, covering architecture, development, user guides, API references, and more. 

@@ -1,0 +1,11 @@
+# Task ID: 6
+# Title: Implement Core API Endpoints
+# Status: not_started
+# Dependencies: 3, 4, 5
+# Priority: medium
+# Description: Develop essential REST API endpoints for journal management functionality
+# Details:
+Implement RESTful API endpoints for journal creation, article submission, review management, and user profiles. Follow API design best practices with proper status codes and error responses. Add request validation and sanitization. Implement pagination, filtering, and sorting for list endpoints. Document APIs using OpenAPI/Swagger. Create service layer abstraction for business logic.
+
+# Test Strategy:
+Develop comprehensive integration tests for each endpoint. Test various scenarios including edge cases and error conditions. Validate against API specifications. Perform manual testing with API client tools.
